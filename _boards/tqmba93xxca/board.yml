@@ -1,0 +1,5 @@
+board.cores:
+  - id: core0
+    name: Cortex-M33
+    core_id: cm33
+    support : true
