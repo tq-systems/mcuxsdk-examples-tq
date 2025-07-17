@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: BSD-3-Clause
+#
+# Copyright 2025 TQ-Systems GmbH <oss@ew.tq-group.com>,
+# D-82229 Seefeld, Germany.
+# Author: Isaac Lucas de Lima Yuki
+#
+
+menu "Board Boot Header"
+    config MCUX_COMPONENT_board.boot_header
+        bool "Use board boot header"
+endmenu
