@@ -1,0 +1,2 @@
+# Pin jsonschema -- workaround for failing pipeline
+jsonschema>=4.17.3
