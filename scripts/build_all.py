@@ -351,5 +351,7 @@ if __name__ == "__main__":
             print(f'\nSaved complete diagnostics to {build_root}/build_diagnostics.csv')
         except Exception as e:
             print(f"Error writing CSV: {e}")
+        if diagnostics['severity'].str.contains('error').any():
+            sys.exit(-1)
     else:
         print("\nNo warnings or errors captured.")
