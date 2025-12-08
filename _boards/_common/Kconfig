@@ -1,0 +1,80 @@
+# This file contains common include directives for the ${board} board.
+# For more information: https://mcuxpresso.nxp.com/mcuxsdk/latest/html/develop/sdk/custom_board_development.html
+
+# The following include directives are common for all boards.
+# The conditions must be defined in the boards prj.conf file.
+
+# Include in common folder
+
+config MCUX_PRJSEG_module.custom_board.common_folder
+    bool "Common folder is present"
+    default n
+    help
+        "Turns on the common inclusion of board, pinmux, clock files as well linker scripts."
+
+config MCUX_PRJSEG_module.custom_board.boardfile_common_folder
+    bool "Board file in Common"
+    help
+        "The custom board file is placed in the common folder."
+    depends on MCUX_PRJSEG_module.custom_board.common_folder
+
+config MCUX_PRJSEG_module.custom_board.clock_common_folder
+    bool "Clock in Common"
+    help
+        "The custom clock file is placed in the common folder."
+    depends on MCUX_PRJSEG_module.custom_board.common_folder
+
+config MCUX_PRJSEG_module.custom_board.pinmux_common_folder
+    bool "Pinmux in Common"
+    help
+        "The custom pinmux file is placed in the common folder."
+    depends on MCUX_PRJSEG_module.custom_board.common_folder
+
+config MCUX_PRJSEG_project.custom_board.hw_app_common_folder
+    bool "app.h/hardware_init.c in Common"
+    help
+        "The custom board app/hardware_init.c file is placed in the common folder."
+    depends on MCUX_PRJSEG_module.custom_board.common_folder
+
+config MCUX_PRJSEG_module.custom_board.linker_common_folder
+    bool "Linker in Common"
+    help
+        "The custom board linker file is placed in the common folder."
+    depends on MCUX_PRJSEG_module.custom_board.common_folder
+
+# Include in module folder
+
+config MCUX_PRJSEG_module.custom_board.boardfile_project_folder
+    bool "Board file in Project"
+    default n
+    help
+        "The custom board file is placed in the app folder.."
+
+
+config MCUX_PRJSEG_module.custom_board.clock_project_folder
+    bool "Clock in Project"
+    default n
+    help
+        "The custom board clock file is placed in the app folder."
+
+config MCUX_PRJSEG_module.custom_board.pinmux_project_folder
+    bool "Pinmux in Project"
+    default n
+    help
+        "The custom board pinmux file is placed in the app folder."
+
+config MCUX_PRJSEG_project.custom_board.hw_app_project_folder
+    bool "app.h/hardware_init.c in Project"
+    default n
+    help
+        "The custom board app/hardware_init.c file is placed in the app folder."
+
+config MCUX_PRJSEG_module.custom_board.linker_project_folder
+    bool "Linker in Project"
+    help
+        "The custom board linker file is placed in the app folder."
+
+# Display support
+
+config MCUX_PRJSEG_module.board.display_support
+    bool "Enable Display Support"

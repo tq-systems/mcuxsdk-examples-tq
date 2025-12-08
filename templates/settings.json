@@ -1,0 +1,10 @@
+{
+    /* Debugger configurations */
+    "cortex-debug.gdbPath": "<arm-none-eabi-gdb.exe path>",
+    "cortex-debug.armToolchainPath": "<arm-none-eabi-gcc.exe path>",
+    "cortex-debug.JLinkGDBServerPath": "<JLinkGDBServerCL.exe path>",
+    "cortex-debug.variableUseNaturalFormat": true,
+    /*Styling configurations*/
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
+}

@@ -1,0 +1,39 @@
+{
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "app",
+            "description": "choose your app",
+            "options": [
+                "hello_world"
+            ]
+        }
+    ],
+    "configurations": [
+        {
+            "showDevDebugOutput": "both",
+            "type": "cortex-debug",
+            "request": "launch",
+            "name": "Debug J-Link Ram - ${input:ModuleName}",
+            "cwd": "${workspaceFolder}",
+            "servertype": "jlink",
+            "serialNumber": "50114986",
+            "device": "MIMX9352_M33",
+            "interface": "jtag",
+            "executable": "${workspaceFolder}\\build\\tqmba93xxca\\debug\\${input:app}_cm33.elf",
+            "serverArgs": [
+                "-endian",
+                "little",
+                "-LocalhostOnly",
+                "-speed",
+                "4000"
+            ],
+            "postLaunchCommands": [
+                "target remote localhost:50000",
+                "monitor reset",
+                "monitor halt",
+                "load"
+            ]
+        }
+    ]
+}
