@@ -117,7 +117,7 @@ main() {
 	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" ]; then
 		echo "-- Directory ${MCUXSDK_DIR} already exists. Skipping clone."
 	else
-		${WEST} init --local ${MCUXSDK_ROOT}/${MCUXSDK_DIR}
+		${WEST} init --local ${PROJECT_NAME}
 		${WEST} update 
 		${WEST} config commands.allow_extensions true
 	fi
