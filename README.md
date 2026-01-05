@@ -14,7 +14,7 @@ applications included in this repository, specifically designed for TQ-developed
 __NOTE__: The versions provided are the ones with which the build system and its artifacts were tested.
 
 - Arm GNU Toolchain: arm-gnu-toolchain-13.3.rel1-[host system]-arm-none-eabi
-- NXP's [MCUXSDK-Manifest](https://github.com/nxp-mcuxpresso/mcuxsdk-manifests)
+- NXP's [MCUXSDK-Manifest](https://github.com/nxp-mcuxpresso/mcuxsdk-manifests): v25.09.00
 - CMake: v3.30.0^
 - West: v1.2.0^
 - Python: v3.10^
@@ -30,18 +30,18 @@ __NOTE__: The versions provided are the ones with which the build system and its
 
 ### Preparation
 
-* Python3 installation (needed for the west repo tool and helper scripts).
-* Install [Arm GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain).
+- Python3 installation (needed for the west repo tool and helper scripts).
+- Install [Arm GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain).
   Use the .exe file for installation or unpack the archive to the desired path.
-* Install [CMake](https://cmake.org/download/) and ensure that `CMake` is added to the system path.
-* Set the environmental variable ARMGCC_DIR pointing to the toolchain installation dir:
+- Install [CMake](https://cmake.org/download/) and ensure that `CMake` is added to the system path.
+- Set the environmental variable ARMGCC_DIR pointing to the toolchain installation dir:
   - Use the "cmake.environment" option under [settings.json](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/cmake-settings.md).
   - Create a system variable.
-* Debugging only: Install [Segger J-link](https://www.segger.com/downloads/jlink/) (Version used: `8.66`).
-* Follow the installation instructions at:
+- Debugging only: Install [Segger J-link](https://www.segger.com/downloads/jlink/) (Version used: `8.66`).
+- Follow the installation instructions at:
 [Getting Started with SDK - Detailed Installation Instructions](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/gsd/installation.html#installation)
-* Clone this repository into your desired location.
-* Initialize the west workspace by executing the following command in the root directory of this repository:
+- Clone this repository into your desired location.
+- Initialize the west workspace by executing the following command in the root directory of this repository:
 
   ```bash
   cd ../
