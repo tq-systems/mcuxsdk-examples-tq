@@ -12,7 +12,7 @@ manifest:
   projects:
     - name: mcuxsdk-manifests
       remote: nxp-mcuxpresso
-      revision: v25.09.00
+      revision: v25.12.00
       path: mcuxpresso-sdk
       import:
       - submanifests/base.yml
