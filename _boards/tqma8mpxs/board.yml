@@ -1,0 +1,5 @@
+board.cores:
+  - id: core0
+    name: Cortex-M7
+    core_id: cm7
+    support : true
