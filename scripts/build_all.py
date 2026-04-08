@@ -144,7 +144,7 @@ def parse_diagnostics(raw_text: str) -> pd.DataFrame:
                     })
     return pd.DataFrame.from_records(records, columns=["severity", "message", "path"])
 
-def build_all(board:list[Board], build_root: Path, general_build_types: list) -> pd.DataFrame:
+def build_all(board:list[Board], build_root: Path, general_build_types: list, output: pd.DataFrame):
     """
     Build all boards with their examples and cores.
     This function is called at the end of the script.
@@ -186,12 +186,13 @@ def build_all(board:list[Board], build_root: Path, general_build_types: list) ->
                                 df.insert(2, "example", example["path"].name)
                                 all_diags.append(df)
 
+                            output = pd.concat(all_diags, ignore_index=True)
                             if res.returncode == 0:
                                 print(f"[BUILD_PROCESS] ✅  Build successful for {build_example_dir}")
                             else:
                                 print(f"[BUILD_PROCESS] ❌ Build **failed** for {build_example_dir}")
-                                return pd.concat(all_diags, ignore_index=True)
-    return pd.concat(all_diags, ignore_index=True)
+                                return -1
+    return 0
 
 # ------------------------------------------------------------
 # 3.  “source ./.config”  →  import environment variables
@@ -329,8 +330,9 @@ if __name__ == "__main__":
 
     all_diags: list[pd.DataFrame] = []
     build_example_dir = None
+    diagnostics = pd.DataFrame()
 
-    diagnostics = build_all(boards, build_root, general_build_types)
+    build_result = build_all(boards, build_root, general_build_types, diagnostics)
 
 # ------------------------------------------------------------
 # 6.  Combine and save / show diagnostics
@@ -355,3 +357,8 @@ if __name__ == "__main__":
             sys.exit(-1)
     else:
         print("\nNo warnings or errors captured.")
+
+    if build_result != 0:
+        sys.exit(
+            "build command error, terminate "
+        )
