@@ -11,7 +11,7 @@ import_sdk_and_compile:
     - echo "Importing and patching SDK"
     - scripts/prepare.sh
   script:
-    - echo "Building tagets"
+    - echo "Building targets"
     - scripts/build.sh
   artifacts:
     when: on_success
