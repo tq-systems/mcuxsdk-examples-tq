@@ -29,21 +29,21 @@ readonly MCUXSDK_DIR="mcuxsdk"
 
 # Parse command-line options
 while getopts ":b:h" opt; do
-    case $opt in
-        --board | b ) BOARD="$OPTARG" ;;  # -b <board>
-        --help | h )
-            echo "Usage: $SCRIPT [-b <board/all>] "
-            exit 0
-            ;;
-        \?)
-            echo "Invalid option: -$OPTARG" >&2
-            exit 1
-            ;;
-        :)
-            echo "Option -$OPTARG requires an argument." >&2
-            exit 1
-            ;;
-    esac
+	case $opt in
+		--board | b ) BOARD="$OPTARG" ;;  # -b <board>
+		--help | h )
+		echo "Usage: $SCRIPT [-b <board/all>] "
+		exit 0
+	;;
+	\?)
+		echo "Invalid option: -$OPTARG" >&2
+		exit 1
+		;;
+	:)
+		echo "Option -$OPTARG requires an argument." >&2
+		exit 1
+		;;
+	esac
 done
 
 main() {
@@ -99,11 +99,11 @@ main() {
 		exit 1
 	fi
 
-    echo "-- Starting Build Setup..."
-    echo "-- Project Path: ${PROJECT_PATH}"
-    echo "-- Script Path: ${SCRIPT_PATH}"
-    echo "-- MCUXSDK_ROOT: $MCUXSDK_ROOT"
-    echo "-- MCUXSDK_DIR: $MCUXSDK_DIR"
+	echo "-- Starting Build Setup..."
+	echo "-- Project Path: ${PROJECT_PATH}"
+	echo "-- Script Path: ${SCRIPT_PATH}"
+	echo "-- MCUXSDK_ROOT: $MCUXSDK_ROOT"
+	echo "-- MCUXSDK_DIR: $MCUXSDK_DIR"
 
 	cd ${SCRIPT_PATH}
 
@@ -112,16 +112,16 @@ main() {
 	# start virtual environment
 	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv" ]; then
 		source "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv/bin/activate"
-        echo $VIRTUAL_ENV
+	echo $VIRTUAL_ENV
 	fi
 
 	echo "-- Virtual environment created and activated."
 
-    ${PYTHON} "${SCRIPT_PATH}/build_all.py" \
-        --mcuxsdk_root "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" \
-        --build_root "${PROJECT_PATH}/build" \
+	${PYTHON} "${SCRIPT_PATH}/build_all.py" \
+		--mcuxsdk_root "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" \
+		--build_root "${PROJECT_PATH}/build" \
 		--generator "${GENERATOR}" \
-		--board 	"${BOARD}"
+		--board "${BOARD}"
 
 	echo "Build completed ..."
 
