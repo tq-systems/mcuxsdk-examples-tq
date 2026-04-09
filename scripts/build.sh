@@ -102,9 +102,12 @@ main() {
 	echo "-- Creating virtual environment..."
 
 	# start virtual environment
-	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv" ]; then
-		source "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv/bin/activate"
+	if [ -d "${MCUXSDK_ROOT}/.venv" ]; then
+		source "${MCUXSDK_ROOT}/.venv/bin/activate"
 		echo "$VIRTUAL_ENV"
+	else
+		echo "Error: no venv found."
+		exit 1
 	fi
 
 	echo "-- Virtual environment created and activated."
