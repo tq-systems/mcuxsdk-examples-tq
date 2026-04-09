@@ -111,7 +111,7 @@ main() {
 	# start virtual environment
 	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv" ]; then
 		source "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv/bin/activate"
-	echo $VIRTUAL_ENV
+		echo $VIRTUAL_ENV
 	fi
 
 	echo "-- Virtual environment created and activated."
