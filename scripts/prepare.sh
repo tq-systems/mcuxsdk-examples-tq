@@ -130,19 +130,18 @@ main() {
 		if [ ! -d "${MCUXSDK_ROOT}/.venv" ]; then
 			echo "-- Creating virtual environment..."
 			${PYTHON} -m venv "${MCUXSDK_ROOT}/.venv"
-			source "${MCUXSDK_ROOT}/.venv/bin/activate"
-		else
-			source "${MCUXSDK_ROOT}/.venv/bin/activate"
 		fi
-			echo $VIRTUAL_ENV
-			echo "-- Virtual environment created and activated."
+		echo "-- Sourcing virtual environment..."
+		. "${MCUXSDK_ROOT}/.venv/bin/activate"
+		echo $VIRTUAL_ENV
+		echo "-- Virtual environment created and activated."
 	fi
-
-	${PIP} install -r "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/scripts/requirements.txt" -c "${PROJECT_PATH}/scripts/constraints.txt"
+	# pip should be also there in .venv but not as ${PIP}
+	pip install -r "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/scripts/requirements.txt" -c "${PROJECT_PATH}/scripts/constraints.txt"
 
 	cd "${PROJECT_PATH}/scripts" || exit
 	if [ -f "requirements.txt" ]; then
-		${PIP} install -r requirements.txt
+		pip install -r requirements.txt
 	else
 		echo "No requirements.txt found, skipping Python dependencies installation."
 		exit 1
