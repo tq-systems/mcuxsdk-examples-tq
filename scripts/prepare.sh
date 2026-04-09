@@ -37,7 +37,7 @@ main() {
 	if [ -n "${WEST}" ]; then
 		echo "-- WEST is defined as: ${WEST}"
 	else
-		WEST=$(which west)
+		WEST=$(which west) || true
 		if [ -z "${WEST}" ] || ! ${WEST} --version > /dev/null 2>&1; then
 			echo "Error: 'west' command not found or not working. Please install west and ensure it is in your PATH."
 			exit 1
@@ -47,7 +47,7 @@ main() {
 	if [ -n "${PYTHON}" ]; then
 		echo "-- PYTHON is defined as: ${PYTHON}"
 	else
-		PYTHON=$(which python3)
+		PYTHON=$(which python3) || true
 		if [ -z "${PYTHON}" ] || ! ${PYTHON} --version > /dev/null 2>&1; then
 			echo "Error: Python3 is not installed or not found in PATH."
 			exit 1
@@ -59,7 +59,7 @@ main() {
 	else
 		GENERATOR="Ninja"
 		echo "-- Ninja is set as default Generator"
-		NINJA=$(which ninja)
+		NINJA=$(which ninja) || true
 		if [ -z "${NINJA}" ] || ! ${NINJA} --version > /dev/null 2>&1; then
 			echo "Error: Ninja is not installed or not found in PATH."
 			exit 1
@@ -92,7 +92,7 @@ main() {
 		exit 1
 	fi
 
-	PIP=$(which pip3 || which pip || true)
+	PIP=$(which pip || which pip3 || true)
 	if [ -z "${PIP}" ] || ! ${PIP} --version >/dev/null 2>&1; then
 		echo "Error: pip is not installed or not found in PATH."
 		exit 1
