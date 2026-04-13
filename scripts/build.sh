@@ -28,6 +28,9 @@ readonly MCUXSDK_DIR="mcuxsdk"
 . ${CONFIG_FILE}
 
 main() {
+	local gitrev
+	local BOARD
+
 	# Parse command-line options
 	while getopts ":b:h" opt; do
 		case $opt in
@@ -126,7 +129,7 @@ main() {
 
 	cd "${PROJECT_PATH}/build"
 
-	local gitrev=$("${SCRIPT_PATH}/git-revision-name.sh")
+	gitrev=$("${SCRIPT_PATH}/git-revision-name.sh")
 
 	"${SCRIPT_PATH}/create_artifacts.sh" \
 	--format tar.gz --prefix "${PROJECT_NAME}.${gitrev}." -d . -o ./artifacts
