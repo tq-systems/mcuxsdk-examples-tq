@@ -21,7 +21,7 @@ readonly CONFIG_FILE="$(dirname "$(readlink -f "$0")")/.config"
 readonly PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
 readonly MCUXSDK_DIR="mcuxsdk"
 
-. ${CONFIG_FILE}
+. "${CONFIG_FILE}"
 
 # Script for Automating the Build Process
 main() {
@@ -112,19 +112,19 @@ main() {
 		exit 1
 	fi
 
-	cd ${MCUXSDK_ROOT} || exit
+	cd "${MCUXSDK_ROOT}" || exit
 
 	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" ]; then
 		echo "-- Directory ${MCUXSDK_DIR} already exists. Skipping clone."
 	else
-		${WEST} init --local ${PROJECT_PATH}
+		${WEST} init --local "${PROJECT_PATH}"
 		${WEST} update 
 		${WEST} config commands.allow_extensions true
 	fi
 
-	cd ${MCUXSDK_ROOT}/${MCUXSDK_DIR} || exit
+	cd "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" || exit
 
-	if [ ${VIRTUAL_ENV} ]; then
+	if [ "${VIRTUAL_ENV}" ]; then
 		echo "-- Virtual environment already activated."
 	else
 		if [ ! -d "${MCUXSDK_ROOT}/.venv" ]; then
@@ -133,7 +133,7 @@ main() {
 		fi
 		echo "-- Sourcing virtual environment..."
 		. "${MCUXSDK_ROOT}/.venv/bin/activate"
-		echo $VIRTUAL_ENV
+		echo "$VIRTUAL_ENV"
 		echo "-- Virtual environment created and activated."
 	fi
 	# pip should be also there in .venv but not as ${PIP}
