@@ -27,26 +27,25 @@ readonly MCUXSDK_DIR="mcuxsdk"
 
 . ${CONFIG_FILE}
 
-# Parse command-line options
-while getopts ":b:h" opt; do
-	case $opt in
-		--board | b ) BOARD="$OPTARG" ;;  # -b <board>
-		--help | h )
-		echo "Usage: $SCRIPT [-b <board/all>] "
-		exit 0
-	;;
-	\?)
-		echo "Invalid option: -$OPTARG" >&2
-		exit 1
-		;;
-	:)
-		echo "Option -$OPTARG requires an argument." >&2
-		exit 1
-		;;
-	esac
-done
-
 main() {
+	# Parse command-line options
+	while getopts ":b:h" opt; do
+		case $opt in
+			--board | b ) BOARD="$OPTARG" ;;  # -b <board>
+			--help | h )
+			echo "Usage: $SCRIPT [-b <board/all>] "
+			exit 0
+		;;
+		\?)
+			echo "Invalid option: -$OPTARG" >&2
+			exit 1
+			;;
+		:)
+			echo "Option -$OPTARG requires an argument." >&2
+			exit 1
+			;;
+		esac
+	done
 
 	# Ensure this script is run from the project directory
 	if [ -z "${MCUXSDK_ROOT}" ]; then
