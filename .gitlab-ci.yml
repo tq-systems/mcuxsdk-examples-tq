@@ -16,6 +16,4 @@ import_sdk_and_compile:
   artifacts:
     when: on_success
     paths:
-      - "*.tar.gz"
-      - "./build/*.tar.gz"
       - "./build/artifacts/*.tar.gz"
