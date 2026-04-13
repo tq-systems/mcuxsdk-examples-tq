@@ -104,14 +104,14 @@ main() {
 	echo "-- MCUXSDK_ROOT: $MCUXSDK_ROOT"
 	echo "-- MCUXSDK_DIR: $MCUXSDK_DIR"
 
-	cd ${SCRIPT_PATH}
+	cd "${SCRIPT_PATH}"
 
 	echo "-- Creating virtual environment..."
 
 	# start virtual environment
 	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv" ]; then
 		source "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv/bin/activate"
-		echo $VIRTUAL_ENV
+		echo "$VIRTUAL_ENV"
 	fi
 
 	echo "-- Virtual environment created and activated."
@@ -126,10 +126,10 @@ main() {
 
 	cd "${PROJECT_PATH}/build"
 
-	local gitrev=$(${SCRIPT_PATH}/git-revision-name.sh)
+	local gitrev=$("${SCRIPT_PATH}/git-revision-name.sh")
 
-	${SCRIPT_PATH}/create_artifacts.sh \
-	--format tar.gz --prefix ${PROJECT_NAME}.${gitrev}. -d . -o ./artifacts
+	"${SCRIPT_PATH}/create_artifacts.sh" \
+	--format tar.gz --prefix "${PROJECT_NAME}.${gitrev}." -d . -o ./artifacts
 
 	exit 0
 
