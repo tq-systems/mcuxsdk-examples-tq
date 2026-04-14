@@ -41,17 +41,17 @@ function error_abort () {
 }
 
 function debug() {
-	[ ${VERBOSE} -eq 1 ] && echo $@
+	[ ${VERBOSE} -eq 1 ] && echo "$@"
 	return 0
 }
 
 function error () {
-	echo $1 >&2
+	echo "$1" >&2
 }
 
 function exit_error () {
 	error "$2"
-	exit $1
+	exit "$1"
 }
 
 function usage () {
@@ -185,11 +185,11 @@ function main () {
 
             if [ ${DRY_RUN} -eq 1 ]; then
                 echo "Dry run mode: would create archive ${archive_name} with files:"
-                echo ${files_to_archive[@]}
+                echo "${files_to_archive[@]}"
                 continue
             
             else
-                debug ${files_to_archive[@]}
+                debug "${files_to_archive[@]}"
                 debug "prefix: ${PREFIX}"
                 if [ -n "${PREFIX}" ]; then
                     # ensure single trailing slash inside the archive
