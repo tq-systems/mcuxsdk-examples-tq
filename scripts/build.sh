@@ -66,16 +66,6 @@ main() {
 		fi
 	fi
 
-	if [ -n "${PYTHON}" ]; then
-		echo "-- PYTHON is defined as: ${PYTHON}"
-	else
-		PYTHON=$(which python3)
-		if [ -z "${PYTHON}" ] || ! ${PYTHON} --version > /dev/null 2>&1; then
-			echo "Error: Python3 is not installed or not found in PATH."
-			exit 1
-		fi
-	fi
-
 	if [ -n "${GENERATOR}" ]; then
 		echo "-- GENERATOR is defined as: ${GENERATOR}"
 	else
@@ -119,7 +109,7 @@ main() {
 
 	echo "-- Virtual environment created and activated."
 
-	${PYTHON} "${SCRIPT_PATH}/build_all.py" \
+	python "${SCRIPT_PATH}/build_all.py" \
 		--mcuxsdk_root "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" \
 		--build_root "${PROJECT_PATH}/build" \
 		--generator "${GENERATOR}" \
