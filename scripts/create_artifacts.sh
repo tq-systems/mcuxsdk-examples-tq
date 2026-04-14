@@ -71,7 +71,7 @@ function usage () {
     echo "Usage: $PROGRAM [--format <tar|tgz>] [--prefix <prefix>] [--build-dir <build_dir>] [--verbose] [--dry-run]"
 
     echo "This script creates archive files for each object (directory or file) in the specified build directory."
-    echo "It includes .bin, .elf, and .csv files in the archives."
+    echo "It includes .bin and .elf files in the archives."
     echo "Options:"
     echo "  --format <tar|tgz|zip>       Specify the archive format (default: tar)"
     echo "  --prefix <prefix>        Prefix to add to each file in the archive (default: none)"
@@ -79,7 +79,6 @@ function usage () {
     echo "  --verbose, -v            Enable verbose output"
     echo "  --dry-run, -n            Perform a trial run with no changes made"
     echo "  --version                Show program version"
-    echo "  --prefix <prefix>        Specify a prefix to add to each file in the archive (default: none)"
     echo "  --output-folder, -o      Specify the output folder for the archives relatively (default: current directory)"
     echo "  --help, --usage, -?      Show this help message"
 
@@ -194,7 +193,7 @@ function main () {
             files_to_archive+=("${files[@]}")
 
             if [ ${#files_to_archive[@]} -eq 0 ]; then
-                echo "No .bin, .elf, or .csv files found for ${object_name}. Skipping..."
+                echo "No .bin or .elf files found for ${object_name}. Skipping..."
                 continue
             fi
 
