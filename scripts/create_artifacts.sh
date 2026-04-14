@@ -24,13 +24,7 @@ trap 'error_abort $LINENO' ERR
 readonly PROGRAM=$(basename "$0")
 readonly VERSION=0.1
 
-readonly PWD="$(pwd)"
-OUT_PATH="$PWD"   # default output folder is current directory
 VERBOSE=0
-DRY_RUN=0
-
-FORMAT=tar            # tar | tgz | tar.gz
-PREFIX=""
 
 # RETURN VALUES/EXIT STATUS CODES
 readonly E_BAD_OPTION=254
@@ -82,6 +76,15 @@ function version () {
 }
 
 function main () {
+    PWD="$(pwd)"
+    local -r PWD
+    # default output folder is current directory
+    local OUT_PATH="${PWD}"
+    local DRY_RUN=0
+    local FORMAT=tar
+    local PREFIX=""
+    local BUILD_DIR=""
+
     # Process command-line arguments.
     while test $# -gt 0; do
         case $1 in
@@ -161,7 +164,8 @@ function main () {
         }
     fi
 
-    readonly OUT_DIR=$(basename "${OUT_PATH}")
+    OUT_DIR=$(basename "${OUT_PATH}")
+    local -r OUT_DIR
 
     for object in "${BUILD_DIR}"/*; do
         object_name=$(basename "${object}")
