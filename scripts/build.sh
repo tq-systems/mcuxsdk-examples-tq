@@ -17,20 +17,19 @@ function error_abort () {
 	echo "error at $1"
 }
 
-# Build Configuration
-# Load variables from config file
 readonly SCRIPT="$(basename "${0}")"
 readonly PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
 readonly SCRIPT_PATH=$(dirname "$(readlink -f "${0}")")
 readonly CONFIG_FILE="$(dirname "$(readlink -f "$0")")/.config"
 readonly MCUXSDK_DIR="mcuxsdk"
 
-. ${CONFIG_FILE}
-
 main() {
 	local gitrev
 	local BOARD=all
 	local BUILD_DIR=build
+
+	# variables from config file
+	. ${CONFIG_FILE}
 
 	# Parse command-line options
 	while test $# -gt 0; do
