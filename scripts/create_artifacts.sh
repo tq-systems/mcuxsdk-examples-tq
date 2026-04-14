@@ -146,21 +146,18 @@ function main () {
 
     # Validate parameters; error early, error often.
     if [ -z "${BUILD_DIR}" ]; then
-        echo "Error: BUILD_DIR is not set. Please specify the build directory."
-        exit 1
+        exit_error "1" "Error: BUILD_DIR is not set. Please specify the build directory." 
     fi
 
     if [ ! -d "${BUILD_DIR}" ]; then
-        echo "Error: BUILD_DIR (${BUILD_DIR}) does not exist."
-        exit 1
+        exit_error "1" "Error: BUILD_DIR (${BUILD_DIR}) does not exist."
     fi
 
     # Validate or create the OUTPUT_FOLDER
     if [ ! -d "${OUT_PATH}" ]; then
         debug "Output folder (${OUT_PATH}) does not exist. Creating it..."
         mkdir -p "${OUT_PATH}" || {
-            echo "Error: Failed to create output folder (${OUT_PATH})."
-            exit 1
+            exit_error "1" "Error: Failed to create output folder (${OUT_PATH})."
         }
     fi
 
@@ -197,8 +194,7 @@ function main () {
                 fi
                 # Create the archive
                 if ! tar --create --file="${archive_name}" --auto-compress --transform="s|^${PFX}/||" "${files_to_archive[@]}"; then
-                    echo "Error: Failed to create archive for ${object_name}."
-                    exit 1
+                    exit_error "1" "Error: Failed to create archive for ${object_name}."
                 fi
                 echo "Archive created: ${archive_name}"
             fi
