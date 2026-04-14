@@ -29,24 +29,31 @@ readonly MCUXSDK_DIR="mcuxsdk"
 
 main() {
 	local gitrev
-	local BOARD
+	local BOARD=all
+	local BUILD_DIR=build
 
 	# Parse command-line options
-	while getopts ":b:h" opt; do
-		case $opt in
-			--board | b ) BOARD="$OPTARG" ;;  # -b <board>
-			--help | h )
-			echo "Usage: $SCRIPT [-b <board/all>] "
-			exit 0
-		;;
-		\?)
-			echo "Invalid option: -$OPTARG" >&2
-			exit 1
-			;;
-		:)
-			echo "Option -$OPTARG requires an argument." >&2
-			exit 1
-			;;
+	while test $# -gt 0; do
+		case $1 in
+			--board )
+				shift
+				BOARD="${1}"
+				shift
+				;;
+			--build-dir )
+				shift
+				BUILD_DIR="${1}"
+				shift
+				;;
+			--help | -h )
+				echo "Usage: $SCRIPT [-board <board|all>]"
+				exit 0
+				;;
+			-* | * )
+				echo "Unrecognized option: $1" >&2
+				usage
+				exit 1
+				;;
 		esac
 	done
 
@@ -114,7 +121,7 @@ main() {
 
 	python "${SCRIPT_PATH}/build_all.py" \
 		--mcuxsdk_root "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" \
-		--build_root "${PROJECT_PATH}/build" \
+		--build_root "${PROJECT_PATH}/${BUILD_DIR}" \
 		--generator "${GENERATOR}" \
 		--board "${BOARD}"
 
