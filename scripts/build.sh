@@ -120,15 +120,7 @@ main() {
 
 	echo "Build completed ..."
 
-	cd "${PROJECT_PATH}/build"
-
-	gitrev=$("${SCRIPT_PATH}/git-revision-name.sh")
-
-	"${SCRIPT_PATH}/create_artifacts.sh" \
-	--format tar.gz --prefix "${PROJECT_NAME}.${gitrev}." -d . -o ./artifacts
-
-	exit 0
-
+	return 0
 }
 
 main "$@"
