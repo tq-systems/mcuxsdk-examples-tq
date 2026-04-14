@@ -134,12 +134,6 @@ function main () {
             DRY_RUN=1
             ;;
 
-        --prefix | -p )
-            shift
-            PREFIX="$1"
-            shift
-            ;;
-
         --output_path | -o )
             shift
             OUT_PATH="$1"
