@@ -93,51 +93,42 @@ function main () {
             FORMAT="$1"
             shift
             ;;
-
         --prefix )
             shift
             PREFIX="$1"
             shift
             ;;
-
         --build-dir | -d )
             shift
             BUILD_DIR="$1"
             shift
             ;;
-
         --version )
             version
             exit
             ;;
-
         --verbose | -v )
             shift
             VERBOSE=1
             ;;
-
         --dry-run | -n )
             shift
             DRY_RUN=1
             ;;
-
         --output_path | -o )
             shift
             OUT_PATH="$1"
             shift
             ;;
-
         -? | --usage | --help )
             usage
             exit
             ;;
-
         -* )
             echo "Unrecognized option: $1" >&2
             usage
             exit $E_BAD_OPTION
             ;;
-
         * )
             break
             ;;
@@ -178,7 +169,6 @@ function main () {
                 echo "No .bin or .elf files found for ${object_name}. Skipping..."
                 continue
             fi
-
 
             if [ ${DRY_RUN} -eq 1 ]; then
                 echo "Dry run mode: would create archive ${archive_name} with files:"
