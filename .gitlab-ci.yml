@@ -3,6 +3,12 @@ image: $CI_JOB_IMAGE
 stages:
   - build
 
+variables:
+  PROJECT_NAME: mcuxsdk-examples-tq
+  BUILD_DIR: ./build
+  ARTIFACTS_DIR: ./artifacts
+  FORMAT: tar.gz
+
 import_sdk_and_compile:
   tags:
     - tqmaxx
@@ -12,8 +18,13 @@ import_sdk_and_compile:
     - scripts/prepare.sh
   script:
     - echo "Building targets"
-    - scripts/build.sh
+    - scripts/build.sh --build-dir "${BUILD_DIR}"
+  after_script:
+    - echo "Archiving"
+    - gitrev=$("scripts/git-revision-name.sh")
+    - scripts/create_artifacts.sh --format "${FORMAT}" --prefix "${PROJECT_NAME}.${gitrev}." --build-dir "${BUILD_DIR}" --output_path "${ARTIFACTS_DIR}"
+
   artifacts:
     when: on_success
     paths:
-      - "./build/artifacts/*.tar.gz"
+      - "${ARTIFACTS_DIR}/*.${FORMAT}"
