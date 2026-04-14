@@ -124,13 +124,10 @@ function main () {
             usage
             exit
             ;;
-        -* )
-            echo "Unrecognized option: $1" >&2
+        -* | * )
+            error "Unrecognized option: $1"
             usage
             exit $E_BAD_OPTION
-            ;;
-        * )
-            break
             ;;
         esac
     done
