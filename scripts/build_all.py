@@ -26,7 +26,6 @@ import re
 import sys
 import subprocess
 import yaml
-import pandas as pd
 from typing import List
 import io
 from pathlib import Path
@@ -118,38 +117,11 @@ def get_board_name(var_file: Path) -> str:
             return m.group(1)
     return None
 
-
-def parse_diagnostics(raw_text: str) -> pd.DataFrame:
-    """
-    Extract compiler / linker diagnostics from *raw_text* and return
-    a DataFrame with columns [severity, message, path].
-    """
-    records: List[dict] = []
-    for line in io.StringIO(raw_text):
-        if "warning: " in line or "error: " in line:
-            line = line.split(": ")
-            for i, section in enumerate(line):
-                if "warning" in section or "error" in section:
-                    severity = section.split(":")[0].strip().lower()
-                    message = line[i + 1].strip()
-                    if i > 0:
-                        path = line[i-1].strip().replace("\\", "/")
-                    else:
-                        path = ""
-
-                    records.append({
-                        "severity": severity,
-                        "message": message,
-                        "path": path,
-                    })
-    return pd.DataFrame.from_records(records, columns=["severity", "message", "path"])
-
-def build_all(board:list[Board], build_root: Path, general_build_types: list) -> pd.DataFrame:
+def build_all(board:list[Board], build_root: Path, general_build_types: list):
     """
     Build all boards with their examples and cores.
     This function is called at the end of the script.
     """
-    all_diags: list[pd.DataFrame] = []
     for board in boards:
         for core in board.supportedCores:
             for example in board.supportedExamples:
@@ -173,25 +145,14 @@ def build_all(board:list[Board], build_root: Path, general_build_types: list) ->
                                     f"-G{generator}",
                                 ],
                                 text=True,
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT,   # merge → everything in res.stdout
                             )
-
-                            # Parse every diagnostic, keep board/core/example for context
-                            [print(f'[BUILD_PROCESS] {line.strip()}') for line in io.StringIO(res.stdout)]
-                            df = parse_diagnostics(res.stdout)
-                            if not df.empty:
-                                df.insert(0, "board", board.name)
-                                df.insert(1, "core", core)
-                                df.insert(2, "example", example["path"].name)
-                                all_diags.append(df)
 
                             if res.returncode == 0:
                                 print(f"[BUILD_PROCESS] ✅  Build successful for {build_example_dir}")
                             else:
                                 print(f"[BUILD_PROCESS] ❌ Build **failed** for {build_example_dir}")
-                                return pd.concat(all_diags, ignore_index=True)
-    return pd.concat(all_diags, ignore_index=True)
+                                return -1
+    return 0
 
 # ------------------------------------------------------------
 # 3.  “source ./.config”  →  import environment variables
@@ -327,31 +288,14 @@ if __name__ == "__main__":
 # 7. Build all boards
 # ------------------------------------------------------------
 
-    all_diags: list[pd.DataFrame] = []
     build_example_dir = None
-
-    diagnostics = build_all(boards, build_root, general_build_types)
+    build_result = build_all(boards, build_root, general_build_types)
 
 # ------------------------------------------------------------
 # 6.  Combine and save / show diagnostics
 # ------------------------------------------------------------
-    if not diagnostics.empty:
-        diagnostics.sort_values(["severity", "board", "core", "path"], inplace=True)
 
-        # Example summaries
-        print("\n=== Diagnostic summary ==========================")
-        print(diagnostics.groupby(["severity", "message"]).size())
-        summary = diagnostics.groupby(["severity", "message"]).size().reset_index(name="count")
-        os.chdir(CWD)  # Ensure we are back in the original directory
-        # Persist (CSV / Parquet / whatever you wish)
-        try:
-            diagnostics.to_csv(f"{build_root}/build_diagnostics.csv", index=False)
-            summary.to_csv(f"{build_root}/diagnostics_summarized.csv", index=False)
-            print(f'\nSaved summarized diagnostics to {build_root}/diagnostics_summarized.csv')
-            print(f'\nSaved complete diagnostics to {build_root}/build_diagnostics.csv')
-        except Exception as e:
-            print(f"Error writing CSV: {e}")
-        if diagnostics['severity'].str.contains('error').any():
-            sys.exit(-1)
-    else:
-        print("\nNo warnings or errors captured.")
+    if build_result != 0:
+        sys.exit(
+            "build command error, terminate "
+        )

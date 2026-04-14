@@ -27,26 +27,28 @@ readonly MCUXSDK_DIR="mcuxsdk"
 
 . ${CONFIG_FILE}
 
-# Parse command-line options
-while getopts ":b:h" opt; do
-    case $opt in
-        --board | b ) BOARD="$OPTARG" ;;  # -b <board>
-        --help | h )
-            echo "Usage: $SCRIPT [-b <board/all>] "
-            exit 0
-            ;;
-        \?)
-            echo "Invalid option: -$OPTARG" >&2
-            exit 1
-            ;;
-        :)
-            echo "Option -$OPTARG requires an argument." >&2
-            exit 1
-            ;;
-    esac
-done
-
 main() {
+	local gitrev
+	local BOARD
+
+	# Parse command-line options
+	while getopts ":b:h" opt; do
+		case $opt in
+			--board | b ) BOARD="$OPTARG" ;;  # -b <board>
+			--help | h )
+			echo "Usage: $SCRIPT [-b <board/all>] "
+			exit 0
+		;;
+		\?)
+			echo "Invalid option: -$OPTARG" >&2
+			exit 1
+			;;
+		:)
+			echo "Option -$OPTARG requires an argument." >&2
+			exit 1
+			;;
+		esac
+	done
 
 	# Ensure this script is run from the project directory
 	if [ -z "${MCUXSDK_ROOT}" ]; then
@@ -57,19 +59,9 @@ main() {
 	if [ -n "${WEST}" ]; then
 		echo "-- WEST is defined as: ${WEST}"
 	else
-		WEST=$(which west)
+		WEST=$(which west) || true
 		if [ -z "${WEST}" ] || ! ${WEST} --version > /dev/null 2>&1; then
 			echo "Error: 'west' command not found or not working. Please install west and ensure it is in your PATH."
-			exit 1
-		fi
-	fi
-
-	if [ -n "${PYTHON}" ]; then
-		echo "-- PYTHON is defined as: ${PYTHON}"
-	else
-		PYTHON=$(which python3)
-		if [ -z "${PYTHON}" ] || ! ${PYTHON} --version > /dev/null 2>&1; then
-			echo "Error: Python3 is not installed or not found in PATH."
 			exit 1
 		fi
 	fi
@@ -79,7 +71,7 @@ main() {
 	else
 		GENERATOR="Ninja"
 		echo "-- Ninja is set as default Generator"
-		NINJA=$(which ninja)
+		NINJA=$(which ninja) || true
 		if [ -z "${NINJA}" ] || ! ${NINJA} --version > /dev/null 2>&1; then
 			echo "Error: Ninja is not installed or not found in PATH."
 			exit 1
@@ -99,38 +91,41 @@ main() {
 		exit 1
 	fi
 
-    echo "-- Starting Build Setup..."
-    echo "-- Project Path: ${PROJECT_PATH}"
-    echo "-- Script Path: ${SCRIPT_PATH}"
-    echo "-- MCUXSDK_ROOT: $MCUXSDK_ROOT"
-    echo "-- MCUXSDK_DIR: $MCUXSDK_DIR"
+	echo "-- Starting Build Setup..."
+	echo "-- Project Path: ${PROJECT_PATH}"
+	echo "-- Script Path: ${SCRIPT_PATH}"
+	echo "-- MCUXSDK_ROOT: $MCUXSDK_ROOT"
+	echo "-- MCUXSDK_DIR: $MCUXSDK_DIR"
 
-	cd ${SCRIPT_PATH}
+	cd "${SCRIPT_PATH}"
 
 	echo "-- Creating virtual environment..."
 
 	# start virtual environment
-	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv" ]; then
-		source "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/.venv/bin/activate"
-        echo $VIRTUAL_ENV
+	if [ -d "${MCUXSDK_ROOT}/.venv" ]; then
+		source "${MCUXSDK_ROOT}/.venv/bin/activate"
+		echo "$VIRTUAL_ENV"
+	else
+		echo "Error: no venv found."
+		exit 1
 	fi
 
 	echo "-- Virtual environment created and activated."
 
-    ${PYTHON} "${SCRIPT_PATH}/build_all.py" \
-        --mcuxsdk_root "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" \
-        --build_root "${PROJECT_PATH}/build" \
+	python "${SCRIPT_PATH}/build_all.py" \
+		--mcuxsdk_root "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" \
+		--build_root "${PROJECT_PATH}/build" \
 		--generator "${GENERATOR}" \
-		--board 	"${BOARD}"
+		--board "${BOARD}"
 
 	echo "Build completed ..."
 
 	cd "${PROJECT_PATH}/build"
 
-	local gitrev=$(${SCRIPT_PATH}/git-revision-name.sh)
+	gitrev=$("${SCRIPT_PATH}/git-revision-name.sh")
 
-	${SCRIPT_PATH}/create_artifacts.sh \
-	--format tar.gz --prefix ${PROJECT_NAME}.${gitrev}. -d . -o ./artifacts
+	"${SCRIPT_PATH}/create_artifacts.sh" \
+	--format tar.gz --prefix "${PROJECT_NAME}.${gitrev}." -d . -o ./artifacts
 
 	exit 0
 

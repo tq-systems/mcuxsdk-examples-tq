@@ -21,7 +21,7 @@ readonly CONFIG_FILE="$(dirname "$(readlink -f "$0")")/.config"
 readonly PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
 readonly MCUXSDK_DIR="mcuxsdk"
 
-. ${CONFIG_FILE}
+. "${CONFIG_FILE}"
 
 # Script for Automating the Build Process
 main() {
@@ -37,7 +37,7 @@ main() {
 	if [ -n "${WEST}" ]; then
 		echo "-- WEST is defined as: ${WEST}"
 	else
-		WEST=$(which west)
+		WEST=$(which west) || true
 		if [ -z "${WEST}" ] || ! ${WEST} --version > /dev/null 2>&1; then
 			echo "Error: 'west' command not found or not working. Please install west and ensure it is in your PATH."
 			exit 1
@@ -47,7 +47,7 @@ main() {
 	if [ -n "${PYTHON}" ]; then
 		echo "-- PYTHON is defined as: ${PYTHON}"
 	else
-		PYTHON=$(which python3)
+		PYTHON=$(which python3) || true
 		if [ -z "${PYTHON}" ] || ! ${PYTHON} --version > /dev/null 2>&1; then
 			echo "Error: Python3 is not installed or not found in PATH."
 			exit 1
@@ -59,7 +59,7 @@ main() {
 	else
 		GENERATOR="Ninja"
 		echo "-- Ninja is set as default Generator"
-		NINJA=$(which ninja)
+		NINJA=$(which ninja) || true
 		if [ -z "${NINJA}" ] || ! ${NINJA} --version > /dev/null 2>&1; then
 			echo "Error: Ninja is not installed or not found in PATH."
 			exit 1
@@ -92,7 +92,7 @@ main() {
 		exit 1
 	fi
 
-	PIP=$(which pip3 || which pip || true)
+	PIP=$(which pip || which pip3 || true)
 	if [ -z "${PIP}" ] || ! ${PIP} --version >/dev/null 2>&1; then
 		echo "Error: pip is not installed or not found in PATH."
 		exit 1
@@ -112,37 +112,36 @@ main() {
 		exit 1
 	fi
 
-	cd ${MCUXSDK_ROOT} || exit
+	cd "${MCUXSDK_ROOT}" || exit
 
 	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" ]; then
 		echo "-- Directory ${MCUXSDK_DIR} already exists. Skipping clone."
 	else
-		${WEST} init --local ${PROJECT_PATH}
+		${WEST} init --local "${PROJECT_PATH}"
 		${WEST} update 
 		${WEST} config commands.allow_extensions true
 	fi
 
-	cd ${MCUXSDK_ROOT}/${MCUXSDK_DIR} || exit
+	cd "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" || exit
 
-	if [ ${VIRTUAL_ENV} ]; then
+	if [ "${VIRTUAL_ENV}" ]; then
 		echo "-- Virtual environment already activated."
 	else
 		if [ ! -d "${MCUXSDK_ROOT}/.venv" ]; then
 			echo "-- Creating virtual environment..."
 			${PYTHON} -m venv "${MCUXSDK_ROOT}/.venv"
-			source "${MCUXSDK_ROOT}/.venv/bin/activate"
-		else
-			source "${MCUXSDK_ROOT}/.venv/bin/activate"
 		fi
-			echo $VIRTUAL_ENV
-			echo "-- Virtual environment created and activated."
+		echo "-- Sourcing virtual environment..."
+		. "${MCUXSDK_ROOT}/.venv/bin/activate"
+		echo "$VIRTUAL_ENV"
+		echo "-- Virtual environment created and activated."
 	fi
-
-	${PIP} install -r "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/scripts/requirements.txt" -c "${PROJECT_PATH}/scripts/constraints.txt"
+	# pip should be also there in .venv but not as ${PIP}
+	pip install -r "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/scripts/requirements.txt" -c "${PROJECT_PATH}/scripts/constraints.txt"
 
 	cd "${PROJECT_PATH}/scripts" || exit
 	if [ -f "requirements.txt" ]; then
-		${PIP} install -r requirements.txt
+		pip install -r requirements.txt
 	else
 		echo "No requirements.txt found, skipping Python dependencies installation."
 		exit 1

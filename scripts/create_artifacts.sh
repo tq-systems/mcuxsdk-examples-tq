@@ -218,7 +218,7 @@ function main () {
                     PFX="${PREFIX%/}/"
                 fi
                 # Create the archive
-                if ! tar --create --file="${archive_name}" --transform="s|^${PFX}/||" ${files_to_archive[@]}; then
+                if ! tar --create --file="${archive_name}" --auto-compress --transform="s|^${PFX}/||" "${files_to_archive[@]}"; then
                     echo "Error: Failed to create archive for ${object_name}."
                     exit 1
                 fi
