@@ -18,12 +18,7 @@ set -e
 set -C  # noclobber
 
 # TRAP SIGNALS
-trap 'cleanup' EXIT
 trap 'error_abort $LINENO' ERR
-
-# Use newline+tab (no splitting on spaces)
-OLD_IFS=$IFS
-IFS=$'\n\t'
 
 # Internal variables and initializations.
 readonly PROGRAM=$(basename "$0")
@@ -41,16 +36,8 @@ PREFIX=""
 readonly E_BAD_OPTION=254
 readonly E_UNKNOWN=255
 
-function cleanup () {
-	rm -f ${TMPFILE}
-	rm -f ${TOARCHIVE}
-	IFS="${OLD_IFS}"
-	return 0
-}
-
 function error_abort () {
 	echo "error at $1"
-	cleanup
 }
 
 function debug() {
