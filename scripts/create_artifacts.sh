@@ -68,21 +68,25 @@ function exit_error () {
 }
 
 function usage () {
-    echo "Usage: $PROGRAM [--format <tar|tgz>] [--prefix <prefix>] [--build-dir <build_dir>] [--verbose] [--dry-run]"
+	cat <<- END
+	Usage:
 
-    echo "This script creates archive files for each object (directory or file) in the specified build directory."
-    echo "It includes .bin and .elf files in the archives."
-    echo "Options:"
-    echo "  --format <tar|tgz|zip>       Specify the archive format (default: tar)"
-    echo "  --prefix <prefix>        Prefix to add to each file in the archive (default: none)"
-    echo "  --build-dir <build_dir>  Specify the build directory (required)"
-    echo "  --verbose, -v            Enable verbose output"
-    echo "  --dry-run, -n            Perform a trial run with no changes made"
-    echo "  --version                Show program version"
-    echo "  --output-folder, -o      Specify the output folder for the archives relatively (default: current directory)"
-    echo "  --help, --usage, -?      Show this help message"
+	${PROGRAM} [--format <tar|tgz>] [--prefix <prefix>] [--build-dir <build_dir>] [--verbose] [--dry-run]
 
-    return 0
+	This script creates archive files for each object (directory or file) in the specified build directory.
+	It includes .bin and .elf files in the archives.
+
+	Options:
+	  --format <tar|tgz|zip>   Specify the archive format (default: tar)
+	  --prefix <prefix>        Prefix to add to each file in the archive (default: none)
+	  --build-dir <build_dir>  Specify the build directory (required)
+	  --verbose, -v            Enable verbose output
+	  --dry-run, -n            Perform a trial run with no changes made
+	  --version                Show program version
+	  --output-folder, -o      Specify the output folder for the archives relatively (default: current directory)
+	  --help, --usage, -?      Show this help message
+
+	END
 }
 
 function version () {
