@@ -94,12 +94,6 @@ function version () {
     return 0
 }
 
-function rm_file () {
-	if [ -f ${1} ]; then
-		rm -f ${1}
-	fi
-}
-
 function main () {
     # Process command-line arguments.
     while test $# -gt 0; do
