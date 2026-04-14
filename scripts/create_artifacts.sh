@@ -163,8 +163,6 @@ function main () {
 
     readonly OUT_DIR=$(basename "${OUT_PATH}")
 
-    files=($(find "${BUILD_DIR}" -maxdepth 1 -type f -name "*.*"))
-
     for object in "${BUILD_DIR}"/*; do
         object_name=$(basename "${object}")
         files_to_archive=()
@@ -175,8 +173,6 @@ function main () {
 
             # Find .bin and .elf files and add them to the archive
             files_to_archive=($(find "${object}" -type f \( -name "*.bin" -o -name "*.elf" \)))
-            files_to_archive+=("${files[@]}")
-
             if [ ${#files_to_archive[@]} -eq 0 ]; then
                 echo "No .bin or .elf files found for ${object_name}. Skipping..."
                 continue
