@@ -34,19 +34,29 @@ __NOTE__: The versions provided are the ones with which the build system and its
 - Install [Arm GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain).
   Use the .exe file for installation or unpack the archive to the desired path.
 - Install [CMake](https://cmake.org/download/) and ensure that `CMake` is added to the system path.
-- Set the environmental variable ARMGCC_DIR pointing to the toolchain installation dir:
-  - Use the "cmake.environment" option under [settings.json](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/cmake-settings.md).
-  - Create a system variable.
+- Set the environment variable `ARMGCC_DIR` pointing to the toolchain installation dir:
+  - VS-Code / Codium: use the "cmake.environment" option under [settings.json](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/cmake-settings.md).
+  - Command Line: Create a variable, e.g. `export ARMGCC_DIR=</path/to/toolchain>`.
 - Debugging only: Install [Segger J-link](https://www.segger.com/downloads/jlink/) (Version used: `8.66`).
 - Follow the installation instructions at:
 [Getting Started with SDK - Detailed Installation Instructions](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/gsd/installation.html#installation)
-- Clone this repository into your desired location.
-- Initialize the west workspace by executing the following command in the root directory of this repository:
+- Create a workspace directory and clone this repository into the workspace.
+- Initialize the west workspace and create a python venv.
+
+  Under Linux the following commands can be used:
 
   ```bash
-  cd ../
-  west init --local mcuxsdk-examples-tq-repo
+  mkdir <workspace>
+  cd <workspace>
+  git clone https://github.com/tq-systems/mcuxsdk-examples-tq.git
+  west init --local "<workspace>/mcuxsdk-examples-tq"
   west update
+  west config commands.allow_extensions true
+  python3 -m venv <workspace>/.venv
+  source <workspace>/.venv/bin/activate
+  pip install -r "<workspace>/mcuxsdk/scripts/requirements.txt" -c "<workspace>/mcuxsdk-examples-tq/scripts/constraints.txt"
+  pip install -r "<workspace>/mcuxsdk-examples-tq/scripts/requirements.txt"
+  deactivate
   ```
 
 > [!NOTE]
@@ -98,10 +108,14 @@ To build examples, use the `west build` command inside the root directory of thi
 > If you installed the MCUXpresso SDK manually, you must execute the `west build` command from within the
 > MCUXpresso SDK repository.
 
+The following commands can be used under Linux to work in a workspace that was set up as documented:
+
 ```bash
+cd <workspace>
+source ".venv/bin/activate"
 west build _boards/<board>/<app_location> --board <board> \
 -Dcore_id=<core> --build-dir build \
--DCUSTOM_BOARD_ROOT="<mcuxsdk-examples-tq-repo>/_boards" \
+-DCUSTOM_BOARD_ROOT="<workspace>/mcuxsdk-examples-tq>/_boards" \
 --config=<configuration> --pristine
 ```
 
