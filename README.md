@@ -1,7 +1,8 @@
 # MCUXpresso SDK: TQ-Systems Board Support
 
-This guide contains instructions for configuring the build system, building targets, and executing the demonstration
-applications included in this repository, specifically designed for TQ-developed boards using the i.MX MCU family from NXP.
+This guide contains instructions for configuring the build system, building targets, and executing demo applications
+from this repository. The demos are adjusted to run on TQ-Systems GmbH starter kits. See this [list](#supported-boards)
+for supported hardware.
 
 ## Table of Contents
 
@@ -152,10 +153,6 @@ To begin debugging, either click on `start debugging` or press `F5`.
 > Please refer, if existing, to the README of your board for further details on setting up the debugger.
 > Some boards may require special settings. The README should be placed under: `examples/README.md`.
 
-## Applications
-
-The list of all applications can be found in the [board](./examples/README.md#applications) README file.
-
 ## Build System
 
 ### Structure
@@ -215,6 +212,16 @@ KConfig options provided in the `<board>/_common/Kconfig` file. You can choose b
 > You can set any `prj.conf` files inside an application folder to override the default `prj.conf` file of the board.
 
 For learning about NXP's API, the examples under `mcuxsdk/examples` can be helpful.
+
+## Supported Boards
+
+The list of demo applications can be found in the board specific documentation:
+
+* [TQMa117x](_boards/tqmba117xl/README.md)
+* [TQMa8MPxL](_boards/tqma8mpxl/README.md)
+* [TQMa8MPxS](_boards/tqma8mpxs/README.md)
+* [TQMa93xxCA](_boards/tqmba93xxca/README.md)
+* [TQMa93xxLA](_boards/tqmba93xxca/README.md)
 
 ## License
 
