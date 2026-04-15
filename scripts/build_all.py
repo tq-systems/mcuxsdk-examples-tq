@@ -135,10 +135,10 @@ def build_all(board:list[Board], build_root: Path, general_build_types: list):
                             res = subprocess.run(
                                 [
                                     "west", "build",
-                                    "-p",
-                                    "-b", board.name,
+                                    "--pristine",
+                                    "--board", board.name,
                                     str(example["path"]),
-                                    "-d", str(build_example_dir),
+                                    "--build-dir", str(build_example_dir),
                                     f"-DCUSTOM_BOARD_ROOT={BOARD_ROOT}",
                                     f"-Dcore_id={core}",
                                     f"--config={build_type}",
