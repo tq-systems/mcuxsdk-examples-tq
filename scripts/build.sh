@@ -29,7 +29,7 @@ main() {
 	local BUILD_DIR=build
 
 	# variables from config file
-	. ${CONFIG_FILE}
+	. "${CONFIG_FILE}"
 
 	# Parse command-line options
 	while test $# -gt 0; do
