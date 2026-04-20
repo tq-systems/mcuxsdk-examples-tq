@@ -122,8 +122,6 @@ main() {
 		${WEST} config commands.allow_extensions true
 	fi
 
-	cd "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" || exit
-
 	if [ "${VIRTUAL_ENV}" ]; then
 		echo "-- Virtual environment already activated."
 	else
