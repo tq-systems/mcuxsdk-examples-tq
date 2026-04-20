@@ -85,7 +85,7 @@ main() {
 	fi
 
 	if [ -n "${ARMGCC_DIR}" ]; then
-	echo "-- ARMGCC_DIR is defined as: ${ARMGCC_DIR}"
+		echo "-- ARMGCC_DIR is defined as: ${ARMGCC_DIR}"
 		if [ -x "${ARMGCC_DIR}/bin/arm-none-eabi-gcc" ]; then
 			echo "-- ARM GCC toolchain found at: ${ARMGCC_DIR}/bin/arm-none-eabi-gcc"
 		else
