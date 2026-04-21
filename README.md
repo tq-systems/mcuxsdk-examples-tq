@@ -166,13 +166,12 @@ It also provides access to an TQ specific submodule for including some light wei
 
 The following table provides an overview of the top-level folders in this repository and their purposes:
 
-| Folder Name       | Description                                                                 |
-|-------------------|-----------------------------------------------------------------------------|
-| `_boards`         | Contains dedicated folders for all boards, which mimics the examples folder/_boards folder from the mcuxsdk repository     |
-| `_boards/_common`         | Shared resources and configurations used across multiple boards.           |
-| `_boards/<board>/templates`         | Some templates for IDEs (e.g.VS-Code settings)         |
-| `scripts`         | Helper scripts for setting up the environment, building, and CI workflows. |
-| `tq-api`           | Contains lightweight APIs for handling specific devices.             |
+| Folder Name                  | Description                                                                 |
+|------------------------------|-----------------------------------------------------------------------------|
+| `_boards`                    | Dedicated folders for supported boards, follows the MCUX SDK documentation. |
+| `_boards/_common`            | Shared resources and configurations used across multiple boards.            |
+| `_boards/<board>/templates`  | Some templates for IDEs (e.g. VS Code settings).                            |
+| `scripts`                    | Helper scripts for setting up the environment, building, and CI workflows.  |
 
 ### Programming Apps
 
