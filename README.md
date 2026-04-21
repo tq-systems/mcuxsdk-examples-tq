@@ -43,7 +43,7 @@ __NOTE__: The versions provided are the ones with which the build system and its
 - Create a workspace directory and clone this repository into the workspace.
 - Initialize the west workspace and create a python venv.
 
-  Under Linux the following commands can be used:
+  Under Linux the `scripts/prepare.sh` script can be used, or run the following commands manually:
 
   ```bash
   mkdir <workspace>
@@ -59,18 +59,16 @@ __NOTE__: The versions provided are the ones with which the build system and its
   deactivate
   ```
 
-> [!NOTE]
-> West will clone the MCUXpresso SDK into the `mcuxpresso-sdk` folder.
-> This cloning can only take place in a path relative to the root of this repository and can be changed by
-> modifying the `path` attribute in the
-> `west.yml` file.
->
-> You can also install the MCUXpresso SDK manually but then you must execute west commands from within the
-> NXP repository.
+**IMPORTANT NOTES**:
 
-> [!TIP]
-> Access the [NXP MCUXpresso SDK Documentation](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/introduction/README.html)
-> for more information.
+- `west` will clone the MCUXpresso SDK into the `<workspace>/mcuxpresso-sdk` folder per default.
+  The location can be adjusted using the `path` attribute in `west.yml`.
+- `west.yml` configuration file in this repository is a reduced version of the entire MCUXpresso SDK
+  to speed up cloning.
+- Manual installation of MCUXpresso SDK and using the examples in this repository separately is
+  out of scope of this documentation.
+- See the [NXP MCUXpresso SDK Documentation](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/introduction/README.html)
+  for SDK documentation.
 
 ### Setting Up VS-Code
 
