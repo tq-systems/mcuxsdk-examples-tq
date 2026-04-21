@@ -9,17 +9,15 @@ D-82229 Seefeld, Germany.
 
 ## Overview
 
-The RPMsg pingpong demo shows communication between the Cortex-A and Cortex-M core by sending a message back and forth for a set amount of times.
+The RPMSG pingpong demo shows communication between the Cortex-A and Cortex-M core by sending a message back and forth for a set amount of times.
 It does not need any special hardware configurations.
 
 ## Building the Demo
 
-In order to build the example for this board use the following command:
+This command builds the RPMSG Lite Pingpong example for Cortex-M33. The artefacts will be stored in the mcuxsdk-examples-tq/build folder.
 ```bash
 west build mcuxsdk-examples-tq/_boards/tqmba93xxca/examples/multicore_examples/rpmsg_lite_pingpong_rtos_linux/remote --board tqmba93xxca -Dcore_id=cm33 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
 ```
-
-The above command will build the RPMSG example for Cortex-M33 and the output will be stored in the mcuxsdk-examples-tq/build folder.
 
 ## Running the Demo
 
