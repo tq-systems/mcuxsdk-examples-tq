@@ -101,12 +101,8 @@ __NOTE__: The versions provided are the ones with which the build system and its
 ## Building
 
 To build examples, use the `west build` command inside the root directory of this repository.
-
->[!NOTE]
-> If you installed the MCUXpresso SDK manually, you must execute the `west build` command from within the
-> MCUXpresso SDK repository.
-
-The following commands can be used under Linux to work in a workspace that was set up as documented:
+The following commands can be used under Linux to work in a workspace that was set up as
+[documented](#preparation):
 
 ```bash
 cd <workspace>
@@ -117,18 +113,15 @@ west build _boards/<board>/<app_location> --board <board> \
 --config=<configuration> --pristine
 ```
 
-> [!IMPORTANT]
-> The `-DCUSTOM_BOARD_ROOT` parameter is not optional. If not provided, the build will not be able to find TQ's
-> board repository.
+**IMPORTANT NOTES**:
 
-> [!NOTE]
-> The `--config` parameter is optional. If not provided, the default configuration will be used.
-> The available configurations can be found in the "examples.yml" file of the respective board.
-
-> [!NOTE]
-> The `-Dcore_id` must be set if your board has multiple cores. This can be recognized by the presence of core folders
-> in the board directory. If your board has only one core, this parameter might not be required.
-> Example core IDs: `cm4`, `cm7`, `cm33`.
+- The `CUSTOM_BOARD_ROOT` parameter must be used to tell the SDK where to find boards and examples.
+- If you installed the MCUXpresso SDK manually, all `west` commands must run from within the SDK directory.
+- The `--config` parameter is optional. If not provided, the default configuration will be used.
+  Available configurations can be found in the `examples.yml` file of the respective board.
+- The `core_id` must be set if your board has multiple cores. This can be recognized by the presence of core folders
+  in the board directory. If your board has only one core, this parameter might not be required.
+  Example core IDs are: `cm4`, `cm7`, `cm33`.
 
 ## Loading Targets
 
