@@ -12,7 +12,7 @@ manifest:
   projects:
     - name: mcuxsdk-manifests
       remote: nxp-mcuxpresso
-      revision: v25.12.00
+      revision: v26.03.00
       path: mcuxpresso-sdk
       import:
       - submanifests/base.yml
@@ -26,3 +26,4 @@ manifest:
     - -bifrost
     - -ble_cs_algo_private
     - -bluetooth_private
+    - -fw_v19_nb
