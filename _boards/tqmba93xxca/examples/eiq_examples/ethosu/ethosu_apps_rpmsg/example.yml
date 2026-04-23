@@ -1,0 +1,3 @@
+example.support:
+  build_type:
+    - "release"
