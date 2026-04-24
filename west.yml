@@ -19,6 +19,7 @@ manifest:
       - submanifests/internal.yml
       - submanifests/devices/RT.yml
       - submanifests/devices/i.MX.yml
+      - submanifests/middleware/multicore.yml
       - submanifests/rtos/rtos.yml
 
   group-filter:
