@@ -20,7 +20,7 @@ manifest:
       - submanifests/devices/RT.yml
       - submanifests/devices/i.MX.yml
       - submanifests/rtos/rtos.yml
-  
+
   group-filter:
     - -optional
     - -bifrost
