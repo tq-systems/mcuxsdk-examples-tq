@@ -34,33 +34,41 @@ __NOTE__: The versions provided are the ones with which the build system and its
 - Install [Arm GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain).
   Use the .exe file for installation or unpack the archive to the desired path.
 - Install [CMake](https://cmake.org/download/) and ensure that `CMake` is added to the system path.
-- Set the environmental variable ARMGCC_DIR pointing to the toolchain installation dir:
-  - Use the "cmake.environment" option under [settings.json](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/cmake-settings.md).
-  - Create a system variable.
+- Set the environment variable `ARMGCC_DIR` pointing to the toolchain installation dir:
+  - VS-Code / Codium: use the "cmake.environment" option under [settings.json](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/cmake-settings.md).
+  - Command Line: Create a variable, e.g. `export ARMGCC_DIR=</path/to/toolchain>`.
 - Debugging only: Install [Segger J-link](https://www.segger.com/downloads/jlink/) (Version used: `8.66`).
 - Follow the installation instructions at:
 [Getting Started with SDK - Detailed Installation Instructions](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/gsd/installation.html#installation)
-- Clone this repository into your desired location.
-- Initialize the west workspace by executing the following command in the root directory of this repository:
+- Create a workspace directory and clone this repository into the workspace.
+- Initialize the west workspace and create a python venv.
+
+  Under Linux the `scripts/prepare.sh` script can be used, or run the following commands manually:
 
   ```bash
-  cd ../
-  west init --local mcuxsdk-examples-tq-repo
+  mkdir <workspace>
+  cd <workspace>
+  git clone https://github.com/tq-systems/mcuxsdk-examples-tq.git
+  west init --local "<workspace>/mcuxsdk-examples-tq"
   west update
+  west config commands.allow_extensions true
+  python3 -m venv <workspace>/.venv
+  source <workspace>/.venv/bin/activate
+  pip install -r "<workspace>/mcuxsdk/scripts/requirements.txt" -c "<workspace>/mcuxsdk-examples-tq/scripts/constraints.txt"
+  pip install -r "<workspace>/mcuxsdk-examples-tq/scripts/requirements.txt"
+  deactivate
   ```
 
-> [!NOTE]
-> West will clone the MCUXpresso SDK into the `mcuxpresso-sdk` folder.
-> This cloning can only take place in a path relative to the root of this repository and can be changed by
-> modifying the `path` attribute in the
-> `west.yml` file.
->
-> You can also install the MCUXpresso SDK manually but then you must execute west commands from within the
-> NXP repository.
+**IMPORTANT NOTES**:
 
-> [!TIP]
-> Access the [NXP MCUXpresso SDK Documentation](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/introduction/README.html)
-> for more information.
+- `west` will clone the MCUXpresso SDK into the `<workspace>/mcuxpresso-sdk` folder per default.
+  The location can be adjusted using the `path` attribute in `west.yml`.
+- `west.yml` configuration file in this repository is a reduced version of the entire MCUXpresso SDK
+  to speed up cloning.
+- Manual installation of MCUXpresso SDK and using the examples in this repository separately is
+  out of scope of this documentation.
+- See the [NXP MCUXpresso SDK Documentation](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/introduction/README.html)
+  for SDK documentation.
 
 ### Setting Up VS-Code
 
@@ -93,30 +101,27 @@ __NOTE__: The versions provided are the ones with which the build system and its
 ## Building
 
 To build examples, use the `west build` command inside the root directory of this repository.
-
->[!NOTE]
-> If you installed the MCUXpresso SDK manually, you must execute the `west build` command from within the
-> MCUXpresso SDK repository.
+The following commands can be used under Linux to work in a workspace that was set up as
+[documented](#preparation):
 
 ```bash
+cd <workspace>
+source ".venv/bin/activate"
 west build _boards/<board>/<app_location> --board <board> \
 -Dcore_id=<core> --build-dir build \
--DCUSTOM_BOARD_ROOT="<mcuxsdk-examples-tq-repo>/_boards" \
+-DCUSTOM_BOARD_ROOT="<workspace>/mcuxsdk-examples-tq>/_boards" \
 --config=<configuration> --pristine
 ```
 
-> [!IMPORTANT]
-> The `-DCUSTOM_BOARD_ROOT` parameter is not optional. If not provided, the build will not be able to find TQ's
-> board repository.
+**IMPORTANT NOTES**:
 
-> [!NOTE]
-> The `--config` parameter is optional. If not provided, the default configuration will be used.
-> The available configurations can be found in the "examples.yml" file of the respective board.
-
-> [!NOTE]
-> The `-Dcore_id` must be set if your board has multiple cores. This can be recognized by the presence of core folders
-> in the board directory. If your board has only one core, this parameter might not be required.
-> Example core IDs: `cm4`, `cm7`, `cm33`.
+- The `CUSTOM_BOARD_ROOT` parameter must be used to tell the SDK where to find boards and examples.
+- If you installed the MCUXpresso SDK manually, all `west` commands must run from within the SDK directory.
+- The `--config` parameter is optional. If not provided, the default configuration will be used.
+  Available configurations can be found in the `examples.yml` file of the respective board.
+- The `core_id` must be set if your board has multiple cores. This can be recognized by the presence of core folders
+  in the board directory. If your board has only one core, this parameter might not be required.
+  Example core IDs are: `cm4`, `cm7`, `cm33`.
 
 ## Loading Targets
 
@@ -161,13 +166,12 @@ It also provides access to an TQ specific submodule for including some light wei
 
 The following table provides an overview of the top-level folders in this repository and their purposes:
 
-| Folder Name       | Description                                                                 |
-|-------------------|-----------------------------------------------------------------------------|
-| `_boards`         | Contains dedicated folders for all boards, which mimics the examples folder/_boards folder from the mcuxsdk repository     |
-| `_boards/_common`         | Shared resources and configurations used across multiple boards.           |
-| `_boards/<board>/templates`         | Some templates for IDEs (e.g.VS-Code settings)         |
-| `scripts`         | Helper scripts for setting up the environment, building, and CI workflows. |
-| `tq-api`           | Contains lightweight APIs for handling specific devices.             |
+| Folder Name                  | Description                                                                 |
+|------------------------------|-----------------------------------------------------------------------------|
+| `_boards`                    | Dedicated folders for supported boards, follows the MCUX SDK documentation. |
+| `_boards/_common`            | Shared resources and configurations used across multiple boards.            |
+| `_boards/<board>/templates`  | Some templates for IDEs (e.g. VS Code settings).                            |
+| `scripts`                    | Helper scripts for setting up the environment, building, and CI workflows.  |
 
 ### Programming Apps
 
