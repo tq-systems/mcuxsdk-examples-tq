@@ -7,6 +7,7 @@
             "options": [
                 "rpmsg_lite_pingpong_rtos_linux_remote"
                 "hello_world"
+                "rgpio_led_output"
             ]
         }
     ],
