@@ -18,53 +18,34 @@ set -e
 set -C  # noclobber
 
 # TRAP SIGNALS
-trap 'cleanup' EXIT
 trap 'error_abort $LINENO' ERR
-
-# Use newline+tab (no splitting on spaces)
-OLD_IFS=$IFS
-IFS=$'\n\t'
 
 # Internal variables and initializations.
 readonly PROGRAM=$(basename "$0")
 readonly VERSION=0.1
 
-readonly PWD="$(pwd)"
-OUT_PATH="$PWD"   # default output folder is current directory
 VERBOSE=0
-DRY_RUN=0
-
-FORMAT=tar            # tar | tgz | tar.gz
-PREFIX=""
 
 # RETURN VALUES/EXIT STATUS CODES
 readonly E_BAD_OPTION=254
 readonly E_UNKNOWN=255
 
-function cleanup () {
-	rm -f ${TMPFILE}
-	rm -f ${TOARCHIVE}
-	IFS="${OLD_IFS}"
-	return 0
-}
-
 function error_abort () {
 	echo "error at $1"
-	cleanup
 }
 
 function debug() {
-	[ ${VERBOSE} -eq 1 ] && echo $@
+	[ ${VERBOSE} -eq 1 ] && echo "$@"
 	return 0
 }
 
 function error () {
-	echo $1 >&2
+	echo "$1" >&2
 }
 
 function exit_error () {
 	error "$2"
-	exit $1
+	exit "$1"
 }
 
 function usage () {
@@ -95,6 +76,15 @@ function version () {
 }
 
 function main () {
+    PWD="$(pwd)"
+    local -r PWD
+    # default output folder is current directory
+    local OUT_PATH="${PWD}"
+    local DRY_RUN=0
+    local FORMAT=tar
+    local PREFIX=""
+    local BUILD_DIR=""
+
     # Process command-line arguments.
     while test $# -gt 0; do
         case $1 in
@@ -103,80 +93,64 @@ function main () {
             FORMAT="$1"
             shift
             ;;
-
         --prefix )
             shift
             PREFIX="$1"
             shift
             ;;
-
         --build-dir | -d )
             shift
             BUILD_DIR="$1"
             shift
             ;;
-
         --version )
             version
             exit
             ;;
-
         --verbose | -v )
             shift
             VERBOSE=1
             ;;
-
         --dry-run | -n )
             shift
             DRY_RUN=1
             ;;
-
         --output_path | -o )
             shift
             OUT_PATH="$1"
             shift
             ;;
-
         -? | --usage | --help )
             usage
             exit
             ;;
-
-        -* )
-            echo "Unrecognized option: $1" >&2
+        -* | * )
+            error "Unrecognized option: $1"
             usage
             exit $E_BAD_OPTION
-            ;;
-
-        * )
-            break
             ;;
         esac
     done
 
     # Validate parameters; error early, error often.
     if [ -z "${BUILD_DIR}" ]; then
-        echo "Error: BUILD_DIR is not set. Please specify the build directory."
-        exit 1
+        exit_error "1" "Error: BUILD_DIR is not set. Please specify the build directory." 
     fi
 
     if [ ! -d "${BUILD_DIR}" ]; then
-        echo "Error: BUILD_DIR (${BUILD_DIR}) does not exist."
-        exit 1
+        exit_error "1" "Error: BUILD_DIR (${BUILD_DIR}) does not exist."
     fi
 
     # Validate or create the OUTPUT_FOLDER
     if [ ! -d "${OUT_PATH}" ]; then
         debug "Output folder (${OUT_PATH}) does not exist. Creating it..."
         mkdir -p "${OUT_PATH}" || {
-            echo "Error: Failed to create output folder (${OUT_PATH})."
-            exit 1
+            exit_error "1" "Error: Failed to create output folder (${OUT_PATH})."
         }
     fi
 
-    readonly OUT_DIR=$(basename "${OUT_PATH}")
-
-    files=($(find "${BUILD_DIR}" -maxdepth 1 -type f -name "*.*"))
+    OUT_DIR=$(basename "${OUT_PATH}")
+    local -r OUT_DIR
 
     for object in "${BUILD_DIR}"/*; do
         object_name=$(basename "${object}")
@@ -188,21 +162,18 @@ function main () {
 
             # Find .bin and .elf files and add them to the archive
             files_to_archive=($(find "${object}" -type f \( -name "*.bin" -o -name "*.elf" \)))
-            files_to_archive+=("${files[@]}")
-
             if [ ${#files_to_archive[@]} -eq 0 ]; then
                 echo "No .bin or .elf files found for ${object_name}. Skipping..."
                 continue
             fi
 
-
             if [ ${DRY_RUN} -eq 1 ]; then
                 echo "Dry run mode: would create archive ${archive_name} with files:"
-                echo ${files_to_archive[@]}
+                echo "${files_to_archive[@]}"
                 continue
             
             else
-                debug ${files_to_archive[@]}
+                debug "${files_to_archive[@]}"
                 debug "prefix: ${PREFIX}"
                 if [ -n "${PREFIX}" ]; then
                     # ensure single trailing slash inside the archive
@@ -210,8 +181,7 @@ function main () {
                 fi
                 # Create the archive
                 if ! tar --create --file="${archive_name}" --auto-compress --transform="s|^${PFX}/||" "${files_to_archive[@]}"; then
-                    echo "Error: Failed to create archive for ${object_name}."
-                    exit 1
+                    exit_error "1" "Error: Failed to create archive for ${object_name}."
                 fi
                 echo "Archive created: ${archive_name}"
             fi

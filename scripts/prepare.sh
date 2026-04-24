@@ -7,7 +7,7 @@
 # Author:    Isaac L. L. Yuki
 #
 # Description: Script for setting up the mcuxsdk.
-#******************************************************************************
+# ******************************************************************************
 
 set -e
 set -C # noclobber
@@ -121,8 +121,6 @@ main() {
 		${WEST} update 
 		${WEST} config commands.allow_extensions true
 	fi
-
-	cd "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" || exit
 
 	if [ "${VIRTUAL_ENV}" ]; then
 		echo "-- Virtual environment already activated."
