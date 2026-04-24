@@ -14,7 +14,7 @@ applications included in this repository, specifically designed for TQ-developed
 __NOTE__: The versions provided are the ones with which the build system and its artifacts were tested.
 
 - Arm GNU Toolchain: arm-gnu-toolchain-13.3.rel1-[host system]-arm-none-eabi
-- NXP's [MCUXSDK-Manifest](https://github.com/nxp-mcuxpresso/mcuxsdk-manifests): v25.12.00
+- NXP's [MCUXSDK-Manifest](https://github.com/nxp-mcuxpresso/mcuxsdk-manifests): v26.03.00
 - CMake: v3.30.0^
 - West: v1.2.0^
 - Python: v3.10^

@@ -16,6 +16,7 @@ files in git the submodule for meta-tq (meta layers meta-tq and meta-dumpling).
 
 ### Changed
 
+* MCUXSDK: upgrade to v26.03.00
 * MCUXSDK: upgrade to v25.12.00
 * CI: split archiving from build
 * CI: do not depend on pandas
