@@ -137,9 +137,8 @@ main() {
 	# pip should be also there in .venv but not as ${PIP}
 	pip install -r "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/scripts/requirements.txt" -c "${PROJECT_PATH}/scripts/constraints.txt"
 
-	cd "${PROJECT_PATH}/scripts" || exit
-	if [ -f "requirements.txt" ]; then
-		pip install -r requirements.txt
+	if [ -f "${PROJECT_PATH}/scripts/requirements.txt" ]; then
+		pip install -r "${PROJECT_PATH}/scripts/requirements.txt"
 	else
 		echo "No requirements.txt found, skipping Python dependencies installation."
 		exit 1
