@@ -112,8 +112,6 @@ main() {
 		exit 1
 	fi
 
-	cd "${MCUXSDK_ROOT}" || exit
-
 	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" ]; then
 		echo "-- Directory ${MCUXSDK_DIR} already exists. Skipping clone."
 	else
