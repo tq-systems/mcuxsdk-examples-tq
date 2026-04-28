@@ -116,9 +116,10 @@ main() {
 		echo "-- Directory ${MCUXSDK_DIR} already exists. Skipping clone."
 	else
 		${WEST} init --local "${PROJECT_PATH}"
-		${WEST} update 
 		${WEST} config commands.allow_extensions true
 	fi
+
+	${WEST} update
 
 	if [ "${VIRTUAL_ENV}" ]; then
 		echo "-- Virtual environment already activated."
