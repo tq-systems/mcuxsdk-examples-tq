@@ -112,15 +112,14 @@ main() {
 		exit 1
 	fi
 
-	cd "${MCUXSDK_ROOT}" || exit
-
 	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" ]; then
 		echo "-- Directory ${MCUXSDK_DIR} already exists. Skipping clone."
 	else
 		${WEST} init --local "${PROJECT_PATH}"
-		${WEST} update 
 		${WEST} config commands.allow_extensions true
 	fi
+
+	${WEST} update
 
 	if [ "${VIRTUAL_ENV}" ]; then
 		echo "-- Virtual environment already activated."
@@ -137,9 +136,8 @@ main() {
 	# pip should be also there in .venv but not as ${PIP}
 	pip install -r "${MCUXSDK_ROOT}/${MCUXSDK_DIR}/scripts/requirements.txt" -c "${PROJECT_PATH}/scripts/constraints.txt"
 
-	cd "${PROJECT_PATH}/scripts" || exit
-	if [ -f "requirements.txt" ]; then
-		pip install -r requirements.txt
+	if [ -f "${PROJECT_PATH}/scripts/requirements.txt" ]; then
+		pip install -r "${PROJECT_PATH}/scripts/requirements.txt"
 	else
 		echo "No requirements.txt found, skipping Python dependencies installation."
 		exit 1
