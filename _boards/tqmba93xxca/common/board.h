@@ -1,14 +1,11 @@
 //*****************************************************************************
 /*!
- * \copyright
  * SPDX-License-Identifier: BSD-3-Clause
  *
- * \copyright
  * Copyright 2022 NXP
  * All rights reserved.
  *
- * \copyright
- * Copyright (c) 2025 TQ-Systems GmbH <oss@ew.tq-group.com>,
+ * Copyright (c) 2025-2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
  * D-82229 Seefeld, Germany.
  * Author: Isaac L. L. Yuki
  */
