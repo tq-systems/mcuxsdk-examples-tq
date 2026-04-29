@@ -101,7 +101,7 @@ __NOTE__: The versions provided are the ones with which the build system and its
 
 > [!NOTE]
 > Please refer, if existing, to the README of your board for further details on setting up the debugger.
-> Some boards may require special settings. The README should be placed under: `examples/README.md`.
+> Some boards may require special settings. The README should be placed under: `_boards/<board>/README.md`.
 
 ## Building
 
