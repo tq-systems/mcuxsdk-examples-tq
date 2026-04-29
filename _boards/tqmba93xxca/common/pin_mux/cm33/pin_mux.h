@@ -1,7 +1,13 @@
 /*
- * Copyright 2022 NXP
- *
  * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Copyright 2022 NXP
+ * All rights reserved.
+ *
+ * Copyright (c) 2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
+ * D-82229 Seefeld, Germany.
+ *
+ * Author: Markus Niebel
  */
 
 #ifndef _PIN_MUX_H_
@@ -37,7 +43,7 @@ void BOARD_InitBootPins(void);
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void BOARD_InitPins(void);                                 /*!< Function assigned for the core: undefined[cm33] */
+void BOARD_InitPins(void);
 
 #if defined(__cplusplus)
 }

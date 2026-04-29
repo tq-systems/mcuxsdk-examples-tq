@@ -20,4 +20,3 @@ void BOARD_InitHardware(void)
   BOARD_BootClockRUN();
   BOARD_InitDebugConsole();
 }
-/*${function:end}*/

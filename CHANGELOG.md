@@ -16,6 +16,12 @@ files in git the submodule for meta-tq (meta layers meta-tq and meta-dumpling).
 
 ### Changed
 
+* TQMa93xx: add and use board common pin_mux.c
+
+  A common file can be used when only debug UART is used.
+* TQMa93xx: cleanup board code
+
+  Remove unused I2C support code, remove outdated *.mex file
 * MCUXSDK: upgrade to v26.03.00
 * MCUXSDK: upgrade to v25.12.00
 * CI: split archiving from build
@@ -23,6 +29,7 @@ files in git the submodule for meta-tq (meta layers meta-tq and meta-dumpling).
 
 ### Fixed
 
+* TQMa93xx: use generic SDK linker files instead of local copy of old LPA demo linker file
 * CI: fix tar creation
 * CI: ensure to use .venv and error on failure
 * CI: ensure fail on errors

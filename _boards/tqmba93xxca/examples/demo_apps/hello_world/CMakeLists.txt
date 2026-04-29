@@ -14,11 +14,11 @@ project(hello_world LANGUAGES C CXX ASM PROJECT_BOARD_PORT_PATH ${board}/example
 message(STATUS "Project: ${PROJECT_NAME} for board: ${board}")
 
 include(${SdkRootDirPath}/CMakeLists.txt)
+
 mcux_add_source(
     BASE_PATH ${SdkRootDirPath}
     SOURCES examples/demo_apps/hello_world/hello_world.c
 )
-
 
 mcux_add_include(
     BASE_PATH ${CMAKE_CURRENT_LIST_DIR}

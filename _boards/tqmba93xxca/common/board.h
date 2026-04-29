@@ -168,19 +168,6 @@ extern "C"
 
   void BOARD_InitDebugConsole(void);
 
-#if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
-#error
-  status_t BOARD_LPI2C_Send(LPI2C_Type *base, uint8_t deviceAddress,
-                            uint32_t subAddress, uint8_t subaddressSize,
-                            uint8_t *txBuff, uint8_t txBuffSize,
-                            uint32_t flags);
-  status_t BOARD_LPI2C_Receive(LPI2C_Type *base, uint8_t deviceAddress,
-                               uint32_t subAddress, uint8_t subaddressSize,
-                               uint8_t *rxBuff, uint8_t rxBuffSize,
-                               uint32_t flags);
-
-#endif
-
 /* Mcore suspend setting */
 #define OSCPLL_LPM_START 3U
 #define OSCPLL_LPM_END 12U
