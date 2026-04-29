@@ -1,7 +1,7 @@
 <!--
 SPDX-License-Identifier: CC-BY-4.0
 
-Copyright (c) 2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
+Copyright (c) 2025-2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
 D-82229 Seefeld, Germany.
 -->
 
@@ -15,12 +15,10 @@ demonstrate the use of the UART and provide a simple project for debugging and f
 
 ## Building the Demo
 
-In order to build the example for this board use the following command:
+This command builds the Hello World example for Cortex-M33. The artefacts will be stored in the mcuxsdk-examples-tq/build folder.
 ```bash
 west build mcuxsdk-examples-tq/_boards/tqmba93xxca/examples/demo_apps/hello_world --board tqmba93xxca -Dcore_id=cm33 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
 ```
-
-The above command will build the Hello World example for Cortex-M33 and the output will be stored in the mcuxsdk-examples-tq/build folder.
 
 ## Running the Demo in U-Boot
 
@@ -62,7 +60,8 @@ The above command will build the Hello World example for Cortex-M33 and the outp
 4. Open two separate terminals.
 5. Start a GDB server in the first terminal:
    `JLinkGDBServerCLExe -device MIMX9332_M33 -if JTAG -speed 4000 -port 50000`
-   Note: On Windows, GDB server might need to be called via: `JLinkGDBServerCL.exe`.
+   Note: On Windows, use `JLinkGDBServerCL.exe` instead.
+   Depending on the module, the "-device" might be `MIMX9352_M33`
 6. In the other terminal, start GDB via CLI:
    `<path to arm-none-eabi-gdb(.exe)>/arm-none-eabi-gdb`
 7. In GDB, run:
