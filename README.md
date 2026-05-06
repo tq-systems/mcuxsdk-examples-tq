@@ -1,7 +1,8 @@
 # MCUXpresso SDK: TQ-Systems Board Support
 
-This guide contains instructions for configuring the build system, building targets, and executing the demonstration
-applications included in this repository, specifically designed for TQ-developed boards using the i.MX MCU family from NXP.
+This guide contains instructions for configuring the build system, building targets, and executing demo applications
+from this repository. The demos are adjusted to run on TQ-Systems GmbH starter kits. See this [list](#supported-boards)
+for supported hardware.
 
 ## Table of Contents
 
@@ -69,6 +70,10 @@ __NOTE__: The versions provided are the ones with which the build system and its
   out of scope of this documentation.
 - See the [NXP MCUXpresso SDK Documentation](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/introduction/README.html)
   for SDK documentation.
+- **Windows:** Please verify that the environment variable `ARMGCC_DIR` uses the short path format. The default installation path is
+  ´C:\Program Files (x86)\Arm\GNU Toolchain mingw-w64-i686-arm-none-eabi´, the short form is ´C:\PROGRA~2\Arm\GNUTOO~1´.
+  Not providing the environment variable `ARMGCC_DIR` in short form may lead to errors.
+
 
 ### Setting Up VS-Code
 
@@ -148,10 +153,6 @@ To begin debugging, either click on `start debugging` or press `F5`.
 > Please refer, if existing, to the README of your board for further details on setting up the debugger.
 > Some boards may require special settings. The README should be placed under: `examples/README.md`.
 
-## Applications
-
-The list of all applications can be found in the [board](./examples/README.md#applications) README file.
-
 ## Build System
 
 ### Structure
@@ -211,6 +212,16 @@ KConfig options provided in the `<board>/_common/Kconfig` file. You can choose b
 > You can set any `prj.conf` files inside an application folder to override the default `prj.conf` file of the board.
 
 For learning about NXP's API, the examples under `mcuxsdk/examples` can be helpful.
+
+## Supported Boards
+
+The list of demo applications can be found in the board specific documentation:
+
+* [TQMa117x](_boards/tqmba117xl/README.md)
+* [TQMa8MPxL](_boards/tqma8mpxl/README.md)
+* [TQMa8MPxS](_boards/tqma8mpxs/README.md)
+* [TQMa93xxCA](_boards/tqmba93xxca/README.md)
+* [TQMa93xxLA](_boards/tqmba93xxca/README.md)
 
 ## License
 

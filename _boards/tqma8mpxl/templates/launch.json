@@ -1,0 +1,40 @@
+{
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "app",
+            "description": "choose your app",
+            "options": [
+                "hello_world"
+            ]
+        }
+    ],
+    "configurations": [
+        {
+            "type": "cortex-debug",
+            "request": "launch",
+            "name": "Debug J-Link Ram",
+            "cwd": "${workspaceFolder}",
+            "servertype": "jlink",
+            "device": "MIMX8ML8_M7",
+            "interface": "jtag",
+            "runToEntryPoint": "main",
+            "executable": "${workspaceFolder}/../../../build/${input:app}_cm7.elf",
+            "serverpath": "C:/Program Files/SEGGER/JLink_V866/JLinkGDBServerCL.exe",
+            "gdbPath": "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/arm-none-eabi-gdb",
+            "serverArgs": [
+                "-endian",
+                "little",
+                "-LocalhostOnly",
+                "-speed",
+                "4000"
+            ],
+            "postLaunchCommands": [
+                "target remote localhost:50000",
+                "monitor reset",
+                "monitor halt",
+                "load"
+            ]
+        }
+    ]
+}
