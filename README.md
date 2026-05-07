@@ -1,3 +1,10 @@
+<!--
+SPDX-License-Identifier: CC-BY-4.0
+
+Copyright (c) 2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
+D-82229 Seefeld, Germany.
+-->
+
 # MCUXpresso SDK: TQ-Systems Board Support
 
 This guide contains instructions for configuring the build system, building targets, and executing demo applications
