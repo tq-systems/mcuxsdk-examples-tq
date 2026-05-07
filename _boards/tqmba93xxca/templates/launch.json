@@ -5,22 +5,24 @@
             "id": "app",
             "description": "choose your app",
             "options": [
+                "rpmsg_lite_pingpong_rtos_linux_remote"
                 "hello_world"
             ]
         }
     ],
     "configurations": [
         {
-            "showDevDebugOutput": "both",
             "type": "cortex-debug",
             "request": "launch",
-            "name": "Debug J-Link Ram - ${input:ModuleName}",
+            "name": "Debug J-Link",
             "cwd": "${workspaceFolder}",
             "servertype": "jlink",
-            "serialNumber": "50114986",
-            "device": "MIMX9352_M33",
+            "device": "MIMX9332_M33",
             "interface": "jtag",
-            "executable": "${workspaceFolder}\\build\\tqmba93xxca\\debug\\${input:app}_cm33.elf",
+            "runToEntryPoint": "main",
+            "executable": "${workspaceFolder}/../../../build/${input:app}_cm33.elf",
+            "serverpath": "C:/Program Files/SEGGER/JLink_V866/JLinkGDBServerCL.exe",
+            "gdbPath": "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/arm-none-eabi-gdb",
             "serverArgs": [
                 "-endian",
                 "little",
