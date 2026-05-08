@@ -20,7 +20,7 @@ In order to build the example for this board use the following command:
 west build mcuxsdk-examples-tq/_boards/tqma8mpxs/examples/demo_apps/hello_world --board tqma8mpxs -Dcore_id=cm7 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
 ```
 
-The above command will build the Hello World example for Cortex-M7 and the output will be in mcuxsdk-examples-tq/build folder.
+The above command will build the Hello World example for Cortex-M7 and the output will be stored in the mcuxsdk-examples-tq/build folder.
 
 ## Running the Demo
 

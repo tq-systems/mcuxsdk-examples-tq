@@ -12,20 +12,30 @@ D-82229 Seefeld, Germany.
 The RPMsg pingpong demo shows communication between the Cortex-A and Cortex-M core by sending a message back and forth for a set amount of times.
 It does not need any special hardware configurations.
 
+## Building the Demo
+
+In order to build the example for this board use the following command:
+```bash
+west build mcuxsdk-examples-tq/_boards/tqmba93xxca/examples/multicore_examples/rpmsg_lite_pingpong_rtos_linux/remote --board tqmba93xxca -Dcore_id=cm33 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
+```
+
+The above command will build the RPMSG example for Cortex-M33 and the output will be stored in the mcuxsdk-examples-tq/build folder.
+
 ## Running the Demo
 
-1. Power on the target board
-2. Select the correct device tree (`setenv fdtfile imx93-tqma9352-mba93xxca-rpmsg.dtb`)
-3. Boot to U-Boot and load the demo (e.g. via USB)
+1. Prepare the board as described [here](../../../../README.md#board-preparartion)
+2. Power on the target board
+3. Select the correct device tree (`setenv fdtfile imx93-tqma9352-mba93xxca-rpmsg.dtb`)
+4. Boot to U-Boot and load the demo (e.g. via USB)
     ```
     => load usb 0:1 ${loadaddr} /rpmsg_lite_pingpong_rtos_linux_remote.bin
     => cp.b ${loadaddr} 0x201e0000 ${filesize}
     => bootaux 0x1ffe0000 0
     ```
-4. Append `clk-imx93.mcore_booted=1` to the `bootargs` environment variable.
+5. Append `clk-imx93.mcore_booted=1` to the `bootargs` environment variable.
    `setenv bootargs '${bootargs} clk-imx93.mcore_booted=1'`
-5. Boot to Linux.
-6. After login, make sure `imx_rpmsg_pingpong` kernel module is inserted (`lsmod`) or insert it (`modprobe imx_rpmsg_pingpong`).
+6. Boot to Linux.
+7. After login, make sure `imx_rpmsg_pingpong` kernel module is inserted (`lsmod`) or insert it (`modprobe imx_rpmsg_pingpong`).
 
 ## Demo Output
 
