@@ -225,21 +225,10 @@ The list of demo applications can be found in the board specific documentation:
 
 ## License
 
-Except where otherwise noted, all files within this repository are licensed under the following terms, excluding
-auto-generated files:
+For license information [see license documentation](./LICENSE.md).
 
-SPDX-License-Identifier: BSD-3-Clause
-
-All documentation is licensed under
-SPDX-License-Identifier: CC-BY-4.0 OR BSD-3-Clause
-
-License Text see
-[BSD-3-Clause](./LICENSE.md)
-[CC-BY-4.0 (Creative Commons Attribution 4.0 International Public License)](./COPYING.CC-BY-4.0).
-
-Copyright (c) 2025 TQ-Systems GmbH <oss@ew.tq-group.com>,  
+Copyright (c) 2025-2026 TQ-Systems GmbH <oss@ew.tq-group.com>,  
 D-82229 Seefeld, Germany.
-Author: Isaac L. L. Yuki
 
 ## Support Wiki
 
