@@ -14,10 +14,13 @@ files in git the submodule for meta-tq (meta layers meta-tq and meta-dumpling).
 
 ### Added
 
+* TQMa93xx: add RPMSG demo
 * Initial board support for TQMa8MPxS on MB-SMARC-2
 * Initial board support for TQMa8MPxL on MBa8MPxL
 
 ### Changed
+
+* TQMa93xx: add debugger configuration and templates
 
 * TQMa93xx: add and use board common pin_mux.c
 

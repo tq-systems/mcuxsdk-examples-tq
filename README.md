@@ -1,3 +1,10 @@
+<!--
+SPDX-License-Identifier: CC-BY-4.0
+
+Copyright (c) 2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
+D-82229 Seefeld, Germany.
+-->
+
 # MCUXpresso SDK: TQ-Systems Board Support
 
 This guide contains instructions for configuring the build system, building targets, and executing demo applications
@@ -101,7 +108,7 @@ __NOTE__: The versions provided are the ones with which the build system and its
 
 > [!NOTE]
 > Please refer, if existing, to the README of your board for further details on setting up the debugger.
-> Some boards may require special settings. The README should be placed under: `examples/README.md`.
+> Some boards may require special settings. The README should be placed under: `_boards/<board>/README.md`.
 
 ## Building
 
@@ -225,21 +232,10 @@ The list of demo applications can be found in the board specific documentation:
 
 ## License
 
-Except where otherwise noted, all files within this repository are licensed under the following terms, excluding
-auto-generated files:
+For license information [see license documentation](./LICENSE.md).
 
-SPDX-License-Identifier: BSD-3-Clause
-
-All documentation is licensed under
-SPDX-License-Identifier: CC-BY-4.0 OR BSD-3-Clause
-
-License Text see
-[BSD-3-Clause](./LICENSE.md)
-[CC-BY-4.0 (Creative Commons Attribution 4.0 International Public License)](./COPYING.CC-BY-4.0).
-
-Copyright (c) 2025 TQ-Systems GmbH <oss@ew.tq-group.com>,  
+Copyright (c) 2025-2026 TQ-Systems GmbH <oss@ew.tq-group.com>,  
 D-82229 Seefeld, Germany.
-Author: Isaac L. L. Yuki
 
 ## Support Wiki
 
