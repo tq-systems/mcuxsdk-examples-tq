@@ -62,5 +62,5 @@ west build _boards/tqmba93xxca/<app_location> --board tqmba93xxca \
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
 |  [Hello World](examples/demo_apps/hello_world/README.md)                                         |  Hello World demo, to make sure everything has been set up correctly      |
 |  [RPMSG Ping Pong](examples/multicore_examples/rpmsg_lite_pingpong_rtos_linux/remote/README.md)  |  Demonstrates inter-core communication between Cortex-A55 and Cortex-M33  |
-
-
+|  [RGPIO Input Interrupt Demo](examples/driver_examples/rgpio/input_interrupt/README.md)          |  Uses the Cortex-M33 to detect edges at a GPIO pin                        |
+|  [RGPIO LED Output Demo](examples/driver_examples/rgpio/input_interrupt/README.md)               |  Uses the Cortex-M33 to toggle a GPIO pin periodically                    |

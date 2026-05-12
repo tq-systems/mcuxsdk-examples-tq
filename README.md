@@ -78,7 +78,7 @@ __NOTE__: The versions provided are the ones with which the build system and its
 - See the [NXP MCUXpresso SDK Documentation](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/introduction/README.html)
   for SDK documentation.
 - **Windows:** Please verify that the environment variable `ARMGCC_DIR` uses the short path format. The default installation path is
-  ´C:\Program Files (x86)\Arm\GNU Toolchain mingw-w64-i686-arm-none-eabi´, the short form is ´C:\PROGRA~2\Arm\GNUTOO~1´.
+  `C:\Program Files (x86)\Arm\GNU Toolchain mingw-w64-i686-arm-none-eabi`, the short form is `C:\PROGRA~2\Arm\GNUTOO~1`.
   Not providing the environment variable `ARMGCC_DIR` in short form may lead to errors.
 
 
