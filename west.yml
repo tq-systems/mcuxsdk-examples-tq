@@ -13,7 +13,7 @@ manifest:
     - name: mcuxsdk-manifests
       west-commands: scripts/west_commands.yml
       remote: nxp-mcuxpresso
-      revision: v26.03.00
+      revision: v26.06.00-LTS
       path: mcuxpresso-sdk
       import:
       - submanifests/base.yml
@@ -25,8 +25,9 @@ manifest:
       - submanifests/rtos/rtos.yml
 
   group-filter:
-    - -optional
-    - -bifrost
-    - -ble_cs_algo_private
-    - -bluetooth_private
-    - -fw_v19_nb
+  - -optional
+  - -bifrost
+  - -ble_cs_algo_private
+  - -ble_cs_algo-restricted_private
+  - -bluetooth_private
+  - -fw_v19_nb
