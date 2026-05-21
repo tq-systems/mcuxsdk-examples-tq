@@ -5,6 +5,7 @@
             "id": "app",
             "description": "choose your app",
             "options": [
+                "ethosu_apps_rpmsg",
                 "hello_world",
                 "rgpio_input_interrupt",
                 "rgpio_led_output",
