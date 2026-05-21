@@ -19,7 +19,7 @@
             "name": "Debug J-Link",
             "cwd": "${workspaceFolder}",
             "servertype": "jlink",
-            "device": "MIMX9332_M33",
+            "device": "MIMX9352_M33",
             "interface": "jtag",
             "runToEntryPoint": "main",
             "executable": "${workspaceFolder}/../../../build/${input:app}_cm33.elf",
