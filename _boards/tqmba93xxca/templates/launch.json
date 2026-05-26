@@ -5,10 +5,10 @@
             "id": "app",
             "description": "choose your app",
             "options": [
+                "hello_world",
+                "rgpio_input_interrupt",
+                "rgpio_led_output",
                 "rpmsg_lite_pingpong_rtos_linux_remote"
-                "hello_world"
-                "rgpio_input_interrupt"
-                "rgpio_led_output"
             ]
         }
     ],
