@@ -5,10 +5,11 @@
             "id": "app",
             "description": "choose your app",
             "options": [
+                "ethosu_apps_rpmsg",
+                "hello_world",
+                "rgpio_input_interrupt",
+                "rgpio_led_output",
                 "rpmsg_lite_pingpong_rtos_linux_remote"
-                "hello_world"
-                "rgpio_input_interrupt"
-                "rgpio_led_output"
             ]
         }
     ],
@@ -19,7 +20,7 @@
             "name": "Debug J-Link",
             "cwd": "${workspaceFolder}",
             "servertype": "jlink",
-            "device": "MIMX9332_M33",
+            "device": "MIMX9352_M33",
             "interface": "jtag",
             "runToEntryPoint": "main",
             "executable": "${workspaceFolder}/../../../build/${input:app}_cm33.elf",

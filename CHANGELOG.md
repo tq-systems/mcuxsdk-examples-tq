@@ -14,6 +14,7 @@ files in git the submodule for meta-tq (meta layers meta-tq and meta-dumpling).
 
 ### Added
 
+* TQMa93xx: NPU firmware
 * TQMa93xx: add RGPIO input / output demos
 * TQMa93xx: add RPMSG demo
 * Initial board support for TQMa8MPxS on MB-SMARC-2
