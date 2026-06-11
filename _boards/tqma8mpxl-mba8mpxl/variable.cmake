@@ -7,7 +7,7 @@
 # Author: Markus Niebel
 #
 
-mcux_set_variable(board tqma8mpxl)
+mcux_set_variable(board tqma8mpxl-mba8mpxl)
 
 if (NOT DEFINED device)
     mcux_set_variable(device MIMX8ML8)

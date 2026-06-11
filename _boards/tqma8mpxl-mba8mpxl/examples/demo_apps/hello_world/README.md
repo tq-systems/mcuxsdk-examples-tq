@@ -17,7 +17,7 @@ demonstrate the use of the UART and provide a simple project for debugging and f
 
 In order to build the example for this board use the following command:
 ```bash
-west build mcuxsdk-examples-tq/_boards/tqma8mpxl/examples/demo_apps/hello_world --board tqma8mpxl -Dcore_id=cm7 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
+west build mcuxsdk-examples-tq/_boards/tqma8mpxl-mba8mpxl/examples/demo_apps/hello_world --board tqma8mpxl-mba8mpxl -Dcore_id=cm7 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
 ```
 
 The above command will build the Hello World example for Cortex-M7 and the output will be stored in the mcuxsdk-examples-tq/build folder.

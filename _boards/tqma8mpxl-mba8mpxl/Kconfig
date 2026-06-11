@@ -9,7 +9,7 @@
 
 rsource "../_common/Kconfig"
 
-config MCUX_HW_BOARD_tqma8mpxl
+config MCUX_HW_BOARD_tqma8mpxl-mba8mpxl
     bool
     default y
     imply MCUX_HW_DEVICE_MIMX8ML8
