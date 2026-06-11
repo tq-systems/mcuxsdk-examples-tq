@@ -16,7 +16,7 @@ It does not need any special hardware configurations.
 
 This command builds the RPMSG Lite Pingpong example for Cortex-M33. The artefacts will be stored in the mcuxsdk-examples-tq/build folder.
 ```bash
-west build mcuxsdk-examples-tq/_boards/tqmba93xxca/examples/multicore_examples/rpmsg_lite_pingpong_rtos_linux/remote --board tqmba93xxca -Dcore_id=cm33 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
+west build mcuxsdk-examples-tq/_boards/tqma93xxca-mba93xxca/examples/multicore_examples/rpmsg_lite_pingpong_rtos_linux/remote --board tqma93xxca-mba93xxca -Dcore_id=cm33 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
 ```
 
 ## Running the Demo

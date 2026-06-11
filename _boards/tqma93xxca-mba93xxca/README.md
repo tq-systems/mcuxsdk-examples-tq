@@ -50,7 +50,7 @@ requirements. Further information can be found in the documentation directory.
 In order to build a demo for TQMa93xxXX use the following command:
 
 ```bash
-west build _boards/tqmba93xxca/<app_location> --board tqmba93xxca \
+west build _boards/tqma93xxca-mba93xxca/<app_location> --board tqma93xxca-mba93xxca \
 -Dcore_id=cm33 --build-dir build \
 -DCUSTOM_BOARD_ROOT="<workspace>/mcuxsdk-examples-tq/_boards" \
 --config=<configuration> --pristine

@@ -5,19 +5,23 @@ Copyright (c) 2025-2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
 D-82229 Seefeld, Germany. 
 -->
 
-# RGPIO LED Output Demo
+# RGPIO Input Interrupt Demo
 
 ## Overview
-The LED_Output demo will toggle pin X1:25 (GPIO2_IO0) on MBa93xxCA. After starting the demo the pin will toggle periodically between high and low.
+This demo will make use of the Cortex-M33 to detect falling edges on pin X1:27 (GPIO2_IO0) on MBa93xxCA. When detecting a falling edge, a message will be printed on the terminal of the M7.
 
 ## Preface
 Software on Cortex-A must not use the GPIO2 bank. Running the demo will occupy the GPIO2 bank, which might cause unexpected errors, if the system tries to use GPIO2 simultaneously.
 
+GPIO2:0 (X1:27) is used as interrupt source.
+Edges at this pin are generated when connecting / disconnecting with X1:2 (3.3V)
+As X1:27 (GPIO2_IO0) is configured as InterruptFallingEdge, the pin should be held high via pull-up to register a falling edge.
+
 ## Building the Demo
 
-This command builds the RGPIO LED Output example for Cortex-M33. The artefacts will be stored in the mcuxsdk-examples-tq/build folder.
+This command builds the RGPIO Input Interrupt example for Cortex-M33. The artefacts will be stored in the mcuxsdk-examples-tq/build folder.
 ```bash
-west build mcuxsdk-examples-tq/_boards/tqmba93xxca/examples/driver_examples/rgpio/led_output --board tqmba93xxca -Dcore_id=cm33 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
+west build mcuxsdk-examples-tq/_boards/tqma93xxca-mba93xxca/examples/driver_examples/rgpio/input_interrupt --board tqma93xxca-mba93xxca -Dcore_id=cm33 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
 ```
 
 ## Running the Demo in U-Boot
@@ -27,7 +31,7 @@ west build mcuxsdk-examples-tq/_boards/tqmba93xxca/examples/driver_examples/rgpi
 3. Select the correct device tree (`setenv fdtfile imx93-tqma9352-mba93xxca-rpmsg.dtb`)
 4. Load the demo (e.g. via USB)
     ```
-    => load usb 0:1 ${loadaddr} /rgpio_led_output_cm33.bin
+    => load usb 0:1 ${loadaddr} /rgpio_input_interrupt_cm33.bin
     => cp.b ${loadaddr} 0x201e0000 ${filesize}
     => bootaux 0x1ffe0000 0
     ```
@@ -38,10 +42,10 @@ west build mcuxsdk-examples-tq/_boards/tqmba93xxca/examples/driver_examples/rgpi
 2. Power on the target board and halt in U-Boot
 3. Select the correct device tree (`setenv fdtfile imx93-tqma9352-mba93xxca-rpmsg.dtb`)
 4. Boot Linux. Verify that the correct device tree is used by checking if `/sys/class/remoteproc/remoteproc0/` exists
-5. Load the built `rgpio_led_output_cm33.elf` into `/lib/firmware`
+5. Load the built `rgpio_input_interrupt_cm33.elf` into `/lib/firmware`
 6. Adjust the content of `/sys/class/remoteproc/remoteproc0/firmware` to the name of the demo file:
 7. ```
-   echo rgpio_led_output_cm33.elf > /sys/class/remoteproc/remoteproc0/firmware
+   echo rgpio_input_interrupt_cm33.elf > /sys/class/remoteproc/remoteproc0/firmware
    ```
 8. Start the Demo:
    ```
@@ -81,9 +85,9 @@ When the example runs successfully, the following message is displayed in the te
 ```
  RGPIO Driver example
 
- The LED is taking turns to shine.
-
+ Press X1:27 (GPIO2_IO0)
+ X1:27 (GPIO2_IO0) is pressed
+ ...
 ```
 
-Since no LED is connected to the RGPIO, please use an oscilloscope probe on the pin to check the output.
-The output will toggle periodically between high and low.
+When creating an interrupt by connecting the X1:27 pin to X1:02 (3.3V) and then releasing it, the demo logs each detected falling edge.

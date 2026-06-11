@@ -7,7 +7,7 @@
 # Author: Markus Niebel
 #
 
-mcux_set_variable(board tqmba93xxca)
+mcux_set_variable(board tqma93xxca-mba93xxca)
 
 if (NOT DEFINED device)
     mcux_set_variable(device MIMX9352)
