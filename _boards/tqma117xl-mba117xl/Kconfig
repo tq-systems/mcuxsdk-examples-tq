@@ -10,7 +10,7 @@
 rsource "${core_id}/Kconfig"
 rsource "../_common/Kconfig"
 
-config MCUX_HW_BOARD_tqmba117xl
+config MCUX_HW_BOARD_tqma117xl-mba117xl
     bool
     default y
     imply MCUX_HW_DEVICE_MIMXRT1176

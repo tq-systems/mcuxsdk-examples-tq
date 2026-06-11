@@ -13,7 +13,7 @@
  */
 //*****************************************************************************
 
-#include "tqmba117xl_flexspi_nor_config.h"
+#include "tqma117xl-mba117xl_flexspi_nor_config.h"
 
 /* Component ID definition, used by tools. */
 #ifndef FSL_COMPONENT_ID

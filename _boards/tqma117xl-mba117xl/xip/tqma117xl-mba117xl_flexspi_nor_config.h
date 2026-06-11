@@ -14,8 +14,8 @@
  */
 //*****************************************************************************
 
-#ifndef __tqmba117xl_FLEXSPI_NOR_CONFIG__
-#define __tqmba117xl_FLEXSPI_NOR_CONFIG__
+#ifndef __tqma117xl_FLEXSPI_NOR_CONFIG__
+#define __tqma117xl_FLEXSPI_NOR_CONFIG__
 
 #include "fsl_common.h"
 #include <stdbool.h>
@@ -326,4 +326,4 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
-#endif /* __tqmba117xl_FLEXSPI_NOR_CONFIG__ */
+#endif /* __tqma117xl_FLEXSPI_NOR_CONFIG__ */

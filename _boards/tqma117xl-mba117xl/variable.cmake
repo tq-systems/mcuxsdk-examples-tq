@@ -5,7 +5,7 @@
 # Author: Isaac Lucas de Lima Yuki
 #
 
-mcux_set_variable(board tqmba117xl)
+mcux_set_variable(board tqma117xl-mba117xl)
 
 if (NOT DEFINED device)
     mcux_set_variable(device MIMXRT1176)

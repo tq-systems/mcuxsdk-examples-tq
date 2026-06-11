@@ -6,7 +6,7 @@
 
 ## Overview
 
-This README provides a comprehensive guide for using the MBa117xL board with the TQMBa1176L module using the M4-Cortex
+This README provides a comprehensive guide for using the MBa117xL board with the TQMa1176L module using the M4-Cortex
 and the M7-Cortex. It includes several demo applications that showcase the capabilities of the board and the MCUXpresso
 SDK software. The demos range from simple sanity checks like the "Hello World" demo to more complex demonstrations.
 
@@ -24,7 +24,7 @@ SDK software. The demos range from simple sanity checks like the "Hello World" d
 | Personal Computer  | Required for programming and interacting with the board.                              | -             |
 | Power Supply       | A power supply with a voltage of 24V is required to power the board.                  | X13           |
 
-Please note that these requirements are specific to the MBa117xL board using the TQMBa1176L module. Always refer to the
+Please note that these requirements are specific to the MBa117xL board using the TQMa1176L module. Always refer to the
 specific READMEs of the demo you are running for any additional hardware requirements.
 
 ## Serial Port Configuration

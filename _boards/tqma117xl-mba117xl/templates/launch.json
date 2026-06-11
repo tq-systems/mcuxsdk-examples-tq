@@ -20,7 +20,7 @@
       "serialNumber": "50114986",
       "device": "MIMXRT1176xxxA_M7",
       "interface": "jtag",
-      "executable": "${workspaceFolder}\\build\\tqmba117xl\\debug\\${input:app}_cm7.elf",
+      "executable": "${workspaceFolder}\\build\\tqma117xl-mba117xl\\debug\\${input:app}_cm7.elf",
       "serverArgs": [
         "-endian",
         "little",
@@ -45,7 +45,7 @@
       "serialNumber": "50114986",
       "device": "MIMXRT1176xxxA_M7",
       "interface": "jtag",
-      "executable": "${workspaceFolder}\\build\\tqmba117xl\\flexspi_nor_debug\\${input:app}_cm7.elf",
+      "executable": "${workspaceFolder}\\build\\tqma117xl-mba117xl\\flexspi_nor_debug\\${input:app}_cm7.elf",
       "serverArgs": [
         "-endian",
         "little",
@@ -69,7 +69,7 @@
       "serialNumber": "50114986",
       "device": "MIMXRT1176xxxA_M7",
       "interface": "jtag",
-      "executable": "${workspaceFolder}\\build\\tqmba117xl\\flexspi_nor_sdram_debug\\${input:app}_cm7.elf",
+      "executable": "${workspaceFolder}\\build\\tqma117xl-mba117xl\\flexspi_nor_sdram_debug\\${input:app}_cm7.elf",
       "serverArgs": [
         "-endian",
         "little",
@@ -93,7 +93,7 @@
       "serialNumber": "50114986",
       "device": "MIMXRT1176xxxA_M7",
       "interface": "jtag",
-      "executable": "${workspaceFolder}\\build\\tqmba117xl\\debug\\${input:app}_cm7.elf",
+      "executable": "${workspaceFolder}\\build\\tqma117xl-mba117xl\\debug\\${input:app}_cm7.elf",
       "serverArgs": [
         "-endian",
         "little",
