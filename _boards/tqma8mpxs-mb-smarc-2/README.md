@@ -46,7 +46,7 @@ board and the MCUXpresso SDK software.
 In order to build the example for this board use the following command:
 
 ```bash
-west build mcuxsdk-examples-tq/_boards/tqma8mpxs/<app_location> --board tqma8mpxs -Dcore_id=cm7 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
+west build mcuxsdk-examples-tq/_boards/tqma8mpxs-mb-smarc-2/<app_location> --board tqma8mpxs-mb-smarc-2 -Dcore_id=cm7 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
 ```
 
 ## Demos

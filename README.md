@@ -226,7 +226,7 @@ The list of demo applications can be found in the board specific documentation:
 
 * [TQMa117x](_boards/tqmba117xl/README.md)
 * [TQMa8MPxL](_boards/tqma8mpxl/README.md)
-* [TQMa8MPxS](_boards/tqma8mpxs/README.md)
+* [TQMa8MPxS](_boards/tqma8mpxs-mb-smarc-2/README.md)
 * [TQMa93xxCA](_boards/tqma93xxca-mba93xxca/README.md)
 * [TQMa93xxLA](_boards/tqma93xxca-mba93xxca/README.md)
 
