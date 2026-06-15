@@ -1,0 +1,116 @@
+{
+  "inputs": [
+    {
+      "type": "pickString",
+      "id": "app",
+      "description": "choose your app",
+      "options": [
+        "hello_world",
+      ]
+    }
+  ],
+  "configurations": [
+    {
+      "showDevDebugOutput": "both",
+      "type": "cortex-debug",
+      "request": "launch",
+      "name": "Load into ram",
+      "cwd": "${workspaceFolder}",
+      "servertype": "jlink",
+      "serialNumber": "50114986",
+      "device": "MIMXRT1176xxxA_M7",
+      "interface": "jtag",
+      "executable": "${workspaceFolder}\\build\\tqma117xl-mba117xl\\debug\\${input:app}_cm7.elf",
+      "serverArgs": [
+        "-endian",
+        "little",
+        "-LocalhostOnly",
+        "-speed",
+        "4000"
+      ],
+      "postLaunchCommands": [
+        "target remote localhost:50000",
+        "monitor reset",
+        "monitor halt",
+        "load"
+      ]
+    },
+    {
+      "showDevDebugOutput": "both",
+      "type": "cortex-debug",
+      "request": "launch",
+      "name": "Flash into nor-flash",
+      "cwd": "${workspaceFolder}",
+      "servertype": "jlink",
+      "serialNumber": "50114986",
+      "device": "MIMXRT1176xxxA_M7",
+      "interface": "jtag",
+      "executable": "${workspaceFolder}\\build\\tqma117xl-mba117xl\\flexspi_nor_debug\\${input:app}_cm7.elf",
+      "serverArgs": [
+        "-endian",
+        "little",
+        "-LocalhostOnly",
+        "-speed",
+        "4000",
+        "-device",
+        "MIMXRT1176xxxA_M7?BankAddr=0x30000000&Loader=nCS@AD18_CLK@AD19_D0@AD20_D1@AD21_D2@AD22_D3@AD23&BankAddr=0x60000000&Loader=nCS@SDB100_CLK@SDB101_D0@SDB102_D1@SDB103_D2@SDB104_D3@SDB105"
+      ],
+      "postLaunchCommands": [
+        "monitor reset"
+      ]
+    },
+    {
+      "showDevDebugOutput": "both",
+      "type": "cortex-debug",
+      "request": "launch",
+      "name": "Flash image using SRAM into nor-flash",
+      "cwd": "${workspaceFolder}",
+      "servertype": "jlink",
+      "serialNumber": "50114986",
+      "device": "MIMXRT1176xxxA_M7",
+      "interface": "jtag",
+      "executable": "${workspaceFolder}\\build\\tqma117xl-mba117xl\\flexspi_nor_sdram_debug\\${input:app}_cm7.elf",
+      "serverArgs": [
+        "-endian",
+        "little",
+        "-LocalhostOnly",
+        "-speed",
+        "4000",
+        "-device",
+        "MIMXRT1176xxxA_M7?BankAddr=0x30000000&Loader=nCS@AD18_CLK@AD19_D0@AD20_D1@AD21_D2@AD22_D3@AD23&BankAddr=0x60000000&Loader=nCS@SDB100_CLK@SDB101_D0@SDB102_D1@SDB103_D2@SDB104_D3@SDB105"
+      ],
+      "postLaunchCommands": [
+        "monitor reset"
+      ]
+    },
+    {
+      "showDevDebugOutput": "both",
+      "type": "cortex-debug",
+      "request": "launch",
+      "name": "Erase nor-flash",
+      "cwd": "${workspaceFolder}",
+      "servertype": "jlink",
+      "serialNumber": "50114986",
+      "device": "MIMXRT1176xxxA_M7",
+      "interface": "jtag",
+      "executable": "${workspaceFolder}\\build\\tqma117xl-mba117xl\\debug\\${input:app}_cm7.elf",
+      "serverArgs": [
+        "-endian",
+        "little",
+        "-LocalhostOnly",
+        "-speed",
+        "4000",
+        "-device",
+        "MIMXRT1176xxxA_M7?BankAddr=0x30000000&Loader=nCS@AD18_CLK@AD19_D0@AD20_D1@AD21_D2@AD22_D3@AD23&BankAddr=0x60000000&Loader=nCS@SDB100_CLK@SDB101_D0@SDB102_D1@SDB103_D2@SDB104_D3@SDB105"
+      ],
+      "postLaunchCommands": [
+        "monitor reset",
+        "monitor halt",
+        "monitor exec EnableEraseAllFlashBanks",
+        "monitor flash erase",
+        "monitor reset",
+        "monitor halt"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "app",
+            "description": "choose your app",
+            "options": [
+                "hello_world"
+            ]
+        }
+    ],
+    "configurations": [
+        {
+            "showDevDebugOutput": "both",
+            "type": "cortex-debug",
+            "request": "launch",
+            "name": "Debug J-Link Ram - ${input:ModuleName}",
+            "cwd": "${workspaceFolder}",
+            "servertype": "jlink",
+            "serialNumber": "50114986",
+            "device": "MIMX8ML_M7",
+            "interface": "jtag",
+            "executable": "${workspaceFolder}\\build\\tqma8mpxs-mb-smarc-2\\debug\\${input:app}_cm7.elf",
+            "serverArgs": [
+                "-endian",
+                "little",
+                "-LocalhostOnly",
+                "-speed",
+                "4000"
+            ],
+            "postLaunchCommands": [
+                "target remote localhost:50000",
+                "monitor reset",
+                "monitor halt",
+                "load"
+            ]
+        }
+    ]
+}

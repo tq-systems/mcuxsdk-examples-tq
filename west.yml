@@ -11,6 +11,7 @@ manifest:
 
   projects:
     - name: mcuxsdk-manifests
+      west-commands: scripts/west_commands.yml
       remote: nxp-mcuxpresso
       revision: v26.03.00
       path: mcuxpresso-sdk
