@@ -1,7 +1,7 @@
 <!-- 
 SPDX-License-Identifier: CC-BY-4.0 OR BSD-3-Clause
  
-Copyright 2025 TQ-Systems GmbH <oss@ew.tq-group.com>,
+Copyright (c) 2025-2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
 D-82229 Seefeld, Germany. 
 -->
 
