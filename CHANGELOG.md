@@ -22,6 +22,14 @@ files in git the submodule for meta-tq (meta layers meta-tq and meta-dumpling).
 
 ### Changed
 
+* treewide: change board names
+
+  Change the boardnames to be in sync with names used in Linux-BSP, board Wiki etc.
+  * tqmba93xxca -> tqma93xxca-mba93xxca
+  * tqma8mpxs -> tqma8mpxs-mb-smarc-2
+  * tqma8mpxl -> tqma8mpxl-mba8mpxl
+  * tqmba117xl -> tqma117xl-mba117x
+
 * TQMa93xx: add debugger configuration and templates
 
 * TQMa93xx: add and use board common pin_mux.c
