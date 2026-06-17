@@ -11,4 +11,5 @@ Board Templates
 This folder contains templates for setting up VS-Code in order to debug.
 This file contains a launch.json with pre-configured settings for debugging the targets available on this board.
 
-You have to copy the *.json-files to the .vscode folder in your workspace.
+You have to copy the *.json-files to the .vscode folder in your workspace and adjust to your installation and
+host system.
