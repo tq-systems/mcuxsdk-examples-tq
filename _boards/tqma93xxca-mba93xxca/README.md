@@ -65,3 +65,7 @@ west build _boards/tqma93xxca-mba93xxca/<app_location> --board tqma93xxca-mba93x
 |  [RPMSG Ping Pong](examples/multicore_examples/rpmsg_lite_pingpong_rtos_linux/remote/README.md)  |  Demonstrates inter-core communication between Cortex-A55 and Cortex-M33  |
 |  [RGPIO Input Interrupt Demo](examples/driver_examples/rgpio/input_interrupt/README.md)          |  Uses the Cortex-M33 to detect edges at a GPIO pin                        |
 |  [RGPIO LED Output Demo](examples/driver_examples/rgpio/input_interrupt/README.md)               |  Uses the Cortex-M33 to toggle a GPIO pin periodically                    |
+
+## Support Wiki
+
+See [TQ Embedded Wiki for TQMa93xxCA](https://support.tq-group.com/en/arm/tqma93xxca) and  [TQ Embedded Wiki for TQMa93xxLA](https://support.tq-group.com/en/arm/tqma93xxla)

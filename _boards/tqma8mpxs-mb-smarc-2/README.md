@@ -60,3 +60,7 @@ purpose, how to prepare for the demo, and what to expect when running the demo.
 
 For debugging, hardware modifications on the SoM are needed. Debugging is currently not supported by
 default. Please contact TQ-Systems support.
+
+## Support Wiki
+
+See [TQ Embedded Wiki for TQMa8MPxS](https://support.tq-group.com/en/arm/tqma8mpxs)

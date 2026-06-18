@@ -195,3 +195,7 @@ This guide describes how to manually program the `fuse 0x9A0` to "1" using the N
 |  Demo                                                                                            |  Description                                                              |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
 |  [Hello World](examples/demo_apps/hello_world/README.md)                                         |  Hello World demo, to make sure everything has been set up correctly      |
+
+## Support Wiki
+
+See [TQ Embedded Wiki for TQMa117xL](https://support.tq-group.com/en/arm/tqma117xl)
