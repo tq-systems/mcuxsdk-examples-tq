@@ -22,6 +22,8 @@ files in git the submodule for meta-tq (meta layers meta-tq and meta-dumpling).
 
 ### Changed
 
+* MCUXSDK: upgrade to v26.06-LTS
+
 * treewide: change board names
 
   Change the boardnames to be in sync with names used in Linux-BSP, board Wiki etc.
