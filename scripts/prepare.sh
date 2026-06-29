@@ -17,11 +17,8 @@ function error_abort () {
 	echo "error at $1"
 }
 
-readonly CONFIG_FILE="$(dirname "$(readlink -f "$0")")/.config"
 readonly PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
 readonly MCUXSDK_DIR="mcuxsdk"
-
-. "${CONFIG_FILE}"
 
 # Script for Automating the Build Process
 main() {

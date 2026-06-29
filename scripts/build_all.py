@@ -9,7 +9,6 @@
 """
 Converted from the Bash script and extended:
 
-  - Sources ./.config → loads KEY=VALUE pairs into os.environ
   - Collects all *variable.cmake* files under ../_boards
   - Uses **CMake itself** to evaluate each variable.cmake and retrieve the
     value of the `board` variable (robust against syntax changes)
@@ -36,7 +35,6 @@ import argparse
 # ------------------------------------------------------------
 
 CWD = Path.cwd()
-CONFIG_PATH = Path(__file__).with_name(".config")
 
 # Regex that tolerates indentation and optional space after "(".
 BOARD_REGEX = re.compile(r"""^\s*mcux_set_variable\(\s*board\s+([^\s\)]+)""")
@@ -154,10 +152,6 @@ def build_all(board:list[Board], build_root: Path, general_build_types: list):
                                 return -1
     return 0
 
-# ------------------------------------------------------------
-# 3.  “source ./.config”  →  import environment variables
-# ------------------------------------------------------------
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MCUXSDK Build Script")
     parser.add_argument("--mcuxsdk_root", type=str, help="Path to MCUXSDK root directory")
@@ -167,19 +161,6 @@ if __name__ == "__main__":
     parser.add_argument("--generator", type=str, help="choose build generator e.g. Ninja, Unix Makefiles", default="Ninja")
     parser.add_argument("--board", type=str, help="Specify one board to build, if not set all boards will be built", default="all")
     args = parser.parse_args()
-
-    if CONFIG_PATH.is_file():
-        pattern = re.compile(r"""^\s*([^=\s#]+)\s*=\s*(.+?)\s*$""")
-        with CONFIG_PATH.open() as fh:
-            for line in fh:
-                if line.strip().startswith("#") or "=" not in line:
-                    continue
-                m = pattern.match(line)
-                if m:
-                    key, value = m.groups()
-                    os.environ.setdefault(key, strip_quotes(value))
-    else:
-        print("Warning: ./.config not found – continuing with current env", file=sys.stderr)
 
     if args.build_root is not None:
         build_root = strip_quotes(args.build_root)
@@ -195,7 +176,7 @@ if __name__ == "__main__":
     else:
             mcux_root = strip_quotes(os.environ.get("MCUXSDK_ROOT", ""))
             if mcux_root is None:
-                sys.exit("Error: MCUXSDK_ROOT is not set (expected in .config or exported).")
+                sys.exit("Error: MCUXSDK_ROOT is not set")
 
     if args.general_build_types is not None:
         general_build_types = args.general_build_types
