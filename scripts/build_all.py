@@ -158,12 +158,13 @@ def main():
     parser = argparse.ArgumentParser(description="MCUXSDK Build Script")
     parser.add_argument("--mcuxsdk_root", type=str, help="Path to MCUXSDK root directory")
     parser.add_argument("--build_root", type=str, help="Path to build output directory")
-    parser.add_argument("--general_build_types", nargs='*', default="all",
-                        help="List of general build types to use (default: debug, options: debug, release, all)")
+    parser.add_argument("--build_types", nargs='*', default="all",
+                        help="List of build types to use (default: all, options: debug, release, all)")
     parser.add_argument("--generator", type=str, help="choose build generator e.g. Ninja, Unix Makefiles", default="Ninja")
     parser.add_argument("--board", type=str, help="Specify one board to build, if not set all boards will be built", default="all")
     args = parser.parse_args()
     board_root = None
+    build_types = None
 
     if args.build_root is not None:
         build_root = strip_quotes(args.build_root)
@@ -175,16 +176,14 @@ def main():
     else:
         sys.exit("Error: --mcuxsdk_root is missing.")
 
-    if args.general_build_types is not None:
-        general_build_types = args.general_build_types
+    if args.build_types == "all":
+        build_types = ["debug", "release"]
+    elif args.build_types == "debug":
+        build_types = ["debug"]
+    elif args.build_types == "release":
+        build_types = ["release"]
     else:
-        general_build_types = "all"
-    if general_build_types == "all":
-        general_build_types = ["debug", "release"]
-    elif general_build_types == "debug":
-        general_build_types = ["debug"]
-    else:
-        general_build_type = ["release"]
+        sys.exit("Error: --build_types is not valid.")
 
     if args.generator is not None:
         generator = strip_quotes(args.generator)
@@ -266,7 +265,7 @@ def main():
 # 7. Build all boards
 # ------------------------------------------------------------
 
-    build_result = build_loop(boards, build_root, board_root, generator, general_build_types)
+    build_result = build_loop(boards, build_root, board_root, generator, build_types)
 
 # ------------------------------------------------------------
 # 6.  Combine and save / show diagnostics
