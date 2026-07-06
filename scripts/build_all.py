@@ -165,18 +165,12 @@ if __name__ == "__main__":
     if args.build_root is not None:
         build_root = strip_quotes(args.build_root)
     else:
-        build_root = strip_quotes(os.environ.get("BUILD_ROOT", ""))
-        if build_root is None:
-            if "scripts" not in CWD.parts:
-                build_root = CWD / "build"
-            else:
-                build_root = CWD / ".." / "build"
+        sys.exit("Error: --build_root is missing.")
+
     if args.mcuxsdk_root is not None:
         mcux_root =  strip_quotes(args.mcuxsdk_root)
     else:
-            mcux_root = strip_quotes(os.environ.get("MCUXSDK_ROOT", ""))
-            if mcux_root is None:
-                sys.exit("Error: MCUXSDK_ROOT is not set")
+        sys.exit("Error: --mcuxsdk_root is missing.")
 
     if args.general_build_types is not None:
         general_build_types = args.general_build_types
