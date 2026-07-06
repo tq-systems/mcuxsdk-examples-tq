@@ -17,13 +17,15 @@ function error_abort () {
 	echo "error at $1"
 }
 
-readonly SCRIPT="$(basename "${0}")"
-readonly PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
-readonly SCRIPT_PATH=$(dirname "$(readlink -f "${0}")")
+SCRIPT="$(basename "${0}")"
+PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
+SCRIPT_PATH="$(dirname "$(readlink -f "${0}")")"
+readonly SCRIPT
+readonly PROJECT_PATH
+readonly SCRIPT_PATH
 readonly MCUXSDK_DIR="mcuxsdk"
 
 main() {
-	local gitrev
 	local BOARD=all
 	local BUILD_DIR=build
 

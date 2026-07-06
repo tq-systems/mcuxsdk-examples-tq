@@ -17,7 +17,8 @@ function error_abort () {
 	echo "error at $1"
 }
 
-readonly PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
+PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
+readonly PROJECT_PATH
 readonly MCUXSDK_DIR="mcuxsdk"
 
 # Script for Automating the Build Process
