@@ -16,7 +16,7 @@ import_sdk_and_compile:
   stage: build
   before_script:
     - echo "Importing and patching SDK"
-    - scripts/prepare.sh
+    - scripts/prepare.sh --force
   script:
     - echo "Building targets"
     - scripts/build.sh --build-dir "${BUILD_DIR}"

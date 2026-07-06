@@ -17,20 +17,59 @@ function error_abort () {
 	echo "error at $1"
 }
 
+SCRIPT="$(basename "${0}")"
 PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
+readonly SCRIPT
 readonly PROJECT_PATH
 readonly MCUXSDK_DIR="mcuxsdk"
 
+function usage () {
+	cat <<- END
+	Usage:
+
+	${SCRIPT} [--force] [--help|-h]
+
+	This script prepares the workspace for the MCUXSDK examples for TQ-Systems GmbH boards
+
+	Options:
+	  --force          force creation of .venv for SDK usage, not to be called from inside a .venv
+	  --help, -h       Show this help message
+	END
+}
+
 # Script for Automating the Build Process
 main() {
-	echo "-- Starting MCUXSDK setup..."
-
 	# Ensure this script is run from the project directory
 	if [ -z "${MCUXSDK_ROOT}" ]; then
 		MCUXSDK_ROOT="${PROJECT_PATH}/.."
 		echo "-- MCUXSDK_ROOT is set to default: ${MCUXSDK_ROOT}"
 	fi
 
+	# Parse command-line options
+	while test $# -gt 0; do
+		case $1 in
+			--force )
+				if [ "${VIRTUAL_ENV}" ]; then
+					echo "Error: called with '--force' inside virtual env"
+					exit 1
+				else
+					rm -rf "${MCUXSDK_ROOT}/.venv"
+				fi
+				shift
+				;;
+			--help | -h )
+				usage
+				exit 0
+				;;
+			* )
+				echo "Unrecognized option: $1" >&2
+				usage
+				exit 1
+				;;
+		esac
+	done
+
+	echo "-- Starting MCUXSDK setup..."
 
 	if [ -n "${WEST}" ]; then
 		echo "-- WEST is defined as: ${WEST}"
