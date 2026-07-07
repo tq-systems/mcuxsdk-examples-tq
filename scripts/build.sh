@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2025 TQ-Systems GmbH <oss@ew.tq-group.com>,
 # D-82229 Seefeld, Germany.
-# Author:    Isaac L. L. Yuki
+# Author:    Isaac Lucas de Lima Yuki
 #
 # Description: Script for setting up the build system and building targets.
 # ******************************************************************************

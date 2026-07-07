@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 #
 # Copyright (C) 2025 TQ-Systems GmbH
-# Author: Isaac L. L. Yuki
+# Author: Isaac Lucas de Lima Yuki
 #
 # Description: Create per-subdirectory archives from a given build directory.
 #              Each archive contains:
