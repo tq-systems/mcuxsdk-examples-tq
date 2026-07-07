@@ -195,6 +195,7 @@ This guide describes how to manually program the `fuse 0x9A0` to "1" using the N
 |  Demo                                                                                            |  Description                                                              |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
 |  [Hello World](examples/demo_apps/hello_world/README.md)                                         |  Hello World demo, to make sure everything has been set up correctly      |
+|  [LED Blinky](examples/demo_apps/led_blinky/README.md)                                           |  Uses the Cortex-M7 to toggle a Green Led on GPIO pin periodically        |
 
 ## Support Wiki
 

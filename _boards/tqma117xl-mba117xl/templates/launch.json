@@ -5,7 +5,8 @@
       "id": "app",
       "description": "choose your app",
       "options": [
-        "hello_world"
+        "hello_world",
+        "led_blinky"
       ]
     }
   ],
