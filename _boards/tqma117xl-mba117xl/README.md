@@ -66,7 +66,7 @@ Available build configurations are:
 |  flexspi_nor_release        |  Speed- and size-optimized build for NOR Flash (XIP possible). Data, Heap, and Stack are allocated in internal SRAM                     |
 |  flexspi_nor_sdram_release  |  Speed- and size-optimized build for NOR Flash (XIP possible). Data, Heap, and Stack are offloaded to external SDRAM                    |
 
-## Running and Debugging a Demo 
+## Running and Debugging a Demo
 
 1. Prepare the board as described [here](./README.md#board-preparation)
 2. Power on the target board
