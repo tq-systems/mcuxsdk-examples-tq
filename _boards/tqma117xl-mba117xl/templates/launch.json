@@ -5,10 +5,12 @@
       "id": "app",
       "description": "choose your app",
       "options": [
+        "canfd_flexcan_ping_pong_buffer_transfer",
+        "flexspi_nor_polling_transfer",
+        "external_rtc",
         "hello_world",
         "led_blinky",
-        "rtc",
-        "external_rtc"
+        "rtc"        
       ]
     }
   ],
