@@ -101,56 +101,56 @@ def strip_quotes(s: str):
         return s[1:-1]
     return s
 
-def get_board_name(var_file: Path) -> str:
+def get_board_name(file: Path) -> str:
     """Extract board name from *variable.cmake* using BOARD_REGEX.
 
     Returns a list because, in theory, a file might define several boards.
     """
 
-    for line in var_file.read_text().splitlines():
+    for line in file.read_text().splitlines():
         m = BOARD_REGEX.match(line)
         if m:
             return m.group(1)
     return None
 
-def build_loop(boardlist:list[Board],
-               build_root: Path,
+def build_loop(targets:list[Board],
+               workdir: Path,
                boarddir: Path,
                generator: str,
-               general_build_types: list):
+               build_configs: list):
     """
     Build all boards with their examples and cores.
     This function is called at the end of the script.
     """
-    for board in boards:
-        for core in board.supported_cores:
-            for example in board.supported_examples:
-                for build_type in example["build_configuration"]:
-                    for mode in general_build_types:
-                        if mode in build_type:
-                            build_type = f'{build_type}'
-                            build_example_dir = Path(build_root) / str(board.name) / f"{example['path'].name}_{core}" / str(build_type)
-                            build_example_dir.mkdir(parents=True, exist_ok=True)
+    for target in targets:
+        for core in target.supported_cores:
+            for example in target.supported_examples:
+                for build_configuration in example["build_configuration"]:
+                    for config in build_configs:
+                        if config in build_configuration:
+                            config = f'{config}'
+                            example_workdir = Path(workdir) / str(target.name) / f"{example['path'].name}_{core}" / str(config)
+                            example_workdir.mkdir(parents=True, exist_ok=True)
 
                             res = subprocess.run(
                                 [
                                     "west", "build",
                                     "--pristine",
-                                    "--board", board.name,
+                                    "--board", target.name,
                                     str(example["path"]),
-                                    "--build-dir", str(build_example_dir),
+                                    "--build-dir", str(example_workdir),
                                     f"-DCUSTOM_BOARD_ROOT={boarddir}",
                                     f"-Dcore_id={core}",
-                                    f"--config={build_type}",
+                                    f"--config={config}",
                                     f"-G{generator}",
                                 ],
                                 text=True,
                             )
 
                             if res.returncode == 0:
-                                print(f"[BUILD_PROCESS] ✅  Build successful for {build_example_dir}")
+                                print(f"[BUILD_PROCESS] ✅  Build successful for {example_workdir}")
                             else:
-                                print(f"[BUILD_PROCESS] ❌ Build **failed** for {build_example_dir}")
+                                print(f"[BUILD_PROCESS] ❌ Build **failed** for {example_workdir}")
                                 return -1
     return 0
 
