@@ -266,7 +266,6 @@ def main():
 # 7. Build all boards
 # ------------------------------------------------------------
 
-    build_example_dir = None
     build_result = build_loop(boards, build_root, board_root, generator, general_build_types)
 
 # ------------------------------------------------------------
