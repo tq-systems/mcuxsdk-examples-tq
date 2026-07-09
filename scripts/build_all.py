@@ -24,11 +24,9 @@ import os
 import re
 import sys
 import subprocess
-import yaml
-from typing import List
-import io
 from pathlib import Path
 import argparse
+import yaml
 
 # ------------------------------------------------------------
 # 0.  Definitions
