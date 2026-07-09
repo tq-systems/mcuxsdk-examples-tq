@@ -4,6 +4,7 @@ stages:
   - build
 
 variables:
+  ARMGCC_DIR: /opt/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi
   PROJECT_NAME: mcuxsdk-examples-tq
   BUILD_DIR: ./build
   ARTIFACTS_DIR: ./artifacts
