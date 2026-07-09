@@ -9,19 +9,19 @@ D-82229 Seefeld, Germany.
 
 ## Overview
 
-This README provides a comprehensive guide for using the MBa117xL board with the TQMa1176L module using the M4-Cortex
-and the M7-Cortex. It includes several demo applications that showcase the capabilities of the board and the MCUXpresso
+This README provides a comprehensive guide for using the MBa117xL board with the TQMa1176L module using the Cortex-M7
+and the Cortex-M4. It includes several demo applications that showcase the capabilities of the board and the MCUXpresso
 SDK software. The demos range from simple sanity checks like the "Hello World" demo to more complex demonstrations.
 
 ## Software Requirements
 
-- MCUXpresso [Secure Provisioning Tool](https://www.nxp.com/design/design-center/software/development-software/mcuxpresso-software-and-tools-/mcuxpresso-secure-provisioning-tool:MCUXPRESSO-SECURE-PROVISIONING#downloads),used for writing a demo to the SPI flash.
+- MCUXpresso [Secure Provisioning Tool](https://www.nxp.com/design/design-center/software/development-software/mcuxpresso-software-and-tools-/mcuxpresso-secure-provisioning-tool:MCUXPRESSO-SECURE-PROVISIONING#downloads), used for writing a demo to the SPI flash.
 
 ## Hardware Requirements
 
 | Hardware           | Description                                                                           | Pin Reference |
 | ------------------ | ------------------------------------------------------------------------------------- | ------------- |
-| Micro USB cable    | Required for connecting the board to your computer for programming and communication. | X1            |
+| Micro USB Cable    | Required for connecting the board to your computer for programming and communication. | X1            |
 | J-Link Debug Probe | Used for debugging and programming the board.                                         | X48           |
 | Personal Computer  | Required for programming and interacting with the board.                              | -             |
 | Power Supply       | A power supply with a voltage of 24V is required to power the board.                  | X13           |
@@ -195,7 +195,7 @@ This guide describes how to manually program the `fuse 0x9A0` to "1" using the N
 |  Demo                                                                                            |  Description                                                              |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
 |  [Hello World](examples/demo_apps/hello_world/README.md)                                         |  Hello World demo, to make sure everything has been set up correctly      |
-|  [LED Blinky](examples/demo_apps/led_blinky/README.md)                                           |  Uses the Cortex-M7 to toggle a Green Led on GPIO pin periodically        |
+|  [LED Blinky](examples/demo_apps/led_blinky/README.md)                                           |  Uses the Cortex-M7 to toggle a green LED on a GPIO pin periodically      |
 
 ## Support Wiki
 
