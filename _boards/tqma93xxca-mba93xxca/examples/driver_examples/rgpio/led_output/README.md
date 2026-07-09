@@ -8,7 +8,7 @@ D-82229 Seefeld, Germany.
 # RGPIO LED Output Demo
 
 ## Overview
-The LED_Output demo will toggle pin X1:25 (GPIO2_IO0) on MBa93xxCA. After starting the demo the pin will toggle periodically between high and low.
+The LED_Output demo will toggle pin X1:27 (GPIO2_IO0) on MBa93xxCA. After starting the demo the pin will toggle periodically between high and low.
 
 ## Preface
 Software on Cortex-A must not use the GPIO2 bank. Running the demo will occupy the GPIO2 bank, which might cause unexpected errors, if the system tries to use GPIO2 simultaneously.
