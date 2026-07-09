@@ -189,12 +189,12 @@ def main():
     if args.generator is not None:
         generator = strip_quotes(args.generator)
     else:
-        generator = "Ninja"
+        sys.exit("Error: --generator is missing.")
 
     if args.board is not None or not args.board == "all":
         board = args.board
     else:
-        board = None
+        sys.exit("Error: --board is missing.")
 
 # ------------------------------------------------------------
 # 4.  Locate every variable.cmake and grab the board name via CMake
