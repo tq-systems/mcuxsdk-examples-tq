@@ -47,8 +47,8 @@ class Board:
     def __init__(self, name: str, path: Path):
         self.name = name
         self.path = path
-        self.supportedCores: list[str] = []
-        self.supportedExamples: list[dict] = []
+        self.supported_cores: list[str] = []
+        self.supported_examples: list[dict] = []
         self.load_from_yaml()
         self.find_examples()
 
@@ -64,12 +64,12 @@ class Board:
                 for core in cores:
                     if isinstance(core, dict) and "id" in core and "support" in core:
                         if core.get("support", True):
-                            self.supportedCores.append(core.get("core_id", core["id"]))
+                            self.supported_cores.append(core.get("core_id", core["id"]))
                     else:
                         print(f"Warning: Invalid core definition in {yaml_file}", file=sys.stderr)
 
     def find_examples(self):
-        """Populate *supportedExamples* with dirs containing `prj.conf`."""
+        """Populate *supported_examples* with dirs containing `prj.conf`."""
         examples_dir = self.path / "examples"
         if examples_dir.is_dir():
             for prj_file in examples_dir.glob("**/prj.conf"):
@@ -83,7 +83,7 @@ class Board:
                         if isinstance(build_type, list) and build_type:
                             example_dict["path"] = prj_file.parent
                             example_dict["build_configuration"] = build_type
-                            self.supportedExamples.append(example_dict)
+                            self.supported_examples.append(example_dict)
 
     # ---------------------- dunders ---------------------- #
     def __repr__(self):
@@ -119,8 +119,8 @@ def build_all(board:list[Board], build_root: Path, general_build_types: list):
     This function is called at the end of the script.
     """
     for board in boards:
-        for core in board.supportedCores:
-            for example in board.supportedExamples:
+        for core in board.supported_cores:
+            for example in board.supported_examples:
                 for build_type in example["build_configuration"]:
                     for mode in general_build_types:
                         if mode in build_type:
@@ -229,7 +229,7 @@ if __name__ == "__main__":
 # ------------------------------------------------------------
     print(f"\nBoards found ({len(boards)}): {' '.join(b.name for b in boards)}")
 
-    example_dirs = [e for b in boards for e in b.supportedExamples]
+    example_dirs = [e for b in boards for e in b.supported_examples]
     print(f"Examples with prj.conf found ({len(example_dirs)}):")
     for ex in example_dirs:
         print(f"  {ex}")
