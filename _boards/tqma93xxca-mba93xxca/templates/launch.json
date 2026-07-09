@@ -5,7 +5,9 @@
             "id": "app",
             "description": "choose your app",
             "options": [
+                "canfd_flexcan_ping_pong_buffer_transfer",
                 "ethosu_apps_rpmsg",
+                "flexcan_ping_pong_buffer_transfer",
                 "hello_world",
                 "rgpio_input_interrupt",
                 "rgpio_led_output",

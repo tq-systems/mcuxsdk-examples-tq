@@ -18,10 +18,12 @@ board and the MCUXpresso SDK software. The demos range from simple sanity checks
 
 | Hardware                      | Description                                                                           | Pin Reference |
 | ----------------------------- | ------------------------------------------------------------------------------------- | ------------- |
-| Micro USB cable               | Required for connecting the board to your computer for programming and communication. | X22           |
+| CAN2                          | CAN2 connector to connect to CAN bus. (Used in CAN Ping Pong Demo)                    | X9            |
 | J-Link Debug Probe (optional) | Used for debugging and programming the board.                                         | X20           |
+| Micro USB cable               | Required for connecting the board to your computer for programming and communication. | X22           |
 | Personal Computer             | Required for programming and interacting with the board.                              | -             |
 | Power Supply                  | A power supply with a voltage of 24V is required to power the board.                  | X23, X24      |
+
 
 Please note that these requirements are specific to the MBa9xxx board using the TQMa93xxXX module.
 Always refer to the specific READMEs of the demo you are running for any additional hardware
@@ -60,11 +62,13 @@ west build _boards/tqma93xxca-mba93xxca/<app_location> --board tqma93xxca-mba93x
 
 |  Demo                                                                                            |  Description                                                              |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
-|  [NPU Firmware](examples/eiq_examples/ethosu/ethosu_apps_rpmsg/README.md )                       |  NPU firmware, needed for NXP ETHOSU driver and software stack            |
+|  [CANFD Ping Pong](examples/driver_examples/flexcan/canfd_ping_pong_buffer_transfer/README.md)   |  Demonstrate CANFD messages ping pong between two boards over CAN bus.    |
+|  [FlexCAN Ping Pong](examples/driver_examples/flexcan/ping_pong_buffer_transfer/README.md)       |  Demonstrate CAN messages ping pong between two boards over CAN bus.      |
 |  [Hello World](examples/demo_apps/hello_world/README.md)                                         |  Hello World demo, to make sure everything has been set up correctly      |
-|  [RPMSG Ping Pong](examples/multicore_examples/rpmsg_lite_pingpong_rtos_linux/remote/README.md)  |  Demonstrates inter-core communication between Cortex-A55 and Cortex-M33  |
+|  [NPU Firmware](examples/eiq_examples/ethosu/ethosu_apps_rpmsg/README.md )                       |  NPU firmware, needed for NXP ETHOSU driver and software stack            |
 |  [RGPIO Input Interrupt Demo](examples/driver_examples/rgpio/input_interrupt/README.md)          |  Uses the Cortex-M33 to detect edges at a GPIO pin                        |
 |  [RGPIO LED Output Demo](examples/driver_examples/rgpio/input_interrupt/README.md)               |  Uses the Cortex-M33 to toggle a GPIO pin periodically                    |
+|  [RPMSG Ping Pong](examples/multicore_examples/rpmsg_lite_pingpong_rtos_linux/remote/README.md)  |  Demonstrates inter-core communication between Cortex-A55 and Cortex-M33  |
 
 ## Support Wiki
 
