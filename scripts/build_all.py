@@ -106,7 +106,7 @@ def get_board_name(var_file: Path) -> str:
 
     Returns a list because, in theory, a file might define several boards.
     """
-    name: str = ""
+
     for line in var_file.read_text().splitlines():
         m = BOARD_REGEX.match(line)
         if m:
