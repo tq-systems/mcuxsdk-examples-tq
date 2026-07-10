@@ -6,7 +6,8 @@
       "description": "choose your app",
       "options": [
         "hello_world",
-        "led_blinky"
+        "led_blinky",
+        "rtc"
       ]
     }
   ],

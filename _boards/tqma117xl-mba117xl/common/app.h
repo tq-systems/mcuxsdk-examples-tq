@@ -15,6 +15,16 @@
 #define _APP_H_
 
 /*******************************************************************************
+ * SNVS RTC defines
+ ******************************************************************************/
+
+/* The RTC is in the Secure Non-Volatile Storage (SNVS) domain */
+
+#define kCLOCK_SnvsHp0          kCLOCK_SnvsHp
+#define EXAMPLE_SNVS_IRQn       SNVS_HP_NON_TZ_IRQn
+#define EXAMPLE_SNVS_IRQHandler SNVS_HP_NON_TZ_IRQHandler
+
+/*******************************************************************************
  * Prototypes
  ******************************************************************************/
 
