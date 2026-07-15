@@ -54,6 +54,7 @@ function main () {
 	local PREFERRED_TAG=""
 	local IS_GIT_TAG="0"
 	local GITHEAD=""
+	local GITREV=""
 	local VERIFY="1"
 	local STAMP="git-unknown"
 
@@ -82,45 +83,48 @@ function main () {
 
 	# set positional arguments in their proper place
 	eval set -- "$pos_params"
+	if [ -n "${1}" ]; then
+		GITREV="${1}"
+	fi
 
 	# commit hash for head
 	GITHEAD="$(git rev-parse --verify HEAD)"
 
-	if [ -n "${1}" ]; then
+	if [ -n "${GITREV}" ]; then
 		local PREFERRED_HEAD_COMMIT=""
 		local PREFERRED_TAG_COMMIT=""
 		local PREFERRED_REV=""
 
-		PREFERRED_REV="$(git rev-parse --verify "$1" 2>/dev/null || true)"
+		PREFERRED_REV="$(git rev-parse --verify "${GITREV}" 2>/dev/null || true)"
 		# the supplied parameter is not a git object
 		if [ -z "${PREFERRED_REV}" ]; then
-			error_exit "$1 is not a git object"
+			error_exit "${GITREV} is not a git object"
 		fi
 
 		# check if given parameter denotes a tag
-		PREFERRED_TAG_COMMIT="$( (git show-ref --tags --dereference "${1}" 2>/dev/null || true) | awk 'END { print $1 }')"
+		PREFERRED_TAG_COMMIT="$( (git show-ref --tags --dereference "${GITREV}" 2>/dev/null || true) | awk 'END { print $1 }')"
 		# check if given parameter denotes a head
-		PREFERRED_HEAD_COMMIT="$( (git show-ref --heads --dereference "${1}" 2>/dev/null || true) | awk 'END { print $1 }')"
+		PREFERRED_HEAD_COMMIT="$( (git show-ref --heads --dereference "${GITREV}" 2>/dev/null || true) | awk 'END { print $1 }')"
 
 		if [ -n "${PREFERRED_TAG_COMMIT}" ]; then
 			if [ "${VERIFY}" -ne "0" ] && [ "${PREFERRED_TAG_COMMIT}" != "${GITHEAD}" ]; then
-				error_exit "tag $1 is not at HEAD"
+				error_exit "tag ${GITREV} is not at HEAD"
 			fi
-			PREFERRED_TAG="$1"
+			PREFERRED_TAG="${GITREV}"
 			GITHEAD="${PREFERRED_TAG_COMMIT}"
 			# <last reachable tag>-<commits since>-g<12 cipher short hash>
 			GIT_DESCRIPTION=$(git describe --abbrev=12 "${PREFERRED_TAG}" 2>/dev/null || true)
 		elif [ -n "${PREFERRED_HEAD_COMMIT}" ]; then
 			if [ "${VERIFY}" -ne "0" ] && [ "${PREFERRED_HEAD_COMMIT}" != "${GITHEAD}" ]; then
-				error_exit "head $1 is not at HEAD"
+				error_exit "head ${GITREV} is not at HEAD"
 			fi
-			PREFERRED_HEAD="$1"
+			PREFERRED_HEAD="${GITREV}"
 			GITHEAD="${PREFERRED_HEAD_COMMIT}"
 			# <last reachable tag>-<commits since>-g<12 cipher short hash>
 			GIT_DESCRIPTION=$(git describe --abbrev=12 "${PREFERRED_HEAD}" 2>/dev/null || true)
 		else
 			if [ "${VERIFY}" -ne "0" ] && [ "${PREFERRED_REV}" != "${GITHEAD}" ]; then
-				error_exit "commit $1 is not at HEAD"
+				error_exit "commit ${GITREV} is not at HEAD"
 			fi
 			# <last reachable tag>-<commits since>-g<12 cipher short hash>
 			GIT_DESCRIPTION=$(git describe --abbrev=12 "${PREFERRED_REV}" 2>/dev/null || true)
