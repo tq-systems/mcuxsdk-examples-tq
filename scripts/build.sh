@@ -17,6 +17,11 @@ function error_abort () {
 	echo "error at $1"
 }
 
+function error_exit () {
+	echo "ERROR: $1" >&2
+	exit 1
+}
+
 SCRIPT="$(basename "${0}")"
 PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
 SCRIPT_PATH="$(dirname "$(readlink -f "${0}")")"
@@ -47,9 +52,8 @@ main() {
 				exit 0
 				;;
 			-* | * )
-				echo "Unrecognized option: $1" >&2
 				usage
-				exit 1
+				error_exit "Unrecognized option: $1"
 				;;
 		esac
 	done
@@ -65,8 +69,7 @@ main() {
 	else
 		WEST=$(which west) || true
 		if [ -z "${WEST}" ] || ! ${WEST} --version > /dev/null 2>&1; then
-			echo "Error: 'west' command not found or not working. Please install west and ensure it is in your PATH."
-			exit 1
+			error_exit "'west' command not found or not working. Please install west and ensure it is in your PATH."
 		fi
 	fi
 
@@ -77,8 +80,7 @@ main() {
 		echo "-- Ninja is set as default Generator"
 		NINJA=$(which ninja) || true
 		if [ -z "${NINJA}" ] || ! ${NINJA} --version > /dev/null 2>&1; then
-			echo "Error: Ninja is not installed or not found in PATH."
-			exit 1
+			error_exit "Ninja is not installed or not found in PATH."
 		fi
 	fi
 
@@ -87,12 +89,10 @@ main() {
 		if [ -x "${ARMGCC_DIR}/bin/arm-none-eabi-gcc" ]; then
 			echo "-- ARM GCC toolchain found at: ${ARMGCC_DIR}/bin/arm-none-eabi-gcc"
 		else
-			echo "Error: ARM GCC toolchain not found at ${ARMGCC_DIR}/bin/arm-none-eabi-gcc."
-			exit 1
+			error_exit "ARM GCC toolchain not found at ${ARMGCC_DIR}/bin/arm-none-eabi-gcc."
 		fi
 	else
-		echo "Error: ARMGCC_DIR is not defined. Please set the path to your ARM GCC toolchain."
-		exit 1
+		error_exit "ARMGCC_DIR is not defined. Please set the path to your ARM GCC toolchain."
 	fi
 
 	echo "-- Starting Build Setup..."
@@ -110,8 +110,7 @@ main() {
 		source "${MCUXSDK_ROOT}/.venv/bin/activate"
 		echo "$VIRTUAL_ENV"
 	else
-		echo "Error: no venv found."
-		exit 1
+		error_exit "no venv found."
 	fi
 
 	echo "-- Virtual environment created and activated."
