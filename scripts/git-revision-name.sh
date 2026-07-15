@@ -19,6 +19,11 @@ function error_abort () {
 	echo "error at $1" >&2
 }
 
+function error_exit () {
+	echo "ERROR: $1" >&2
+	exit 1
+}
+
 # Internal variables and initializations.
 readonly SCRIPTNAME="${0}"
 
@@ -65,8 +70,8 @@ function main () {
 			shift
 			;;
 		--*=|-*) # unsupported flags
-			error_out "Error: Unsupported flag $1"
-			exit 1
+			usage
+			error_exit "Unsupported flag $1"
 			;;
 		*) # preserve positional arguments
 			pos_params="$pos_params $1"
@@ -89,8 +94,7 @@ function main () {
 		PREFERRED_REV="$(git rev-parse --verify "$1" 2>/dev/null || true)"
 		# the supplied parameter is not a git object
 		if [ -z "${PREFERRED_REV}" ]; then
-			echo "error: $1 is not a git object" >&2
-			return 255
+			error_exit "$1 is not a git object"
 		fi
 
 		# check if given parameter denotes a tag
@@ -100,8 +104,7 @@ function main () {
 
 		if [ -n "${PREFERRED_TAG_COMMIT}" ]; then
 			if [ "${VERIFY}" -ne "0" ] && [ "${PREFERRED_TAG_COMMIT}" != "${GITHEAD}" ]; then
-				echo "error: tag $1 is not at HEAD" >&2
-				return 255
+				error_exit "tag $1 is not at HEAD"
 			fi
 			PREFERRED_TAG="$1"
 			GITHEAD="${PREFERRED_TAG_COMMIT}"
@@ -109,8 +112,7 @@ function main () {
 			GIT_DESCRIPTION=$(git describe --abbrev=12 "${PREFERRED_TAG}" 2>/dev/null || true)
 		elif [ -n "${PREFERRED_HEAD_COMMIT}" ]; then
 			if [ "${VERIFY}" -ne "0" ] && [ "${PREFERRED_HEAD_COMMIT}" != "${GITHEAD}" ]; then
-				echo "error: head $1 is not at HEAD" >&2
-				return 255
+				error_exit "head $1 is not at HEAD"
 			fi
 			PREFERRED_HEAD="$1"
 			GITHEAD="${PREFERRED_HEAD_COMMIT}"
@@ -118,8 +120,7 @@ function main () {
 			GIT_DESCRIPTION=$(git describe --abbrev=12 "${PREFERRED_HEAD}" 2>/dev/null || true)
 		else
 			if [ "${VERIFY}" -ne "0" ] && [ "${PREFERRED_REV}" != "${GITHEAD}" ]; then
-				echo "error: commit $1 is not at HEAD" >&2
-				return 255
+				error_exit "commit $1 is not at HEAD"
 			fi
 			# <last reachable tag>-<commits since>-g<12 cipher short hash>
 			GIT_DESCRIPTION=$(git describe --abbrev=12 "${PREFERRED_REV}" 2>/dev/null || true)
