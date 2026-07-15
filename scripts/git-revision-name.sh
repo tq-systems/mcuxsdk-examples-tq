@@ -90,6 +90,15 @@ function main () {
 	# commit hash for head
 	GITHEAD="$(git rev-parse --verify HEAD)"
 
+	# if an optional revision was given, check if it is
+	# - a valid git object
+	# - a tag or
+	# - a branch or
+	# - a commit
+	# If not --no-verify given, check if this is equal to the checked out revision
+	# if no parameter given, assume checked out head.
+	# prepare tp determine the pretty version string on that base using PREFERRED_HEAD
+	# and GIT_DESCRIPTION
 	if [ -n "${GITREV}" ]; then
 		local PREFERRED_HEAD_COMMIT=""
 		local PREFERRED_TAG_COMMIT=""
