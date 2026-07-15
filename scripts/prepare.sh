@@ -17,27 +17,69 @@ function error_abort () {
 	echo "error at $1"
 }
 
-readonly PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
+function error_exit () {
+	echo "ERROR: $1" >&2
+	exit 1
+}
+
+SCRIPT="$(basename "${0}")"
+PROJECT_PATH="$(dirname "$(readlink -f "$0")")/.."
+readonly SCRIPT
+readonly PROJECT_PATH
 readonly MCUXSDK_DIR="mcuxsdk"
+
+function usage () {
+	cat <<- END
+	Usage:
+
+	${SCRIPT} [--force] [--help|-h]
+
+	This script prepares the workspace for the MCUXSDK examples for TQ-Systems GmbH boards
+
+	Options:
+	  --force          force creation of .venv for SDK usage, not to be called from inside a .venv
+	  --help, -h       Show this help message
+	END
+}
 
 # Script for Automating the Build Process
 main() {
-	echo "-- Starting MCUXSDK setup..."
-
 	# Ensure this script is run from the project directory
 	if [ -z "${MCUXSDK_ROOT}" ]; then
 		MCUXSDK_ROOT="${PROJECT_PATH}/.."
 		echo "-- MCUXSDK_ROOT is set to default: ${MCUXSDK_ROOT}"
 	fi
 
+	# Parse command-line options
+	while test $# -gt 0; do
+		case $1 in
+			--force )
+				if [ "${VIRTUAL_ENV}" ]; then
+					error_exit "called with '--force' inside virtual env"
+				else
+					rm -rf "${MCUXSDK_ROOT}/.venv"
+				fi
+				shift
+				;;
+			--help | -h )
+				usage
+				exit 0
+				;;
+			* )
+				usage
+				error_exit "Unrecognized option: $1"
+				;;
+		esac
+	done
+
+	echo "-- Starting MCUXSDK setup..."
 
 	if [ -n "${WEST}" ]; then
 		echo "-- WEST is defined as: ${WEST}"
 	else
 		WEST=$(which west) || true
 		if [ -z "${WEST}" ] || ! ${WEST} --version > /dev/null 2>&1; then
-			echo "Error: 'west' command not found or not working. Please install west and ensure it is in your PATH."
-			exit 1
+			error_exit "'west' command not found or not working. Please install west and ensure it is in your PATH."
 		fi
 	fi
 
@@ -46,8 +88,7 @@ main() {
 	else
 		PYTHON=$(which python3) || true
 		if [ -z "${PYTHON}" ] || ! ${PYTHON} --version > /dev/null 2>&1; then
-			echo "Error: Python3 is not installed or not found in PATH."
-			exit 1
+			error_exit "Python3 is not installed or not found in PATH."
 		fi
 	fi
 
@@ -58,8 +99,7 @@ main() {
 		echo "-- Ninja is set as default Generator"
 		NINJA=$(which ninja) || true
 		if [ -z "${NINJA}" ] || ! ${NINJA} --version > /dev/null 2>&1; then
-			echo "Error: Ninja is not installed or not found in PATH."
-			exit 1
+			error_exit "Ninja is not installed or not found in PATH."
 		fi
 	fi
 
@@ -68,12 +108,10 @@ main() {
 		if [ -x "${ARMGCC_DIR}/bin/arm-none-eabi-gcc" ]; then
 			echo "-- ARM GCC toolchain found at: ${ARMGCC_DIR}/bin/arm-none-eabi-gcc"
 		else
-			echo "Error: ARM GCC toolchain not found at ${ARMGCC_DIR}/bin/arm-none-eabi-gcc."
-			exit 1
+			error_exit "ARM GCC toolchain not found at ${ARMGCC_DIR}/bin/arm-none-eabi-gcc."
 		fi
 	else
-		echo "Error: ARMGCC_DIR is not defined. Please set the path to your ARM GCC toolchain."
-		exit 1
+		error_exit "ARMGCC_DIR is not defined. Please set the path to your ARM GCC toolchain."
 	fi
 
 	PYTHON_VERSION_REQUIRED_MAJOR=3
@@ -85,14 +123,12 @@ main() {
 
 	if [ "$PYTHON_VERSION_MAJOR" -lt "$PYTHON_VERSION_REQUIRED_MAJOR" ] || \
 	{ [ "$PYTHON_VERSION_MAJOR" -eq "$PYTHON_VERSION_REQUIRED_MAJOR" ] && [ "$PYTHON_VERSION_MINOR" -lt "$PYTHON_VERSION_REQUIRED_MINOR" ]; }; then
-		echo "Error: Python >= ${PYTHON_VERSION_REQUIRED_MAJOR}.${PYTHON_VERSION_REQUIRED_MINOR} required, found ${PYTHON_VERSION}"
-		exit 1
+		error_exit "Python >= ${PYTHON_VERSION_REQUIRED_MAJOR}.${PYTHON_VERSION_REQUIRED_MINOR} required, found ${PYTHON_VERSION}"
 	fi
 
 	PIP=$(which pip || which pip3 || true)
 	if [ -z "${PIP}" ] || ! ${PIP} --version >/dev/null 2>&1; then
-		echo "Error: pip is not installed or not found in PATH."
-		exit 1
+		error_exit "pip is not installed or not found in PATH."
 	fi
 
 	# --- pip version check (>= MAJOR.MINOR) ---
@@ -105,8 +141,7 @@ main() {
 
 	if [ "$PIP_VERSION_MAJOR" -lt "$PIP_VERSION_REQUIRED_MAJOR" ] || \
 	{ [ "$PIP_VERSION_MAJOR" -eq "$PIP_VERSION_REQUIRED_MAJOR" ] && [ "$PIP_VERSION_MINOR" -lt "$PIP_VERSION_REQUIRED_MINOR" ]; }; then
-		echo "Error: pip >= ${PIP_VERSION_REQUIRED_MAJOR}.${PIP_VERSION_REQUIRED_MINOR} required, found ${PIP_VERSION}"
-		exit 1
+		error_exit "pip >= ${PIP_VERSION_REQUIRED_MAJOR}.${PIP_VERSION_REQUIRED_MINOR} required, found ${PIP_VERSION}"
 	fi
 
 	if [ -d "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" ]; then
@@ -136,8 +171,7 @@ main() {
 	if [ -f "${PROJECT_PATH}/scripts/requirements.txt" ]; then
 		pip install -r "${PROJECT_PATH}/scripts/requirements.txt"
 	else
-		echo "No requirements.txt found, skipping Python dependencies installation."
-		exit 1
+		error_exit "No requirements.txt found, skipping Python dependencies installation."
 	fi
 
 	deactivate
