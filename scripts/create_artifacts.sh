@@ -22,7 +22,6 @@ trap 'error_abort $LINENO' ERR
 
 # Internal variables and initializations.
 readonly PROGRAM=$(basename "$0")
-readonly VERSION=0.1
 
 VERBOSE=0
 
@@ -63,16 +62,10 @@ function usage () {
 	  --build-dir <build_dir>  Specify the build directory (required)
 	  --verbose, -v            Enable verbose output
 	  --dry-run, -n            Perform a trial run with no changes made
-	  --version                Show program version
 	  --output-folder, -o      Specify the output folder for the archives relatively (default: current directory)
 	  --help, --usage, -?      Show this help message
 
 	END
-}
-
-function version () {
-    echo "${PROGRAM} version ${VERSION}"
-    return 0
 }
 
 function main () {
@@ -102,10 +95,6 @@ function main () {
             shift
             BUILD_DIR="$1"
             shift
-            ;;
-        --version )
-            version
-            exit
             ;;
         --verbose | -v )
             shift
