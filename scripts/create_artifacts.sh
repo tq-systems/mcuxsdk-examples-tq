@@ -114,9 +114,8 @@ function main () {
             exit
             ;;
         -* | * )
-            error "Unrecognized option: $1"
             usage
-            exit $E_BAD_OPTION
+            exit_error $E_BAD_OPTION "Unrecognized option: $1"
             ;;
         esac
     done
