@@ -50,7 +50,6 @@ END
  # Create a place to store our work's progress
 function main () {
 	local GIT_DESCRIPTION=""
-	local PREFERRED_HEAD=""
 	local PREFERRED_TAG=""
 	local IS_GIT_TAG="0"
 	local GITHEAD=""
@@ -102,6 +101,7 @@ function main () {
 	if [ -n "${GITREV}" ]; then
 		local PREFERRED_HEAD_COMMIT=""
 		local PREFERRED_TAG_COMMIT=""
+		local PREFERRED_HEAD=""
 		local PREFERRED_REV=""
 
 		PREFERRED_REV="$(git rev-parse --verify "${GITREV}" 2>/dev/null || true)"
