@@ -1,15 +1,20 @@
+<!-- 
+SPDX-License-Identifier: CC-BY-4.0
+ 
+Copyright (c) 2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
+D-82229 Seefeld, Germany.
+-->
+
 # External RTC Demo
 
 ## Overview
 
-The RTC project is a simple demonstration program for onboard pcf85063a RTC connected to I2C bus 6.
-For I2C communication NXP I2C driver is used. It sets up the RTC hardware block to trigger an alarm
-after a user specified time period. The test will set the current date and time to a predefined value.
-The alarm will be set with reference to this predefined date and time.
+This RTC example is a simple demonstration program for the onboard PCF85063A RTC connected to I2C bus 6.
+For I2C communication, NXP's I2C driver is used. The test initializes the RTC with a predefined date and time and then configures the hardware block to trigger an alarm after a user-specified time period.
 
 ## Demo Output
 
-The log below shows the output of the external_rtc demo in the Cortex-M7 terminal:
+The log below shows the output of the external RTC demo in the Cortex-M7 terminal:
 
 ```
 TQ-Systems GmbH
