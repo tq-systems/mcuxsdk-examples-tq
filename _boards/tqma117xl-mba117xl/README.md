@@ -194,8 +194,10 @@ This guide describes how to manually program the `fuse 0x9A0` to "1" using the N
 
 |  Demo                                                                                            |  Description                                                              |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
-|  [Hello World](examples/demo_apps/hello_world/README.md)                                         |  Hello World demo, to make sure everything has been set up correctly      |
-|  [LED Blinky](examples/demo_apps/led_blinky/README.md)                                           |  Uses the Cortex-M7 to toggle a green LED on a GPIO pin periodically      |
+|  [Hello World](examples/demo_apps/hello_world/README.md)                                         |  Hello World demo, to make sure everything has been set up correctly.     |
+|  [LED Blinky](examples/demo_apps/led_blinky/README.md)                                           |  Uses the Cortex-M7 to toggle a green LED on a GPIO pin periodically.     |
+|  [RTC Internal](examples/driver_examples/rtc/README.md)                                          |  Demonstrate how to use internal SNVS RTC with Alarm function.            |
+|  [RTC External](examples/driver_examples/rtc_external/README.md)                                 |  Demonstrate how to use RTC on I2C bus with Alarm function.               |
 
 ## Support Wiki
 
