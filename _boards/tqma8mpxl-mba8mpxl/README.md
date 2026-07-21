@@ -27,7 +27,7 @@ board and the MCUXpresso SDK software.
 1.  Connect 24V power supply at X13
 2.  Connect a USB cable between the host PC and the X28 USB port on the target board.
 3.  Connect the J-Link Debug Probe between the host PC and the X22 port on the target board.
-4.  Open two serial terminals for the first (Cortex-A55, LPUART1) and the second (Cortex-M7, LPUART3)
+4.  Open two serial terminals for the first (Cortex-A53, LPUART1) and the second (Cortex-M7, LPUART3)
     USB UART port with the following settings:
     - 115200 baud rate
     - 8 data bits
