@@ -194,6 +194,8 @@ This guide describes how to manually program the `fuse 0x9A0` to "1" using the N
 
 |  Demo                                                                                            |  Description                                                              |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+|  [CANFD Ping Pong](examples/driver_examples/flexcan/canfd_ping_pong_buffer_transfer/README.md)   |  Demonstrate CANFD messages ping pong between two boards over CAN bus.    |
+|  [FlexCAN Ping Pong](examples/driver_examples/flexcan/ping_pong_buffer_transfer/README.md)       |  Demonstrate CAN messages ping pong between two boards over CAN bus.      |
 |  [Hello World](examples/demo_apps/hello_world/README.md)                                         |  Hello World demo, to make sure everything has been set up correctly.     |
 |  [LED Blinky](examples/demo_apps/led_blinky/README.md)                                           |  Uses the Cortex-M7 to toggle a green LED on a GPIO pin periodically.     |
 |  [RTC Internal](examples/driver_examples/rtc/README.md)                                          |  Demonstrate how to use internal SNVS RTC with Alarm function.            |
