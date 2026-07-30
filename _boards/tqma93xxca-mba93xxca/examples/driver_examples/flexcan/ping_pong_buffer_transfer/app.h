@@ -1,0 +1,51 @@
+//*****************************************************************************
+/*!
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Copyright 2022 NXP
+ * All rights reserved.
+ *
+ * Copyright (c) 2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
+ * D-82229 Seefeld, Germany.
+ * Author: Markus Niebel
+ */
+//******************************************************************************
+
+#ifndef _APP_H_
+#define _APP_H_
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+/*${macro:start}*/
+#define BOARD_LED_RGPIO      GPIO2
+#define BOARD_LED_RGPIO_PIN  0U
+#define BOARD_SW_NAME        "X1:27 (GPIO2_IO0)"
+#define EXAMPLE_GPIO_CLOCK_ROOT kCLOCK_Root_BusWakeup
+#define EXAMPLE_GPIO_CLOCK_GATE kCLOCK_Gpio2
+
+#define EXAMPLE_CAN                   CAN2
+#define EXAMPLE_FLEXCAN_RxWarningIRQn CAN2_IRQn
+#define EXAMPLE_FLEXCAN_BusOffIRQn    CAN2_IRQn
+#define EXAMPLE_FLEXCAN_ErrorIRQn     CAN2_IRQn
+#define EXAMPLE_FLEXCAN_MBIRQn        CAN2_IRQn
+#define EXAMPLE_FLEXCAN_IRQHandler    CAN2_IRQHandler
+
+#define RX_QUEUE_BUFFER_BASE  (1U)
+#define RX_QUEUE_BUFFER_SIZE  (4U)
+#define TX_MESSAGE_BUFFER_NUM (8U)
+
+#define FLEXCAN_CLOCK_ROOT         (kCLOCK_Root_Can2)
+#define FLEXCAN_CLOCK_GATE         kCLOCK_Can2
+#define EXAMPLE_CAN_CLK_FREQ       CLOCK_GetIpFreq(FLEXCAN_CLOCK_ROOT)
+#define USE_IMPROVED_TIMING_CONFIG (1U)
+/*${macro:end}*/
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+/*${prototype:start}*/
+void BOARD_InitHardware(void);
+/*${prototype:end}*/
+
+#endif /* _APP_H_ */
