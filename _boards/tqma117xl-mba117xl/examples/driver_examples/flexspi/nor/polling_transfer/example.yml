@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: BSD-3-Clause
+#
+# Copyright (c) 2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
+# D-82229 Seefeld, Germany.
+# Author: Mohammad Tawsif Ahmad Ansari
+#
+
+example.support:
+  build_type:
+    - "debug"
+    - "release"

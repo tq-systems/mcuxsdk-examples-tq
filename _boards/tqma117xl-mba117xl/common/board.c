@@ -34,11 +34,45 @@
  * Define
  ******************************************************************************/
 
+#define FLEXSPI_PAD_CTRL (0x0AU)
 #define BOARD_I2C_PMIC_BOOT_CLOCK_FREQUENCY 24000000UL
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+void BOARD_InitFlexSPI1Pins(void)
+{
+  /* Chip Select */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_18_FLEXSPI1_A_SS0_B, 0U);
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_18_FLEXSPI1_A_SS0_B,
+    FLEXSPI_PAD_CTRL);
+
+  /* Serial Clock */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_19_FLEXSPI1_A_SCLK, 0U);
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_19_FLEXSPI1_A_SCLK,
+    FLEXSPI_PAD_CTRL);
+
+  /* DATA0 */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_20_FLEXSPI1_A_DATA00, 0U);
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_20_FLEXSPI1_A_DATA00,
+    FLEXSPI_PAD_CTRL);
+
+  /* DATA1 */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_21_FLEXSPI1_A_DATA01, 0U);
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_21_FLEXSPI1_A_DATA01,
+    FLEXSPI_PAD_CTRL);
+
+  /* DATA2 */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_22_FLEXSPI1_A_DATA02, 0U);
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_22_FLEXSPI1_A_DATA02,
+    FLEXSPI_PAD_CTRL);
+
+  /* DATA3 */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_23_FLEXSPI1_A_DATA03, 0U);
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_23_FLEXSPI1_A_DATA03,
+    FLEXSPI_PAD_CTRL);
+}
 
 /* Get debug console frequency. */
 uint32_t BOARD_DebugConsoleSrcFreq(void)
@@ -702,4 +736,5 @@ void BOARD_Initialize(void)
 
   BOARD_ConfigMPU();
   BOARD_BootClockRUN();
+  BOARD_InitFlexSPI1Pins();
 }

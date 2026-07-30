@@ -13,6 +13,9 @@
 
 #ifndef _APP_H_
 #define _APP_H_
+#if (defined NOR_FLASH_DEMO) && (NOR_FLASH_DEMO == 1)
+#include "fsl_flexspi.h"
+#endif
 
 /*******************************************************************************
  * SNVS RTC defines
@@ -55,10 +58,52 @@
 /*${macro:end}*/
 
 /*******************************************************************************
+ * NOR Flash Flexspi defines
+ ******************************************************************************/
+
+#define EXAMPLE_FLEXSPI                 FLEXSPI1
+#define FLASH_SIZE                      0x40000 /* 128 Mb W25Q128, Size in KB */
+#define EXAMPLE_FLEXSPI_AMBA_BASE       FlexSPI1_AMBA_BASE
+#define FLASH_PAGE_SIZE                 256
+#define EXAMPLE_SECTOR                  500
+#define SECTOR_SIZE                     0x1000 /* 4K */
+#define EXAMPLE_FLEXSPI_CLOCK           kCLOCK_Flexspi1
+#define FLASH_PORT                      kFLEXSPI_PortA1
+#define EXAMPLE_FLEXSPI_RX_SAMPLE_CLOCK kFLEXSPI_ReadSampleClkLoopbackFromDqsPad
+
+#define CUSTOM_LUT_LENGTH            64U
+#define FLASH_QUAD_ENABLE            0x02
+#define FLASH_BUSY_STATUS_POL        1U
+#define FLASH_BUSY_STATUS_OFFSET     0U
+
+#define NOR_CMD_LUT_SEQ_IDX_READ_FAST_QUAD     0
+#define NOR_CMD_LUT_SEQ_IDX_WRITEENABLE        1
+#define NOR_CMD_LUT_SEQ_IDX_ERASESECTOR        2
+#define NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_QUAD   3
+#define NOR_CMD_LUT_SEQ_IDX_ERASECHIP          4
+#define NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM_SINGLE 5
+#define NOR_CMD_LUT_SEQ_IDX_READ_NORMAL        6
+#define NOR_CMD_LUT_SEQ_IDX_READID             7
+#define NOR_CMD_LUT_SEQ_IDX_WRITESTATUSREG     8
+#define NOR_CMD_LUT_SEQ_IDX_READSTATUSREG      9
+#define NOR_CMD_LUT_SEQ_IDX_READ_FAST          10
+
+/*******************************************************************************
  * Prototypes
  ******************************************************************************/
 
 extern void BOARD_startupHook(void);
 extern void BOARD_InitHardware(void);
+
+#if (defined NOR_FLASH_DEMO) && (NOR_FLASH_DEMO == 1)
+
+static inline void flexspi_clock_init(void)
+{
+  /*Clock setting for flexspi1*/
+  CLOCK_SetRootClockDiv(kCLOCK_Root_Flexspi1, 2);
+  CLOCK_SetRootClockMux(kCLOCK_Root_Flexspi1, 0);
+}
+
+#endif
 
 #endif /* _APP_H_ */
