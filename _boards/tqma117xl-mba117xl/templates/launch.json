@@ -6,8 +6,9 @@
       "description": "choose your app",
       "options": [
         "canfd_flexcan_ping_pong_buffer_transfer",
-        "flexspi_nor_polling_transfer",
+        "eeprom_m24c64",
         "external_rtc",
+        "flexspi_nor_polling_transfer",
         "hello_world",
         "led_blinky",
         "rtc",
