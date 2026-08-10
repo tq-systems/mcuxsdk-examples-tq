@@ -113,7 +113,11 @@ def get_board_name(var_file: Path) -> str:
             return m.group(1)
     return None
 
-def build_all(board:list[Board], build_root: Path, general_build_types: list):
+def build_loop(boardlist:list[Board],
+               build_root: Path,
+               boarddir: Path,
+               generator: str,
+               general_build_types: list):
     """
     Build all boards with their examples and cores.
     This function is called at the end of the script.
@@ -135,7 +139,7 @@ def build_all(board:list[Board], build_root: Path, general_build_types: list):
                                     "--board", board.name,
                                     str(example["path"]),
                                     "--build-dir", str(build_example_dir),
-                                    f"-DCUSTOM_BOARD_ROOT={BOARD_ROOT}",
+                                    f"-DCUSTOM_BOARD_ROOT={boarddir}",
                                     f"-Dcore_id={core}",
                                     f"--config={build_type}",
                                     f"-G{generator}",
@@ -150,7 +154,7 @@ def build_all(board:list[Board], build_root: Path, general_build_types: list):
                                 return -1
     return 0
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="MCUXSDK Build Script")
     parser.add_argument("--mcuxsdk_root", type=str, help="Path to MCUXSDK root directory")
     parser.add_argument("--build_root", type=str, help="Path to build output directory")
@@ -159,6 +163,7 @@ if __name__ == "__main__":
     parser.add_argument("--generator", type=str, help="choose build generator e.g. Ninja, Unix Makefiles", default="Ninja")
     parser.add_argument("--board", type=str, help="Specify one board to build, if not set all boards will be built", default="all")
     args = parser.parse_args()
+    board_root = None
 
     if args.build_root is not None:
         build_root = strip_quotes(args.build_root)
@@ -196,19 +201,19 @@ if __name__ == "__main__":
 # ------------------------------------------------------------
 
     if "scripts" not in CWD.parts:
-        BOARD_ROOT = CWD / "_boards"
+        board_root = CWD / "_boards"
     else:
-        BOARD_ROOT = CWD / ".." / "_boards"
+        board_root = CWD / ".." / "_boards"
 
-    if not BOARD_ROOT.is_dir():
+    if not board_root.is_dir():
         sys.exit(
-            f"Error: The board root directory '{BOARD_ROOT}' does not exist. "
+            f"Error: The board root directory '{board_root}' does not exist. "
             "Please ensure you are in the correct directory."
         )
 
     boards: list[Board] = []
 
-    for var_file in BOARD_ROOT.rglob("variable.cmake"):
+    for var_file in board_root.rglob("variable.cmake"):
         board_name = get_board_name(var_file)
         if board_name:
             boards.append(Board(board_name, var_file.parent))
@@ -220,7 +225,7 @@ if __name__ == "__main__":
 
 # ---------------------- sanity check ---------------------- #
     assert boards, (
-        f"No board names found under {BOARD_ROOT}. "
+        f"No board names found under {board_root}. "
         "Verify that variable.cmake files exist and that CMake is able to parse them."
     )
 
@@ -262,7 +267,7 @@ if __name__ == "__main__":
 # ------------------------------------------------------------
 
     build_example_dir = None
-    build_result = build_all(boards, build_root, general_build_types)
+    build_result = build_loop(boards, build_root, board_root, generator, general_build_types)
 
 # ------------------------------------------------------------
 # 6.  Combine and save / show diagnostics
@@ -272,3 +277,6 @@ if __name__ == "__main__":
         sys.exit(
             "build command error, terminate "
         )
+
+if __name__ == "__main__":
+    main()
