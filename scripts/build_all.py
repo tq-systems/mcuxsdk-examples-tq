@@ -132,6 +132,7 @@ def build_loop(targets:list[Board],
                             example_workdir = Path(workdir) / str(target.name) / f"{example['path'].name}_{core}" / str(config)
                             example_workdir.mkdir(parents=True, exist_ok=True)
 
+                            # disable exception, check for returncode instead.
                             res = subprocess.run(
                                 [
                                     "west", "build",
@@ -145,6 +146,7 @@ def build_loop(targets:list[Board],
                                     f"-G{generator}",
                                 ],
                                 text=True,
+                                check=False
                             )
 
                             if res.returncode == 0:
@@ -247,10 +249,12 @@ def main():
     except FileNotFoundError:
         sys.exit(f"Error: MCUXSDK_ROOT directory '{mcux_root}' does not exist.")
 
+    # disable exception, check for returncode instead.
     result = subprocess.run(
         ["west", "build", "--help"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
+        check=False
     )
 
     if result.returncode != 0:
