@@ -159,10 +159,18 @@ def main():
     parser = argparse.ArgumentParser(description="MCUXSDK Build Script")
     parser.add_argument("--mcuxsdk_root", type=str, help="Path to MCUXSDK root directory")
     parser.add_argument("--build_root", type=str, help="Path to build output directory")
-    parser.add_argument("--build_types", nargs='*', default="all",
+    parser.add_argument("--build_types",
+                        nargs='*',
+                        default="all",
                         help="List of build types to use (default: all, options: debug, release, all)")
-    parser.add_argument("--generator", type=str, help="choose build generator e.g. Ninja, Unix Makefiles", default="Ninja")
-    parser.add_argument("--board", type=str, help="Specify one board to build, if not set all boards will be built", default="all")
+    parser.add_argument("--generator",
+                        type=str,
+                        help="choose build generator e.g. Ninja, Unix Makefiles",
+                        default="Ninja")
+    parser.add_argument("--board",
+                        type=str,
+                        help="Specify one board to build, if not set all boards will be built",
+                        default="all")
     args = parser.parse_args()
     board_root = None
     build_types = None
