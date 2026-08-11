@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: BSD-3-Clause
 #
-# Copyright 2025 TQ-Systems GmbH <oss@ew.tq-group.com>,
+# Copyright 2025-2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
 # D-82229 Seefeld, Germany.
 # Author: Isaac Lucas de Lima Yuki
 #
@@ -9,13 +9,13 @@
 """
 Converted from the Bash script and extended:
 
-  - Collects all *variable.cmake* files under ../_boards
-  - Uses **CMake itself** to evaluate each variable.cmake and retrieve the
-    value of the `board` variable (robust against syntax changes)
-  - Adds a **sanity‑check assertion** that at least one board was found
-  - Finds every `prj.conf` inside <board>/examples/**/
-  - Prints the same summaries the Bash script printed
-  - cd’s into $MCUXSDK_ROOT and checks that `west build --help` executes.
+  - Collect all `variable.cmake` files under ../_boards
+  - Find board names from each `variable.cmake` via regex
+    (mcux_set_variable for `board`)
+  - Add a sanity-check assertion that at least one board was found
+  - Find every `prj.conf` inside `<board>/examples/**/`
+  - Print the same summaries the Bash script printed
+  - cd into $MCUXSDK_ROOT and check that `west build --help` executes.
 """
 
 from __future__ import annotations
@@ -24,11 +24,9 @@ import os
 import re
 import sys
 import subprocess
-import yaml
-from typing import List
-import io
 from pathlib import Path
 import argparse
+import yaml
 
 # ------------------------------------------------------------
 # 0.  Definitions
@@ -49,8 +47,8 @@ class Board:
     def __init__(self, name: str, path: Path):
         self.name = name
         self.path = path
-        self.supportedCores: list[str] = []
-        self.supportedExamples: list[dict] = []
+        self.supported_cores: list[str] = []
+        self.supported_examples: list[dict] = []
         self.load_from_yaml()
         self.find_examples()
 
@@ -66,12 +64,12 @@ class Board:
                 for core in cores:
                     if isinstance(core, dict) and "id" in core and "support" in core:
                         if core.get("support", True):
-                            self.supportedCores.append(core.get("core_id", core["id"]))
+                            self.supported_cores.append(core.get("core_id", core["id"]))
                     else:
                         print(f"Warning: Invalid core definition in {yaml_file}", file=sys.stderr)
 
     def find_examples(self):
-        """Populate *supportedExamples* with dirs containing `prj.conf`."""
+        """Populate *supported_examples* with dirs containing `prj.conf`."""
         examples_dir = self.path / "examples"
         if examples_dir.is_dir():
             for prj_file in examples_dir.glob("**/prj.conf"):
@@ -85,7 +83,7 @@ class Board:
                         if isinstance(build_type, list) and build_type:
                             example_dict["path"] = prj_file.parent
                             example_dict["build_configuration"] = build_type
-                            self.supportedExamples.append(example_dict)
+                            self.supported_examples.append(example_dict)
 
     # ---------------------- dunders ---------------------- #
     def __repr__(self):
@@ -103,64 +101,79 @@ def strip_quotes(s: str):
         return s[1:-1]
     return s
 
-def get_board_name(var_file: Path) -> str:
+def get_board_name(file: Path) -> str:
     """Extract board name from *variable.cmake* using BOARD_REGEX.
 
     Returns a list because, in theory, a file might define several boards.
     """
-    name: str = ""
-    for line in var_file.read_text().splitlines():
+
+    for line in file.read_text().splitlines():
         m = BOARD_REGEX.match(line)
         if m:
             return m.group(1)
     return None
 
-def build_all(board:list[Board], build_root: Path, general_build_types: list):
+def build_loop(targets:list[Board],
+               workdir: Path,
+               boarddir: Path,
+               generator: str,
+               build_configs: list):
     """
     Build all boards with their examples and cores.
     This function is called at the end of the script.
     """
-    for board in boards:
-        for core in board.supportedCores:
-            for example in board.supportedExamples:
-                for build_type in example["build_configuration"]:
-                    for mode in general_build_types:
-                        if mode in build_type:
-                            build_type = f'{build_type}'
-                            build_example_dir = Path(build_root) / str(board.name) / f"{example['path'].name}_{core}" / str(build_type)
-                            build_example_dir.mkdir(parents=True, exist_ok=True)
+    for target in targets:
+        for core in target.supported_cores:
+            for example in target.supported_examples:
+                for build_configuration in example["build_configuration"]:
+                    for config in build_configs:
+                        if config in build_configuration:
+                            config = f'{config}'
+                            example_workdir = Path(workdir) / str(target.name) / f"{example['path'].name}_{core}" / str(config)
 
+                            # disable exception, check for returncode instead.
                             res = subprocess.run(
                                 [
                                     "west", "build",
                                     "--pristine",
-                                    "--board", board.name,
+                                    "--board", target.name,
                                     str(example["path"]),
-                                    "--build-dir", str(build_example_dir),
-                                    f"-DCUSTOM_BOARD_ROOT={BOARD_ROOT}",
+                                    "--build-dir", str(example_workdir),
+                                    f"-DCUSTOM_BOARD_ROOT={boarddir}",
                                     f"-Dcore_id={core}",
-                                    f"--config={build_type}",
+                                    f"--config={config}",
                                     f"-G{generator}",
                                 ],
                                 text=True,
+                                check=False
                             )
 
                             if res.returncode == 0:
-                                print(f"[BUILD_PROCESS] ✅  Build successful for {build_example_dir}")
+                                print(f"[BUILD_PROCESS] ✅  Build successful for {example_workdir}")
                             else:
-                                print(f"[BUILD_PROCESS] ❌ Build **failed** for {build_example_dir}")
+                                print(f"[BUILD_PROCESS] ❌ Build **failed** for {example_workdir}")
                                 return -1
     return 0
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="MCUXSDK Build Script")
     parser.add_argument("--mcuxsdk_root", type=str, help="Path to MCUXSDK root directory")
     parser.add_argument("--build_root", type=str, help="Path to build output directory")
-    parser.add_argument("--general_build_types", nargs='*', default="all",
-                        help="List of general build types to use (default: debug, options: debug, release, all)")
-    parser.add_argument("--generator", type=str, help="choose build generator e.g. Ninja, Unix Makefiles", default="Ninja")
-    parser.add_argument("--board", type=str, help="Specify one board to build, if not set all boards will be built", default="all")
+    parser.add_argument("--build_types",
+                        nargs='*',
+                        default="all",
+                        help="List of build types to use (default: all, options: debug, release, all)")
+    parser.add_argument("--generator",
+                        type=str,
+                        help="choose build generator e.g. Ninja, Unix Makefiles",
+                        default="Ninja")
+    parser.add_argument("--board",
+                        type=str,
+                        help="Specify one board to build, if not set all boards will be built",
+                        default="all")
     args = parser.parse_args()
+    board_root = None
+    build_types = None
 
     if args.build_root is not None:
         build_root = strip_quotes(args.build_root)
@@ -172,45 +185,43 @@ if __name__ == "__main__":
     else:
         sys.exit("Error: --mcuxsdk_root is missing.")
 
-    if args.general_build_types is not None:
-        general_build_types = args.general_build_types
+    if args.build_types == "all":
+        build_types = ["debug", "release"]
+    elif args.build_types == "debug":
+        build_types = ["debug"]
+    elif args.build_types == "release":
+        build_types = ["release"]
     else:
-        general_build_types = "all"
-    if general_build_types == "all":
-        general_build_types = ["debug", "release"]
-    elif general_build_types == "debug":
-        general_build_types = ["debug"]
-    else:
-        general_build_type = ["release"]
+        sys.exit("Error: --build_types is not valid.")
 
     if args.generator is not None:
         generator = strip_quotes(args.generator)
     else:
-        generator = "Ninja"
+        sys.exit("Error: --generator is missing.")
 
     if args.board is not None or not args.board == "all":
         board = args.board
     else:
-        board = None
+        sys.exit("Error: --board is missing.")
 
 # ------------------------------------------------------------
 # 4.  Locate every variable.cmake and grab the board name via CMake
 # ------------------------------------------------------------
 
     if "scripts" not in CWD.parts:
-        BOARD_ROOT = CWD / "_boards"
+        board_root = CWD / "_boards"
     else:
-        BOARD_ROOT = CWD / ".." / "_boards"
+        board_root = CWD / ".." / "_boards"
 
-    if not BOARD_ROOT.is_dir():
+    if not board_root.is_dir():
         sys.exit(
-            f"Error: The board root directory '{BOARD_ROOT}' does not exist. "
+            f"Error: The board root directory '{board_root}' does not exist. "
             "Please ensure you are in the correct directory."
         )
 
     boards: list[Board] = []
 
-    for var_file in BOARD_ROOT.rglob("variable.cmake"):
+    for var_file in board_root.rglob("variable.cmake"):
         board_name = get_board_name(var_file)
         if board_name:
             boards.append(Board(board_name, var_file.parent))
@@ -222,7 +233,7 @@ if __name__ == "__main__":
 
 # ---------------------- sanity check ---------------------- #
     assert boards, (
-        f"No board names found under {BOARD_ROOT}. "
+        f"No board names found under {board_root}. "
         "Verify that variable.cmake files exist and that CMake is able to parse them."
     )
 
@@ -231,7 +242,7 @@ if __name__ == "__main__":
 # ------------------------------------------------------------
     print(f"\nBoards found ({len(boards)}): {' '.join(b.name for b in boards)}")
 
-    example_dirs = [e for b in boards for e in b.supportedExamples]
+    example_dirs = [e for b in boards for e in b.supported_examples]
     print(f"Examples with prj.conf found ({len(example_dirs)}):")
     for ex in example_dirs:
         print(f"  {ex}")
@@ -245,10 +256,12 @@ if __name__ == "__main__":
     except FileNotFoundError:
         sys.exit(f"Error: MCUXSDK_ROOT directory '{mcux_root}' does not exist.")
 
+    # disable exception, check for returncode instead.
     result = subprocess.run(
         ["west", "build", "--help"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
+        check=False
     )
 
     if result.returncode != 0:
@@ -263,8 +276,7 @@ if __name__ == "__main__":
 # 7. Build all boards
 # ------------------------------------------------------------
 
-    build_example_dir = None
-    build_result = build_all(boards, build_root, general_build_types)
+    build_result = build_loop(boards, build_root, board_root, generator, build_types)
 
 # ------------------------------------------------------------
 # 6.  Combine and save / show diagnostics
@@ -274,3 +286,6 @@ if __name__ == "__main__":
         sys.exit(
             "build command error, terminate "
         )
+
+if __name__ == "__main__":
+    main()
