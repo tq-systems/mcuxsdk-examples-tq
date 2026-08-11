@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: BSD-3-Clause
 #
-# Copyright 2025 TQ-Systems GmbH <oss@ew.tq-group.com>,
+# Copyright 2025-2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
 # D-82229 Seefeld, Germany.
 # Author: Isaac Lucas de Lima Yuki
 #
@@ -9,13 +9,13 @@
 """
 Converted from the Bash script and extended:
 
-  - Collects all *variable.cmake* files under ../_boards
-  - Uses **CMake itself** to evaluate each variable.cmake and retrieve the
-    value of the `board` variable (robust against syntax changes)
-  - Adds a **sanity‑check assertion** that at least one board was found
-  - Finds every `prj.conf` inside <board>/examples/**/
-  - Prints the same summaries the Bash script printed
-  - cd’s into $MCUXSDK_ROOT and checks that `west build --help` executes.
+  - Collect all `variable.cmake` files under ../_boards
+  - Find board names from each `variable.cmake` via regex
+    (mcux_set_variable for `board`)
+  - Add a sanity-check assertion that at least one board was found
+  - Find every `prj.conf` inside `<board>/examples/**/`
+  - Print the same summaries the Bash script printed
+  - cd into $MCUXSDK_ROOT and check that `west build --help` executes.
 """
 
 from __future__ import annotations
