@@ -64,15 +64,6 @@ main() {
 		echo "-- MCUXSDK_ROOT is set to default: ${MCUXSDK_ROOT}"
 	fi
 
-	if [ -n "${WEST}" ]; then
-		echo "-- WEST is defined as: ${WEST}"
-	else
-		WEST=$(which west) || true
-		if [ -z "${WEST}" ] || ! ${WEST} --version > /dev/null 2>&1; then
-			error_exit "'west' command not found or not working. Please install west and ensure it is in your PATH."
-		fi
-	fi
-
 	if [ -n "${GENERATOR}" ]; then
 		echo "-- GENERATOR is defined as: ${GENERATOR}"
 	else
