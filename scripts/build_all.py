@@ -130,7 +130,6 @@ def build_loop(targets:list[Board],
                         if config in build_configuration:
                             config = f'{config}'
                             example_workdir = Path(workdir) / str(target.name) / f"{example['path'].name}_{core}" / str(config)
-                            example_workdir.mkdir(parents=True, exist_ok=True)
 
                             # disable exception, check for returncode instead.
                             res = subprocess.run(
