@@ -104,7 +104,7 @@ main() {
 		error_exit "no venv found."
 	fi
 
-	echo "-- Virtual environment created and activated."
+	echo "-- Virtual environment activated."
 
 	python "${SCRIPT_PATH}/build_all.py" \
 		--mcuxsdk_root "${MCUXSDK_ROOT}/${MCUXSDK_DIR}" \
