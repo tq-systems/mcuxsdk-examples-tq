@@ -258,7 +258,7 @@ def main():
 
     # disable exception, check for returncode instead.
     result = subprocess.run(
-        ["west", "build", "--help"],
+        ["west", "--version"],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         check=False

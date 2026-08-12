@@ -14,6 +14,11 @@ files in git the submodule for meta-tq (meta layers meta-tq and meta-dumpling).
 
 ### Added
 
+* TQMa117xL: FlexSPI / SPI-NOR example (Cortex-M7)
+* TQMa93xx: CAN / CANFD example
+* TQMa117xL: CAN / CANFD example (Cortex-M7)
+* TQMa117xL: external RTC example (Cortex-M7)
+* TQMa117xL: GPIO / LED example (Cortex-M7)
 * TQMa93xx: NPU firmware
 * TQMa93xx: add RGPIO input / output demos
 * TQMa93xx: add RPMSG demo
