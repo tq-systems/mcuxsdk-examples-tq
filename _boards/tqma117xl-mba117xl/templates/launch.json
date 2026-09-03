@@ -10,7 +10,8 @@
         "external_rtc",
         "hello_world",
         "led_blinky",
-        "rtc"        
+        "rtc",
+        "temp_sensor_se97b"      
       ]
     }
   ],
