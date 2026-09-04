@@ -20,6 +20,7 @@ manifest:
       - submanifests/internal.yml
       - submanifests/devices/RT.yml
       - submanifests/devices/i.MX.yml
+      - submanifests/middleware/connectivity.yml
       - submanifests/middleware/eiq.yml
       - submanifests/middleware/multicore.yml
       - submanifests/rtos/rtos.yml
