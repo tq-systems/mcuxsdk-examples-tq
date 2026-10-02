@@ -5,13 +5,11 @@ Copyright (c) 2026 TQ-Systems GmbH <oss@ew.tq-group.com>,
 D-82229 Seefeld, Germany.
 -->
 
-General Templates
-=========
+# General Templates
 
-This folder contains general templates that can be used throughout the entire Repository.
+This folder contains general templates that can be used throughout the entire repository.
 
-The settings.json required to set up VS-Code in order to debug. Substitute the placeholders
-with the actual paths on your system. The configuration also contains settings for the C/C++
-extension, which is required for IntelliSense.
+The settings.json file is required to set up VS-Code for debugging. Substitute the placeholders
+with the actual paths to `arm-none-eabi-gdb` and `arm-none-eabi-gcc` from the ARM Toolchain, as well as the path of `JLinkGDBServerCL`. The configuration also contains settings for the C/C++ extension, which is required for IntelliSense.
 
-You have to copy the *.json-files to the .vscode folder in your workspace.
+Copy this file into your `.vscode` folder in your workspace.
