@@ -195,6 +195,7 @@ This guide describes how to manually program the `fuse 0x9A0` to "1" using the N
 |  Demo                                                                                            |  Description                                                              |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
 |  [CANFD Ping Pong](examples/driver_examples/flexcan/canfd_ping_pong_buffer_transfer/README.md)   |  Demonstrate CANFD messages ping pong between two boards over CAN bus.    |
+|  [EEPROM M24Cxx](examples/eeprom/m24cxx/README.md)                                               |  Uses the onboard M24C64 EEPROM to read and write data.                   |
 |  [FlexCAN Ping Pong](examples/driver_examples/flexcan/ping_pong_buffer_transfer/README.md)       |  Demonstrate CAN messages ping pong between two boards over CAN bus.      |
 |  [FlexSPI NOR](examples/driver_examples/flexspi/nor/polling_transfer/README.md)                  |  Demonstrates simple operations on the FlexSPI NOR flash.                 |
 |  [Hello World](examples/demo_apps/hello_world/README.md)                                         |  Hello World demo, to make sure everything has been set up correctly.     |
