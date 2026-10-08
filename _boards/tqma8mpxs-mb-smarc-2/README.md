@@ -25,17 +25,16 @@ board and the MCUXpresso SDK software.
 ## Board Preparation
 
 1.  Connect 24V power supply at X12
-2.  Connect a Micro USB cable between the host PC and the X20 USB port on the target board.
-3.  Connect a USB to RS232 cable between the host PC and the X40 port on the target board.
-4.  Open two serial terminals for the first (Cortex-A53, LPUART1) and the second (Cortex-M7 LPUART3)
-    USB UART port with the following settings:
+2.  Connect a Micro USB cable between the host PC and the X20 USB port on the target board (Cortex-A53, LPUART1).
+3.  Connect an USB to RS232 cable between the host PC and the X40 port on the target board (Cortex-M7, LPUART3).
+4.  Open serial terminals for both ports with the following settings:
     - 115200 baud rate
     - 8 data bits
     - No parity
     - One stop bit
     - No flow control
 
-5.  Set the board to SD boot mode and insert an SD card with BSP supporting Cortex-M demos.
+5.  Set the board to SD boot mode and insert an SD card with a BSP supporting the Cortex-M demos.
     | S-1  | S-2  | S-3  | S-4  |
     | ---- | ---- | ---- | ---- |
     | OFF  | ON   | ON   | OFF  |
