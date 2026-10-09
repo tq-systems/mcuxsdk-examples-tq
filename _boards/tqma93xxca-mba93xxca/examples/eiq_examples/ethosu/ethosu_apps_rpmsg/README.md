@@ -15,8 +15,8 @@ This 'ethosu_apps_rpmsg' demo application runs an inference model on the NPU of 
 
 This command builds the Ethos-U RPMSG demo for Cortex-M33. The artefacts will be stored in the mcuxsdk-examples-tq/build folder.
 
-```
-west build mcuxsdk-examples-tq/_boards/tqma93xxca-mba93xxca/examples/eiq_examples/ethosu/ethosu_apps_rpmsg/ --board tqma93xxca-mba93xxca -Dcore_id=cm33 -DBINARY_DIR=mcuxsdk-examples-tq/build  -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=release --pristine
+```bash
+west build mcuxsdk-examples-tq/_boards/tqma93xxca-mba93xxca/examples/eiq_examples/ethosu/ethosu_apps_rpmsg/ --board tqma93xxca-mba93xxca -Dcore_id=cm33 --build-dir mcuxsdk-examples-tq/build  -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=release --pristine
 ```
 
 ## Running the Demo

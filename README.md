@@ -116,8 +116,8 @@ The following commands can be used under Linux to work in a workspace that was s
 cd <workspace>
 source ".venv/bin/activate"
 west build _boards/<board>/<app_location> --board <board> \
--Dcore_id=<core> --build-dir build \
--DCUSTOM_BOARD_ROOT="<workspace>/mcuxsdk-examples-tq>/_boards" \
+-Dcore_id=<core> --build-dir mcuxsdk-examples-tq/build \
+-DCUSTOM_BOARD_ROOT="/mcuxsdk-examples-tq/_boards" \
 --config=<configuration> --pristine
 ```
 

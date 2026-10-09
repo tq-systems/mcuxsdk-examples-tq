@@ -52,7 +52,7 @@ specific READMEs of the demo you are running for any additional requirements.
 In order to build a demo for TQMa117xL use the following command:
 
 ```bash
-west build mcuxsdk-examples-tq/_boards/tqma117xl-mba117xl/<app_location> --board tqma117xl-mba117xl -Dcore_id=cm7 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=<configuration> --pristine
+west build mcuxsdk-examples-tq/_boards/tqma117xl-mba117xl/<app_location> --board tqma117xl-mba117xl -Dcore_id=cm7 --build-dir mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=<configuration> --pristine
 ```
 
 Available build configurations are:
@@ -87,7 +87,7 @@ It is also possible to write the demo to the flash of TQMa117xL using NXP's Secu
 Download the [Secure Provisioning Tool](../../../README.md#software-requirements) and build a demo with the "flexspi_nor_debug" or "flexspi_nor_release" build configuration.
 
 ```bash
-west build mcuxsdk-examples-tq/_boards/tqma117xl-mba117xl/<app_location> --board tqma117xl-mba117xl -Dcore_id=cm7 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=flexspi_nor_debug --pristine
+west build mcuxsdk-examples-tq/_boards/tqma117xl-mba117xl/<app_location> --board tqma117xl-mba117xl -Dcore_id=cm7 --build-dir mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=flexspi_nor_debug --pristine
 ```
 
 - Power off the board.

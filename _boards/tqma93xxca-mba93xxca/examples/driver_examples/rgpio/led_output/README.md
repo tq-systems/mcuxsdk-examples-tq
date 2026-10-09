@@ -17,7 +17,7 @@ Software on Cortex-A must not use the GPIO2 bank. Running the demo will occupy t
 
 This command builds the RGPIO LED Output example for Cortex-M33. The artefacts will be stored in the mcuxsdk-examples-tq/build folder.
 ```bash
-west build mcuxsdk-examples-tq/_boards/tqma93xxca-mba93xxca/examples/driver_examples/rgpio/led_output --board tqma93xxca-mba93xxca -Dcore_id=cm33 -DBINARY_DIR=mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
+west build mcuxsdk-examples-tq/_boards/tqma93xxca-mba93xxca/examples/driver_examples/rgpio/led_output --board tqma93xxca-mba93xxca -Dcore_id=cm33 --build-dir mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
 ```
 
 ## Running the Demo in U-Boot
