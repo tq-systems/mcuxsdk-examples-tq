@@ -11,17 +11,16 @@
     ],
     "configurations": [
         {
+            "showDevDebugOutput": "both",
             "type": "cortex-debug",
             "request": "launch",
-            "name": "Debug J-Link Ram",
+            "name": "Debug J-Link RAM",
             "cwd": "${workspaceFolder}",
             "servertype": "jlink",
             "device": "MIMX8ML8_M7",
             "interface": "jtag",
             "runToEntryPoint": "main",
-            "executable": "${workspaceFolder}/../../../build/${input:app}_cm7.elf",
-            "serverpath": "C:/Program Files/SEGGER/JLink_V866/JLinkGDBServerCL.exe",
-            "gdbPath": "C:/Program Files (x86)/Arm/GNU Toolchain mingw-w64-i686-arm-none-eabi/bin/arm-none-eabi-gdb",
+            "executable": "${workspaceFolder}/mcuxsdk-examples-tq/build/${input:app}_cm7.elf",
             "serverArgs": [
                 "-endian",
                 "little",

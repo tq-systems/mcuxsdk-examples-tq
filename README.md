@@ -19,10 +19,10 @@ for supported hardware.
 
 ### Requirements
 
-__NOTE__: The versions provided are the ones with which the build system and its artifacts were tested.
+__NOTE__: The versions provided were used to validatte the build system and its artefacts.
 
 - Arm GNU Toolchain: arm-gnu-toolchain-13.3.rel1-[host system]-arm-none-eabi
-- NXP's [MCUXSDK-Manifest](https://github.com/nxp-mcuxpresso/mcuxsdk-manifests): v26.03.00
+- NXP's [MCUXSDK-Manifest](https://github.com/nxp-mcuxpresso/mcuxsdk-manifests): v26.06.00
 - CMake: v3.30.0^
 - West: v1.2.0^
 - Python: v3.10^
@@ -38,16 +38,16 @@ __NOTE__: The versions provided are the ones with which the build system and its
 
 ### Preparation
 
-- Python3 installation (needed for the west repo tool and helper scripts).
-- Install [Arm GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain).
+- Install [Python3](https://www.python.org/downloads/) (needed for the west repo tool and helper scripts).
+- Install [Arm GNU Toolchain](https://gitlab.arm.com/tooling/gnu-toolchains-for-arm/-/tree/releases/13.3.rel1?ref_type=heads).
   Use the .exe file for installation or unpack the archive to the desired path.
 - Install [CMake](https://cmake.org/download/) and ensure that `CMake` is added to the system path.
+- Install [West](https://docs.zephyrproject.org/latest/develop/west/install.html) using `pip3` or `apt install`.
+- Install [Ninja](https://github.com/ninja-build/ninja/releases).
 - Set the environment variable `ARMGCC_DIR` pointing to the toolchain installation dir:
   - VS-Code / Codium: use the "cmake.environment" option under [settings.json](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/cmake-settings.md).
   - Command Line: Create a variable, e.g. `export ARMGCC_DIR=</path/to/toolchain>`.
 - Debugging only: Install [Segger J-link](https://www.segger.com/downloads/jlink/) (Version used: `8.66`).
-- Follow the installation instructions at:
-[Getting Started with SDK - Detailed Installation Instructions](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/gsd/installation.html#installation)
 - Create a workspace directory and clone this repository into the workspace.
 - Initialize the west workspace and create a python venv.
 
@@ -75,7 +75,7 @@ __NOTE__: The versions provided are the ones with which the build system and its
   to speed up cloning.
 - Manual installation of MCUXpresso SDK and using the examples in this repository separately is
   out of scope of this documentation.
-- See the [NXP MCUXpresso SDK Documentation](https://mcuxpresso.nxp.com/mcuxsdk/latest/html/introduction/README.html)
+- See the [NXP MCUXpresso SDK Documentation](https://mcuxpresso.nxp.com/mcuxsdk/26.06.00/html/introduction/README.html)
   for SDK documentation.
 - **Windows:** Please verify that the environment variable `ARMGCC_DIR` uses the short path format. The default installation path is
   `C:\Program Files (x86)\Arm\GNU Toolchain mingw-w64-i686-arm-none-eabi`, the short form is `C:\PROGRA~2\Arm\GNUTOO~1`.
@@ -85,22 +85,18 @@ __NOTE__: The versions provided are the ones with which the build system and its
 ### Setting Up VS-Code
 
 - Open Visual Studio from the applications folder.
-- Please refer to the [example templates](./templates/) when setting up VS-Code. You should have at least the same
-`.json-files` and `.yaml-files` in your [.vscode folder](./.vscode) by the end of this section.
+- Please refer to the [example templates](./templates/) when setting up VS-Code. You should have the same
+`settings.json` in your [.vscode folder](./.vscode) by the end of this section.
 - Install the [CMake tools extension by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools).
   - Ctrl+P: `ext install ms-vscode.cmake-tools` or search for the extension under the menu extensions on the left bar.
-  - Adjust [settings.json](https://github.com/microsoft/vscode-cmake-tools/blob/main/docs/cmake-settings.md)
-    in the [.vscode](./.vscode) folder accordingly to your environment. You can follow the provided **settings.json**
-    under "<_board_>/templates".
 - For Debug only: Install [cortex-debug](https://github.com/Marus/cortex-debug/wiki)
   extension from marus25.
-  - either use `Ctrl+P` and `ext install marus25.cortex-debug`
-  - or search for the extension under the menu extensions on the left bar
+  - Either use `Ctrl+P` and `ext install marus25.cortex-debug` or search for the extension under the menu extensions on the left bar.
   - Set up the desired configurations for debug on VS-Code. You will need two files:
-    - one to configure the debug settings for VS-Code.
-      - You can follow the provided **settings.json** under "<_board_>/templates".
-    - the other to set up the debugger configuration.
-       - You can follow the provided **launch.json** under "<_board_>/templates".
+    - `settings.json` contains actual paths of the Arm GNU Toolchain, GDB and GDBServer. Customize these paths according to your environment.
+      - You can find a **settings.json** template under `./templates`.
+    - `launch.json` contains the debugger configuration.
+       - You can find a board specific **launch.json** template under `_boards/<board>/templates`.
 
 > [!TIP]
 > Here is an entire [guide](https://wiki.segger.com/J-Link_Visual_Studio_Code)
@@ -120,8 +116,8 @@ The following commands can be used under Linux to work in a workspace that was s
 cd <workspace>
 source ".venv/bin/activate"
 west build _boards/<board>/<app_location> --board <board> \
--Dcore_id=<core> --build-dir build \
--DCUSTOM_BOARD_ROOT="<workspace>/mcuxsdk-examples-tq>/_boards" \
+-Dcore_id=<core> --build-dir mcuxsdk-examples-tq/build \
+-DCUSTOM_BOARD_ROOT="/mcuxsdk-examples-tq/_boards" \
 --config=<configuration> --pristine
 ```
 
@@ -132,12 +128,12 @@ west build _boards/<board>/<app_location> --board <board> \
 - The `--config` parameter is optional. If not provided, the default configuration will be used.
   Available configurations can be found in the `examples.yml` file of the respective board.
 - The `core_id` must be set if your board has multiple cores. This can be recognized by the presence of core folders
-  in the board directory. If your board has only one core, this parameter might not be required.
+  in the board directory.
   Example core IDs are: `cm4`, `cm7`, `cm33`.
 
 ## Loading Targets
 
-Before running a target, make **boot instructions of your board**.
+Before running a target, make sure to follow the **boot instructions of your board**.
 
 ### Loading a Target via GDB Server
 
@@ -168,9 +164,7 @@ This repository is structured almost like the examples folder inside the mcuxsdk
 this repository includes the source and header files for the examples from a CMakesLists.txt file located inside a dedicated
 examples folder for each board inside this repository.
 
-Besides the boards folder this repository provides as well scripts to help with the setup of the environment and CI.
-
-It also provides access to an TQ specific submodule for including some light weight API for handling specific devices.
+Besides the boards folder this repository also provides scripts that help setting up the environment and CI.
 
 The following table provides an overview of the top-level folders in this repository and their purposes:
 
@@ -178,7 +172,7 @@ The following table provides an overview of the top-level folders in this reposi
 |------------------------------|-----------------------------------------------------------------------------|
 | `_boards`                    | Dedicated folders for supported boards, follows the MCUX SDK documentation. |
 | `_boards/_common`            | Shared resources and configurations used across multiple boards.            |
-| `_boards/<board>/templates`  | Some templates for IDEs (e.g. VS Code settings).                            |
+| `_boards/<board>/templates`  | Some templates for IDEs (e.g. VS-Code settings).                            |
 | `scripts`                    | Helper scripts for setting up the environment, building, and CI workflows.  |
 
 ### Programming Apps
@@ -188,17 +182,17 @@ build system structure within this repository when creating new apps or boards.
 
 The build system is built using west. West uses CMake and Kconfig to manage the build system.
 
-To create a new application, you must create a new folder for it inside the examples directory of the board and create
-a `CMakeLists.txt` file located in `../examples/<app_name>`.
+To create a new application, create a new folder inside the examples directory of the board and create
+a `CMakeLists.txt` file located in `../examples/<app_name>/`.
 
 > [!TIP]
-> You can use any of the CMakeLists.txt files from the existing demo applications as a template.
+> You can use any of the CMakeLists.txt files from existing demo applications as a template.
 > Be also aware that depending on your app requirements you must choose the correct components or even add new ones
 > to the board via the KConfig tool.
 
 Compiler and linker flags are set in the `flags.cmake` file in the `<board>/target` directory. However, if an app
-requires special flags you can set it inside the `CMakeLists.txt` of the application directory. You can use e.g.
-`mcux_add_armgcc_configuration` for adding flags for the arm compiler.
+requires special flags you can set it inside the `CMakeLists.txt` of the application directory. You can use the CMake extension
+`mcux_add_armgcc_configuration` for adding flags to the ARM GCC compiler.
 
 When programming, use the linker scripts provided by TQ. You can switch between the different linker scripts by using the
 `--config` parameter in the `west build` command. The available configurations can be found in the "examples.yml" file
@@ -224,7 +218,7 @@ For learning about NXP's API, the examples under `mcuxsdk/examples` can be helpf
 
 The list of demo applications can be found in the board specific documentation:
 
-* [TQMa117x](_boards/tqma117xl-mba117xl/README.md)
+* [TQMa117xL](_boards/tqma117xl-mba117xl/README.md)
 * [TQMa8MPxL](_boards/tqma8mpxl-mba8mpxl/README.md)
 * [TQMa8MPxS](_boards/tqma8mpxs-mb-smarc-2/README.md)
 * [TQMa93xxCA](_boards/tqma93xxca-mba93xxca/README.md)

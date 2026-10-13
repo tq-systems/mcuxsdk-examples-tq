@@ -27,7 +27,7 @@ board and the MCUXpresso SDK software.
 1.  Connect 24V power supply at X13
 2.  Connect a USB cable between the host PC and the X28 USB port on the target board.
 3.  Connect the J-Link Debug Probe between the host PC and the X22 port on the target board.
-4.  Open two serial terminals for the first (Cortex-A55, LPUART1) and the second (Cortex-M7, LPUART3)
+4.  Open two serial terminals for the first (Cortex-A53, LPUART1) and the second (Cortex-M7, LPUART3)
     USB UART port with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -46,7 +46,7 @@ board and the MCUXpresso SDK software.
 In order to build the examples for this board use the following command:
 
 ```bash
-west build mcuxsdk-examples-tq/_boards/tqma8mpxl-mba8mpxl/<app_location> --board tqma8mpxl-mba8mpxl -Dcore_id=cm7 -DBINARY_DIR=mcuxsdk-examples-tq/build  -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=debug --pristine
+west build mcuxsdk-examples-tq/_boards/tqma8mpxl-mba8mpxl/<app_location> --board tqma8mpxl-mba8mpxl -Dcore_id=cm7 --build-dir mcuxsdk-examples-tq/build -DCUSTOM_BOARD_ROOT="mcuxsdk-examples-tq/_boards" --config=<configuration> --pristine
 ```
 
 ## Demos
